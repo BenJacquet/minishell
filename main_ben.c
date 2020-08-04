@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   main_ben.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/04 14:12:42 by jabenjam          #+#    #+#             */
-/*   Updated: 2020/08/04 16:14:04 by jabenjam         ###   ########.fr       */
+/*   Updated: 2020/08/04 16:32:04 by jabenjam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,10 @@
 #include <string.h>
 #include <stdlib.h>
 #include <stdio.h>
-#include "ft_strjoin.c"
+#include "GNL/get_next_line.h"
+#include "GNL/get_next_line.c"
+#include "GNL/get_next_line_utils.c"
+#include "libft/libft.h"
 
 int get_dir()
 {
@@ -47,18 +50,14 @@ int manager(char *input)
 
 int main_loop()
 {
-    char buffer[4096];
     char *input;
     char *path;
     int out;
 
-    bzero(buffer, 4096);
     input = malloc(4096);
-
     get_dir();
-    while (get_next_line() != 0))
+    while (get_next_line(0, &input) != 0)
     {
-        input = ft_strjoin(input, buffer);
         manager(input);
     }
     return (0);
