@@ -6,35 +6,24 @@
 #    By: chgilber <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/10/16 11:50:11 by chgilber          #+#    #+#              #
-#    Updated: 2020/08/04 19:02:28 by chgilber         ###   ########.fr        #
+#    Updated: 2020/08/04 19:06:20 by chgilber         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = libft.a
+NAME = Minishell
 
-SRCS =	ft_atoi.c ft_isascii.c ft_isalpha.c \
-		ft_tolower.c ft_strlcat.c \
-		ft_strnstr.c ft_toupper.c ft_isalnum.c ft_isdigit.c \
-		ft_isprint.c ft_strchr.c  ft_strlcpy.c ft_strncmp.c \
-		ft_strrchr.c ft_memset.c ft_bzero.c ft_memcpy.c \
-		ft_memccpy.c ft_memmove.c ft_memchr.c ft_memcmp.c \
-		ft_strdup.c ft_calloc.c ft_itoa.c ft_substr.c \
-		ft_strtrim.c ft_putchar_fd.c ft_putstr_fd.c ft_lennbr.c \
-		ft_putendl_fd.c ft_putnbr_fd.c ft_strmapi.c ft_split.c 
-
-SRCS_BONUS_LIBFT = ft_lstnew_bonus.c ft_lstadd_front_bonus.c \
-ft_lstsize_bonus.c ft_lstlast_bonus.c \
-ft_lstadd_back_bonus.c ft_lstdelone_bonus.c \
-ft_lstclear_bonus.c ft_lstiter_bonus.c \
-ft_lstmap_bonus.c
+SRCS =		get_dir.c end.c cd.c \
+			GNL/get_next_line.c GNL/get_next_line_utils.c \
+			main.c
+SRCSLIB =	libft/ft_split.c libft/ft_strlen.c libft/ft_strncmp.c
 
 INCLUDES = .
-OBJS_LIBFT = $(SRCS:.c=.o)
-OBJS_BONUS_LIBFT = $(SRCS_BONUS_LIBFT:.c=.o)
+
+LIBFT = ./libft/libft.a
 
 CC = gcc
 
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra
 
 # Text format
 _DEF = $'\033[0m
@@ -64,33 +53,35 @@ _IPURPLE = $'\033[45m
 _ICYAN = $'\033[46m
 _IGREY = $'\033[47m
 
+OBJS = $(SRCS:.c=.o)
+OBJS_LIB = $(SRCSLIB:.c=.o)
+
 all : $(NAME)
+bonus : $(NAME_BONUS)
 
-$(NAME) : $(OBJS_LIBFT)
+-include $(DPDCS)
+
+$(NAME) : $(OBJS)
 	@echo "$(_END)$(_GREEN) [OK]\t"
-	@ar rc $(NAME) $(OBJS_LIBFT)
-	@ranlib $(NAME)
+	@make -C libft
 	@echo "$(_END)$(_GREEN)[Done]"
+	gcc $(CFLAGS) -L libft -lft -o $@ $(OBJS) $(LMINX)
 
-%.o : %.c $(INCLUDES)
+%.o : %.c
 	@echo "$(_END)$(_GREEN) [OK]\t"
-	@$(CC) $(CFLAGS) -I $(INCLUDES) -o ${<:.c=.o} -c $<
-re : 
-	@make fclean 
-	@make all
-	
-bonus : $(OBJS_LIBFT) $(OBJS_BONUS_LIBFT)
-	@echo "$(_END)$(_YELLOW) [COMPILE WITH BONUS FUNCTION]\t$(_UNDER)$(_GREEN)"
-	@ar rc $(NAME) $(OBJS_LIBFT) $(OBJS_BONUS_LIBFT)
-	@ranlib $(NAME)
-	@echo "$(_UNDER)$(_GREEN) [OK]"
-	@echo "$(_END)$(_YELLOW)[Done]"
+	$(CC) $(CFLAGS) -I $(INCLUDES) -o ${<:.c=.o} -c $<
 
+re : 
+	@make fclean
+	@make all
 
 fclean : clean
-	@rm -f $(NAME)
+	@rm -f $(NAME) 
+	@make fclean -C libft
 
 clean :
-	@rm -f $(OBJS_LIBFT) $(OBJS_BONUS_LIBFT)
+	@rm -f $(OBJS) 
+	@make clean -C libft
+
 
 .PHONY : all re fclean clean bonus
