@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: chgilber <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/04 14:09:45 by chgilber          #+#    #+#             */
-/*   Updated: 2020/08/04 15:59:07 by chgilber         ###   ########.fr       */
+/*   Updated: 2020/08/04 16:48:26 by jabenjam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,28 @@
 #include <sys/uio.h>
 #include "GNL/get_next_line.h"
 #include "libft/libft.h"
+
+int get_dir()
+{
+    char *path;
+    char *dir;
+    void *bkp;
+    int len;
+
+    path = getcwd(path, 0);
+    bkp = path;
+    while (*path != '\0')
+    {
+        if (*path == '/')
+            dir = ++path;
+        path++;
+    }
+    len = strlen(dir);
+    write(1, dir, len);
+    write(1, " : ", 3);
+    free(bkp);
+    return (0);
+}
 
 int		main(int ac, char **av)
 {
@@ -36,7 +58,8 @@ int		main(int ac, char **av)
 	free(pwd);
 	pwd = getcwd(pwd, 40);
 //	printf("%det d{%s}\n", i, pwd + len);
-	write(1, pwd, len);
+	//write(1, pwd, len);
+    get_dir();
 	write(1, " -> :", 5);
 	get_next_line(0,&buff);
 	lenw = strlen(pwd);
@@ -59,7 +82,8 @@ int		main(int ac, char **av)
 //	printf("%s", pwd);
 	else
 		system(buff);
-	write(1, pwd, len);
+	//write(1, pwd, len);
+    get_dir();
 	write(1, " -> :", 5);
 //	write(1, "bonjours", 9);
 		pwd = getcwd(pwd, 80);
