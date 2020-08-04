@@ -6,7 +6,7 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/04 14:12:42 by jabenjam          #+#    #+#             */
-/*   Updated: 2020/08/04 16:32:04 by jabenjam         ###   ########.fr       */
+/*   Updated: 2020/08/04 16:34:15 by jabenjam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,9 +57,7 @@ int main_loop()
     input = malloc(4096);
     get_dir();
     while (get_next_line(0, &input) != 0)
-    {
         manager(input);
-    }
     return (0);
 }
 

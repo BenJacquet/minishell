@@ -6,7 +6,7 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/04 16:16:26 by jabenjam          #+#    #+#             */
-/*   Updated: 2020/08/04 16:33:42 by jabenjam         ###   ########.fr       */
+/*   Updated: 2020/08/04 16:36:18 by jabenjam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,5 +27,6 @@ int get_dir()
     len = strlen(dir);
     write(1, dir, len);
     write(1, " : ", 3);
+    free(path);
     return (0);
 }
