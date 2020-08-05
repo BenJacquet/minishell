@@ -6,18 +6,18 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/04 16:16:26 by jabenjam          #+#    #+#             */
-/*   Updated: 2020/08/04 17:51:44 by chgilber         ###   ########.fr       */
+/*   Updated: 2020/08/05 12:15:31 by chgilber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int get_dir()
+int	get_dir(void)
 {
-	char *path;
-	int len;
-	int i;
-	int a;
+	char	*path;
+	int		len;
+	int		i;
+	int		a;
 
 	path = NULL;
 	path = getcwd(path, 0);

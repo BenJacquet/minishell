@@ -6,13 +6,13 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/04 14:09:45 by chgilber          #+#    #+#             */
-/*   Updated: 2020/08/04 19:07:39 by chgilber         ###   ########.fr       */
+/*   Updated: 2020/08/05 12:12:22 by chgilber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int		check(char	*buff)
+int		check(char *buff)
 {
 	//	printf("%d,%s\n", ft_strlen(buff), buff);
 	if (ft_strlen(buff) == 4 && ft_strncmp(buff, "exit", 4) == 0)
@@ -28,6 +28,7 @@ int		check(char	*buff)
 	else
 		return (1);
 }
+
 int		main(int ac, char **av)
 {
 	int		i;
@@ -37,16 +38,16 @@ int		main(int ac, char **av)
 	i = 0;
 	get_dir();
 	get_next_line(0, &buff);
-	while(check(buff) == 1)
+	while (check(buff) == 1)
 	{
 		dir = ft_split(buff, ' ');
-		if(ft_strncmp(dir[0], "cd", 2) == 0)
+		if (ft_strncmp(dir[0], "cd", 2) == 0)
 			cd(dir);
 		else
 			system(buff);
 		get_dir();
 		free(buff);
-		get_next_line(0,&buff);
+		get_next_line(0, &buff);
 	}
 	free(buff);
 	return (0);
