@@ -6,7 +6,7 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/04 16:18:54 by jabenjam          #+#    #+#             */
-/*   Updated: 2020/08/04 17:59:39 by chgilber         ###   ########.fr       */
+/*   Updated: 2020/08/05 14:48:06 by jabenjam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,16 +22,15 @@
 #include "GNL/get_next_line.h"
 #include "libft/libft.h"
 
-/*
-**------OLD FUNCTIONS-------------------------------------------------------------
-*/
 
-int get_dir();
 
-/*
-**------NEW FUNCTIONS-------------------------------------------------------------
-*/
+int     get_dir();
 int		end(char	*buff);
 int		cd(char		**dir);
+char    *ft_getenv(char *cmd, char **env);
+int		check(char *buff);
+int		checkquote(char *buff);
+
+
 #endif
 
