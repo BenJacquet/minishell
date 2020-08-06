@@ -1,26 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstadd_back_bonus.c                             :+:      :+:    :+:   */
+/*   parse_cmd.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/10/15 13:33:15 by chgilber          #+#    #+#             */
-/*   Updated: 2020/08/06 16:25:57 by jabenjam         ###   ########.fr       */
+/*   Created: 2020/08/05 15:21:37 by jabenjam          #+#    #+#             */
+/*   Updated: 2020/08/05 15:28:10 by jabenjam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
-
-void	ft_lstadd_back(t_list **alst, t_list *new)
+/*void    parse_cmd(char *str)
 {
-	t_list		*begin;
 
-	if (!new)
-		return;
-	begin = ft_lstlast(*alst);
-	if (begin)
-		begin->next = new;
-	else
-		*alst = new;
-}
+}*/

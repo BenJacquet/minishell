@@ -6,23 +6,13 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/05 12:35:39 by jabenjam          #+#    #+#             */
-/*   Updated: 2020/08/05 16:59:36 by jabenjam         ###   ########.fr       */
+/*   Updated: 2020/08/06 15:51:26 by jabenjam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-/*
-** RETURN 0
-**
-*/
-/*int ft_add_var(char *var, char *env)
-{
-    ft_strncmp() if () return (1);
-    return (0);
-}*/
-
-char *ft_find_var(char *var, char **env)
+char   *ft_find_var(char *var, char **env)
 {
     int j;
 
@@ -31,40 +21,79 @@ char *ft_find_var(char *var, char **env)
     {
         if (ft_strcmp(var, env[j]))
         {
-            env = ft_strdup(var);
-            return (1);
+            env[j] = ft_strdup(var);
+            return (env[j]);
         }
     }
+    return (NULL);
 }
 
-int ft_envlen(char **env)
+int ft_tablen(char **tab)
 {
     int len;
 
     len = 0;
-    while (env[len] != NULL)
+    while (tab[len] != NULL)
         len++;
     return (len);
 }
 
-char **ft_sort_tab(char **env)
+void free_tab(char **tab)
+{
+    int i;
+
+    i = 0;
+    if (tab)
+    {
+        while (tab[i])
+            free(tab[i++]);
+    }
+}
+
+char **tab_dup(char **tab)
+{
+    int i;
+    char **new;
+
+    i = 0;
+    new = NULL;
+    if (!(new = malloc(sizeof(char *) * ft_tablen(tab))))
+        return (NULL);
+    while (tab[i])
+    {
+        new[i] = ft_strdup(tab[i]);
+        i++;
+    }
+    new[i] = 0;
+    return (new);
+}
+
+void ft_sort_tab(char **env)
 {
     int i;
     int j;
-    char **sorted;
+    char **new;
+    char *tmp;
 
     i = 0;
     j = 0;
-    if (!(sorted = malloc(sizeof(char*) * ft_envlen(env))))
-        return (NULL);
-    while(env[i])
+    new = tab_dup(env);
+    while (new[i])
     {
-        if (env[i + 1] && j == i)
+        if (new[i + 1] && j == i)
             j++;
-        if (ft_strcmp(env[i], env[j]) > 0)
-            sorted[i] = env[j];
+        if (ft_strcmp(new[i], new[j]) > 0)
+        {
+            tmp = new[i];
+            new[i] = new[j];
+            new[j] = tmp;
+            i = -1;
+            j = 0;
+        }
         i++;
     }
+    ft_putenv(new);
+    free(new);
 }
 
 void ft_putenv(char **env)
@@ -87,21 +116,20 @@ int ft_export(char *var, char **env)
 
     i = 0;
     j = 0;
-    len = ft_envlen(env);
+    len = ft_tablen(env);
     if (var == NULL)
     {
-        ft_putenv(ft_sort_tab(env));
+        ft_sort_tab(env);
         return (0);
     }
     while (var[i] != '\0')
     {
         if (var[i] == '=')
         {
-            while (env[j] != NULL/* && !ft_find_var(var, env[j], i)*/)
+            while (env[j] != NULL)
                 j++;
             env[j] = ft_strdup(var);
             env[len] = NULL;
-            printf("len = %d\n", len);
             break;
         }
         i++;

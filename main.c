@@ -6,13 +6,13 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/04 14:09:45 by chgilber          #+#    #+#             */
-/*   Updated: 2020/08/05 12:12:22 by chgilber         ###   ########.fr       */
+/*   Updated: 2020/08/06 15:52:04 by jabenjam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int		check(char *buff)
+int check(char *buff)
 {
 	//	printf("%d,%s\n", ft_strlen(buff), buff);
 	if (ft_strlen(buff) == 4 && ft_strncmp(buff, "exit", 4) == 0)
@@ -29,11 +29,11 @@ int		check(char *buff)
 		return (1);
 }
 
-int		main(int ac, char **av)
+int main(int ac, char **av, char **env)
 {
-	int		i;
-	char	**dir;
-	char	*buff;
+	int i;
+	char **dir;
+	char *buff;
 
 	i = 0;
 	get_dir();
@@ -43,8 +43,16 @@ int		main(int ac, char **av)
 		dir = ft_split(buff, ' ');
 		if (ft_strncmp(dir[0], "cd", 2) == 0)
 			cd(dir);
-		else
-			system(buff);
+		else if (ft_strncmp(buff, "export ", 7) == 0)
+			ft_export(buff + 7, env);
+		else if (ft_strncmp(buff, "export", 6) == 0)
+			ft_export(NULL, env);
+		else if (ft_strncmp(buff, "test", 4) == 0)
+			ft_tab_to_list(env);
+		else if (ft_strncmp(buff, "env", 3) == 0)
+			ft_putenv(env);
+		/*else
+			system(buff);*/
 		get_dir();
 		free(buff);
 		get_next_line(0, &buff);

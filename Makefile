@@ -3,16 +3,17 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: chgilber <marvin@42.fr>                    +#+  +:+       +#+         #
+#    By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/10/16 11:50:11 by chgilber          #+#    #+#              #
-#    Updated: 2020/08/04 19:06:20 by chgilber         ###   ########.fr        #
+#    Updated: 2020/08/06 15:56:05 by jabenjam         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = Minishell
 
 SRCS =		get_dir.c end.c cd.c \
+			parse_env.c env_conversion.c\
 			GNL/get_next_line.c GNL/get_next_line_utils.c \
 			main.c
 SRCSLIB =	libft/ft_split.c libft/ft_strlen.c libft/ft_strncmp.c
@@ -64,6 +65,7 @@ bonus : $(NAME_BONUS)
 $(NAME) : $(OBJS)
 	@echo "$(_END)$(_GREEN) [OK]\t"
 	@make -C libft
+	@make bonus -C libft
 	@echo "$(_END)$(_GREEN)[Done]"
 	gcc $(CFLAGS) -L libft -lft -o $@ $(OBJS) $(LMINX)
 
