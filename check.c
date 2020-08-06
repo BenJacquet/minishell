@@ -6,7 +6,7 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/05 14:40:00 by chgilber          #+#    #+#             */
-/*   Updated: 2020/08/05 14:48:18 by jabenjam         ###   ########.fr       */
+/*   Updated: 2020/08/05 16:58:00 by chgilber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,23 +32,25 @@ int		checkquote(char *buff)
 {
 	int	i;
 	int	a;
+	int u;
 
 	i = 0;
-	while (buff[i] == ' ')
-		i++;
-	while (buff[i] != ' ')
-		i++;
-	while (buff[i] == ' ')
-		i++;
-	while(buff[i] != 34 && buff[i] != 39)
-		i++;
-	a = i + 1;
-	while(buff[a] != 34 && buff[a] != 39)
-		a++;
-//	if
-
-//	printf("[%c]\n", buff[i]);
-	return (0);
+	a = 0;
+	u = 0;
+	while (buff[i])
+	{
+		while (buff[i] && (buff[i] != 34 && buff[i] != 39))
+			i++;
+		if (buff[i] && buff[i] == 34)
+			a++;
+		if (buff[i] && buff[i] == 39)
+			u++;
+		if (buff[i] && (buff[i] == 34 || buff[i] == 39))
+			i++;
+	}
+	if (a % 2 != 0 || u % 2 != 0)
+		write(1, "No multilines\n", 14);
+	return ((a % 2) + (u % 2));
 }
 
 
