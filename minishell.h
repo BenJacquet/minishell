@@ -6,7 +6,7 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/04 16:18:54 by jabenjam          #+#    #+#             */
-/*   Updated: 2020/08/06 16:45:19 by jabenjam         ###   ########.fr       */
+/*   Updated: 2020/08/06 18:48:41 by chgilber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,5 +47,6 @@ t_env *new_variable(char *var);
 int ft_varlen(char *var, int mode);
 int check(char *buff);
 int checkquote(char *buff);
+int		freelance(char **dir, char *buff);
 
 #endif

@@ -6,7 +6,7 @@
 #    By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/10/16 11:50:11 by chgilber          #+#    #+#              #
-#    Updated: 2020/08/06 14:55:49 by jabenjam         ###   ########.fr        #
+#    Updated: 2020/08/06 18:59:13 by chgilber         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -67,24 +67,21 @@ _IGREY = $'\033[47m
 all : $(NAME)
 
 $(NAME) : $(OBJS_LIBFT)
-	@echo "$(_END)$(_GREEN) [OK]\t"
 	@ar rc $(NAME) $(OBJS_LIBFT)
 	@ranlib $(NAME)
-	@echo "$(_END)$(_GREEN)[Done]"
+	@echo "$(_END)$(_GREEN)[Libft-Done]"
 
 %.o : %.c $(INCLUDES)
-	@echo "$(_END)$(_GREEN) [OK]\t"
+	@echo "$(_END)$(_PURPLE) [OK]\t"
 	@$(CC) $(CFLAGS) -I $(INCLUDES) -o ${<:.c=.o} -c $<
 re : 
 	@make fclean 
 	@make all
 	
 bonus : $(OBJS_LIBFT) $(OBJS_BONUS_LIBFT)
-	@echo "$(_END)$(_YELLOW) [COMPILE WITH BONUS FUNCTION]\t$(_UNDER)$(_GREEN)"
 	@ar rc $(NAME) $(OBJS_LIBFT) $(OBJS_BONUS_LIBFT)
 	@ranlib $(NAME)
-	@echo "$(_UNDER)$(_GREEN) [OK]"
-	@echo "$(_END)$(_YELLOW)[Done]"
+	@echo "$(_END)$(_PURPLE)[Libft-Done]"
 
 
 fclean : clean

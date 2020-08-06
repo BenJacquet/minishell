@@ -6,13 +6,13 @@
 #    By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/10/16 11:50:11 by chgilber          #+#    #+#              #
-#    Updated: 2020/08/06 15:56:05 by jabenjam         ###   ########.fr        #
+#    Updated: 2020/08/06 19:01:56 by chgilber         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = Minishell
 
-SRCS =		get_dir.c end.c cd.c \
+SRCS =		get_dir.c end.c cd.c check.c freelance.c\
 			parse_env.c env_conversion.c\
 			GNL/get_next_line.c GNL/get_next_line_utils.c \
 			main.c
@@ -64,14 +64,13 @@ bonus : $(NAME_BONUS)
 
 $(NAME) : $(OBJS)
 	@echo "$(_END)$(_GREEN) [OK]\t"
-	@make -C libft
 	@make bonus -C libft
-	@echo "$(_END)$(_GREEN)[Done]"
-	gcc $(CFLAGS) -L libft -lft -o $@ $(OBJS) $(LMINX)
+	@gcc $(CFLAGS) -L libft -lft -o $@ $(OBJS) $(LMINX)
+	@echo "$(_END)$(_GREEN)[Minishell-Done]"
 
 %.o : %.c
 	@echo "$(_END)$(_GREEN) [OK]\t"
-	$(CC) $(CFLAGS) -I $(INCLUDES) -o ${<:.c=.o} -c $<
+	@$(CC) $(CFLAGS) -I $(INCLUDES) -o ${<:.c=.o} -c $<
 
 re : 
 	@make fclean

@@ -6,7 +6,7 @@
 /*   By: chgilber <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/04 17:17:15 by chgilber          #+#    #+#             */
-/*   Updated: 2020/08/05 17:37:02 by chgilber         ###   ########.fr       */
+/*   Updated: 2020/08/06 19:02:11 by chgilber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ int		cdnoarg(int i)
 	}
 	//	printf("(%s)%d{%s}\n" , path,i, ft_substr(path, 0, i - 1));
 	i = chdir(ft_substr(path, 0, i - 1));
+//	i = chdir("$HOME");
 	return (i);
 }
 
@@ -36,6 +37,7 @@ int		cd(char **dir)
 {
 	int		i;
 
+	i = 0;
 	if (dir[1])
 	{
 		i = chdir((dir[1]));
