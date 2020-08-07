@@ -6,29 +6,27 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/05 12:35:39 by jabenjam          #+#    #+#             */
-/*   Updated: 2020/08/07 14:33:53 by jabenjam         ###   ########.fr       */
+/*   Updated: 2020/08/07 17:02:14 by jabenjam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-/*int ft_find_name(char *var, t_env *env)
+int ft_find_name(char *var, t_env *env)
 {
     int i;
 
     i = 0;
-    while (var[i] != '=')
+    while (var[i] != '=' || ft_strncmp(var + i, "+=", 2))
         i++;
-    while (env[])
+    while (env)
     {
-        if (ft_strcmp(var, env[i]))
-        {
-            env[j] = ft_strdup(var);
-            return (env[j]);
-        }
+        if (ft_strncmp(var, env->name, i))
+            return (1);
+        env = env->next;
     }
     return (0);
-}*/
+}
 
 int ft_check_name(char *var) // verifier si le nom ne comprend pas de chars interdits, osef de la value
 {
@@ -41,7 +39,8 @@ int ft_check_name(char *var) // verifier si le nom ne comprend pas de chars inte
             return (ft_put_error("not a valid identifier", var, 1));
         while (ft_isalnum(var[i]) || var[i] == '_')
             i++;
-        if (var[i] != '=')
+        if (var[i] != '=' || ((ft_strncmp(var + i, "+=", 2) &&
+            var[i + 1] != '\0' && var[i + 1] != '=')))
             return (ft_put_error("not a valid identifier", var, 1));
     }
     return (0);
@@ -143,19 +142,8 @@ int ft_export_core(char *var, char **env)
     if (ft_check_name(var))
         return (-1);
     lst = ft_tab_to_list(env);
-/*    if (!(ft_find_name(lst, )))*/
-    /*while (var[i] != '\0')
-    {
-        if (var[i] == '=')
-        {
-            while (env[j] != NULL)
-                j++;
-            env[j] = ft_strdup(var);
-            env[len] = NULL;
-            break;
-        }
-        i++;
-    }*/
+    if (!(ft_find_name(var, lst)))
+        return (0);
     return (0);
 }
 
