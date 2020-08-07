@@ -6,13 +6,30 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/04 14:09:45 by chgilber          #+#    #+#             */
-/*   Updated: 2020/08/06 19:03:54 by chgilber         ###   ########.fr       */
+/*   Updated: 2020/08/07 14:32:21 by jabenjam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	main(int ac, char **av, char **env)
+int check(char *buff)
+{
+	//	printf("%d,%s\n", ft_strlen(buff), buff);
+	if (ft_strlen(buff) == 4 && ft_strncmp(buff, "exit", 4) == 0)
+	{
+		write(1, "exit\n", 5);
+		return (0);
+	}
+	if (ft_strlen(buff) > 4 && ft_strncmp(buff, "exit ", 5) == 0)
+	{
+		write(1, "exit\n", 5);
+		return (end(buff));
+	}
+	else
+		return (1);
+}
+
+int main(int ac, char **av, char **env)
 {
 	int i;
 	char **dir;
@@ -20,28 +37,26 @@ int	main(int ac, char **av, char **env)
 
 	i = 0;
 	get_dir();
-	(void)ac;
-	(void)av;
-	i = get_next_line(0, &buff);
-	while (check(buff) == 1 && i > 0)
+	get_next_line(0, &buff);
+	while (check(buff) == 1)
 	{
 		dir = ft_split(buff, ' ');
-		if (ft_strlen(buff) > 0 && ft_strncmp(dir[0], "cd", 2) == 0)
+		if (ft_strncmp(dir[0], "cd", 2) == 0)
 			cd(dir);
 		else if (ft_strncmp(buff, "export ", 7) == 0)
-			ft_export(buff + 7, env);
+			ft_export_core(buff + 7, env);
 		else if (ft_strncmp(buff, "export", 6) == 0)
-			ft_export(NULL, env);
-		else if (ft_strncmp(dir[0], "test", 4) == 0)
-			ft_tab_to_list(env);
-		else if (ft_strncmp(dir[0], "env", 3) == 0)
+			ft_export_core(NULL, env);
+		else if (ft_strncmp(buff, "test", 4) == 0)
+			ft_check_name(buff + 5);
+		else if (ft_strncmp(buff, "env", 3) == 0)
 			ft_putenv(env);
-		else
-			system(buff);
+		/*else
+			system(buff);*/
 		get_dir();
 		free(buff);
-		i = get_next_line(0, &buff);
+		get_next_line(0, &buff);
 	}
-	freelance(dir, buff);
+	free(buff);
 	return (0);
 }

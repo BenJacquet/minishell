@@ -6,26 +6,45 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/05 12:35:39 by jabenjam          #+#    #+#             */
-/*   Updated: 2020/08/06 15:51:26 by jabenjam         ###   ########.fr       */
+/*   Updated: 2020/08/07 14:33:53 by jabenjam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char   *ft_find_var(char *var, char **env)
+/*int ft_find_name(char *var, t_env *env)
 {
-    int j;
+    int i;
 
-    j = 0;
-    while (env[j] != NULL)
+    i = 0;
+    while (var[i] != '=')
+        i++;
+    while (env[])
     {
-        if (ft_strcmp(var, env[j]))
+        if (ft_strcmp(var, env[i]))
         {
             env[j] = ft_strdup(var);
             return (env[j]);
         }
     }
-    return (NULL);
+    return (0);
+}*/
+
+int ft_check_name(char *var) // verifier si le nom ne comprend pas de chars interdits, osef de la value
+{
+    int i;
+
+    i = 0;
+    if (var[i] != '\0')
+    {
+        if (ft_isdigit(var[i]) || var[i] == '=')
+            return (ft_put_error("not a valid identifier", var, 1));
+        while (ft_isalnum(var[i]) || var[i] == '_')
+            i++;
+        if (var[i] != '=')
+            return (ft_put_error("not a valid identifier", var, 1));
+    }
+    return (0);
 }
 
 int ft_tablen(char **tab)
@@ -68,7 +87,19 @@ char **tab_dup(char **tab)
     return (new);
 }
 
-void ft_sort_tab(char **env)
+void ft_putenv(char **env)
+{
+    int i;
+
+    i = 0;
+    while (env[i] != NULL)
+    {
+        ft_putstr_fd(env[i++], 1);
+        write(1, "\n", 1);
+    }
+}
+
+int ft_export_null(char **env)
 {
     int i;
     int j;
@@ -94,35 +125,26 @@ void ft_sort_tab(char **env)
     }
     ft_putenv(new);
     free(new);
+    return (0);
 }
 
-void ft_putenv(char **env)
-{
-    int i;
-
-    i = 0;
-    while (env[i] != NULL)
-    {
-        ft_putstr_fd(env[i++], 1);
-        write(1, "\n", 1);
-    }
-}
-
-int ft_export(char *var, char **env)
+int ft_export_core(char *var, char **env)
 {
     int i;
     int j;
     int len;
+    t_env *lst;
 
     i = 0;
     j = 0;
     len = ft_tablen(env);
     if (var == NULL)
-    {
-        ft_sort_tab(env);
-        return (0);
-    }
-    while (var[i] != '\0')
+        return (ft_export_null(env));
+    if (ft_check_name(var))
+        return (-1);
+    lst = ft_tab_to_list(env);
+/*    if (!(ft_find_name(lst, )))*/
+    /*while (var[i] != '\0')
     {
         if (var[i] == '=')
         {
@@ -133,7 +155,7 @@ int ft_export(char *var, char **env)
             break;
         }
         i++;
-    }
+    }*/
     return (0);
 }
 

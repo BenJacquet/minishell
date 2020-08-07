@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   end.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: chgilber <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/04 17:30:12 by chgilber          #+#    #+#             */
-/*   Updated: 2020/08/05 12:13:32 by chgilber         ###   ########.fr       */
+/*   Updated: 2020/08/07 14:36:11 by jabenjam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,4 +32,21 @@ int		end(char *buff)
 			return (atoi(arg[1]));
 	}
 	return (0);
+}
+
+/* A FAIRE : REMETTRE A LA LIGNE APRES AFFICHAGE
+** MODE = 0 : NE PAS AFFICHER VAR
+** MODE = 1 : AFFICHER VAR
+*/
+int	ft_put_error(char *error, char *var, int mode)
+{
+	if (mode == 1)
+	{
+		ft_putstr_fd(" \'", 2);
+		ft_putstr_fd(var, 2);
+		ft_putstr_fd("\':", 2);
+	}
+	ft_putstr_fd(" ", 2);
+	ft_putstr_fd(error, 2);
+	return (-1);
 }
