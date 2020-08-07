@@ -6,13 +6,13 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/04 14:09:45 by chgilber          #+#    #+#             */
-/*   Updated: 2020/08/07 14:43:15 by jabenjam         ###   ########.fr       */
+/*   Updated: 2020/08/07 14:47:34 by jabenjam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int main(int ac, char **av, char **env)
+int	main(int ac, char **av, char **env)
 {
 	int i;
 	char **dir;
@@ -20,11 +20,13 @@ int main(int ac, char **av, char **env)
 
 	i = 0;
 	get_dir();
-	get_next_line(0, &buff);
-	while (check(buff) == 1)
+	(void)ac;
+	(void)av;
+	i = get_next_line(0, &buff);
+	while (check(buff) == 1 && i > 0)
 	{
 		dir = ft_split(buff, ' ');
-		if (ft_strncmp(dir[0], "cd", 2) == 0)
+		if (ft_strlen(buff) > 0 && ft_strncmp(dir[0], "cd", 2) == 0)
 			cd(dir);
 		else if (ft_strncmp(buff, "export ", 7) == 0)
 			ft_export_core(buff + 7, env);
@@ -34,12 +36,16 @@ int main(int ac, char **av, char **env)
 			ft_check_name(buff + 5);
 		else if (ft_strncmp(buff, "env", 3) == 0)
 			ft_putenv(env);
-		/*else
-			system(buff);*/
+		else if (ft_strlen(dir) && ft_strncmp(dir[0], "test", 4) == 0)
+			ft_tab_to_list(env);
+		else if (ft_strlen(dir) && ft_strncmp(dir[0], "env", 3) == 0)
+			ft_putenv(env);
+		else
+			system(buff);
 		get_dir();
 		free(buff);
-		get_next_line(0, &buff);
+		i = get_next_line(0, &buff);
 	}
-	free(buff);
+	freelance(dir, buff);
 	return (0);
 }
