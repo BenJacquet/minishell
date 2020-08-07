@@ -6,7 +6,7 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/04 14:09:45 by chgilber          #+#    #+#             */
-/*   Updated: 2020/08/07 14:47:34 by jabenjam         ###   ########.fr       */
+/*   Updated: 2020/08/07 14:50:28 by chgilber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,9 +36,9 @@ int	main(int ac, char **av, char **env)
 			ft_check_name(buff + 5);
 		else if (ft_strncmp(buff, "env", 3) == 0)
 			ft_putenv(env);
-		else if (ft_strlen(dir) && ft_strncmp(dir[0], "test", 4) == 0)
+		else if (ft_strlen(buff) > 0 && ft_strncmp(dir[0], "test", 4) == 0)
 			ft_tab_to_list(env);
-		else if (ft_strlen(dir) && ft_strncmp(dir[0], "env", 3) == 0)
+		else if (ft_strlen(buff) > 0 && ft_strncmp(dir[0], "env", 3) == 0)
 			ft_putenv(env);
 		else
 			system(buff);
