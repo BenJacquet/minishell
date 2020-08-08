@@ -6,7 +6,7 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/06 14:31:34 by jabenjam          #+#    #+#             */
-/*   Updated: 2020/08/08 13:51:27 by jabenjam         ###   ########.fr       */
+/*   Updated: 2020/08/08 14:27:07 by jabenjam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int ft_varlen(char *var, int mode)
 
     i = 0;
     j = 0;
-    while (var[i] != '\0' && var[i] != '=')
+    while (var[i] != '\0' && var[i] != '=' && var[i] != '+')
         i++;
     if (mode == 0)
         return (i);

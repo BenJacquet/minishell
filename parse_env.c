@@ -6,7 +6,7 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/05 12:35:39 by jabenjam          #+#    #+#             */
-/*   Updated: 2020/08/08 14:22:51 by jabenjam         ###   ########.fr       */
+/*   Updated: 2020/08/08 14:28:38 by jabenjam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int ft_export_edit(char *var, t_env *env, int op)
         else if (op == 2)
         {
             len = ft_strlen(var) + ft_strlen(env->value);
-            new = ft_strjoin(env->name, var);
+            new = ft_strjoin(env->value, var);
             free(env->value);
             env->value = new;
             printf("env->value=%s\n", env->value);
@@ -53,7 +53,7 @@ int ft_find_name(char *var, t_env *env, int op)
     i = ft_varlen(var, 0);
     if (!(name = malloc(sizeof(char) * i + 1)))
         return (-1);
-    ft_strlcpy(name, var, i + op - 1);
+    ft_strlcpy(name, var, i);
     printf("name=%s\n", name);
     i++;
     while (env)
