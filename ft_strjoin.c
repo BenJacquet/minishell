@@ -6,9 +6,11 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/08 15:53:10 by jabenjam          #+#    #+#             */
-/*   Updated: 2020/08/04 15:23:04 by jabenjam         ###   ########.fr       */
+/*   Updated: 2020/08/08 13:52:17 by jabenjam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include "minishell.h"
 
 char	*ft_strjoin(char const *s1, char const *s2)
 {

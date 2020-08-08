@@ -6,29 +6,77 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/05 12:35:39 by jabenjam          #+#    #+#             */
-/*   Updated: 2020/08/07 17:02:14 by jabenjam         ###   ########.fr       */
+/*   Updated: 2020/08/08 14:22:51 by jabenjam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int ft_find_name(char *var, t_env *env)
+int ft_export_edit(char *var, t_env *env, int op)
 {
-    int i;
+    int len;
+    char *new;
 
-    i = 0;
-    while (var[i] != '=' || ft_strncmp(var + i, "+=", 2))
-        i++;
-    while (env)
+    printf("var=%s\n", var);
+    if (var)
     {
-        if (ft_strncmp(var, env->name, i))
-            return (1);
-        env = env->next;
+        if (op == 1)
+        {
+            free(env->value);
+            if (!(env->value = malloc(sizeof(char) * ft_strlen(var))))
+                return (-1);
+            env->value = ft_strdup(var);
+            printf("env->value=%s\n", env->value);
+        }
+        else if (op == 2)
+        {
+            len = ft_strlen(var) + ft_strlen(env->value);
+            new = ft_strjoin(env->name, var);
+            free(env->value);
+            env->value = new;
+            printf("env->value=%s\n", env->value);
+        }
     }
     return (0);
 }
 
-int ft_check_name(char *var) // verifier si le nom ne comprend pas de chars interdits, osef de la value
+/*int ft_export_new(char *var, t_env)
+{
+    
+}*/
+
+int ft_find_name(char *var, t_env *env, int op)
+{
+    int i;
+    char *name;
+
+    i = ft_varlen(var, 0);
+    if (!(name = malloc(sizeof(char) * i + 1)))
+        return (-1);
+    ft_strlcpy(name, var, i + op - 1);
+    printf("name=%s\n", name);
+    i++;
+    while (env)
+    {
+        if (ft_strcmp(name, env->name) == 0)
+        {
+            free(name);
+            return (ft_export_edit(var + i, env, op));
+        }
+        env = env->next;
+    }
+    free(name);
+    return (0);
+    //return (ft_export_new(var, env));
+}
+
+/*
+** RETURN =-1 : ERREUR
+** RETURN = 0 : NO OP
+** RETURN = 1 : OP = "="
+** RETURN = 2 : OP = "+="
+*/
+int ft_check_name(char *var)
 {
     int i;
 
@@ -39,8 +87,13 @@ int ft_check_name(char *var) // verifier si le nom ne comprend pas de chars inte
             return (ft_put_error("not a valid identifier", var, 1));
         while (ft_isalnum(var[i]) || var[i] == '_')
             i++;
-        if (var[i] != '=' || ((ft_strncmp(var + i, "+=", 2) &&
-            var[i + 1] != '\0' && var[i + 1] != '=')))
+        if (var[i] == '\0')
+            return (0);
+        else if (var[i] == '=')
+            return (1);
+        else if (ft_strncmp(&var[i], "+=", 2) == 0)
+            return (2);
+        else
             return (ft_put_error("not a valid identifier", var, 1));
     }
     return (0);
@@ -91,14 +144,14 @@ void ft_putenv(char **env)
     int i;
 
     i = 0;
-    while (env[i] != NULL)
+    while (env[i] != 0)
     {
         ft_putstr_fd(env[i++], 1);
         write(1, "\n", 1);
     }
 }
 
-int ft_export_null(char **env)
+void ft_export_null(char **env)
 {
     int i;
     int j;
@@ -124,13 +177,13 @@ int ft_export_null(char **env)
     }
     ft_putenv(new);
     free(new);
-    return (0);
 }
 
-int ft_export_core(char *var, char **env)
+char **ft_export_core(char *var, char **env)
 {
     int i;
     int j;
+    int op;
     int len;
     t_env *lst;
 
@@ -138,13 +191,16 @@ int ft_export_core(char *var, char **env)
     j = 0;
     len = ft_tablen(env);
     if (var == NULL)
-        return (ft_export_null(env));
-    if (ft_check_name(var))
-        return (-1);
+        ft_export_null(env);
+    if ((op = ft_check_name(var)) < 1)
+        return (env);
     lst = ft_tab_to_list(env);
-    if (!(ft_find_name(var, lst)))
-        return (0);
-    return (0);
+    ft_find_name(var, lst, op);
+    env = ft_list_to_tab(lst);
+/*    for (int x=0;env[x];x++)
+        printf("env[%d]=%s\n", x, env[x]);*/
+    //AJOUTER FREE DE LA LISTE PRECEDENTE
+    return (env);
 }
 
 char *ft_getenv(char *var, char **env)

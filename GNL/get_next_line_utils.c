@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: chgilber <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/26 19:42:57 by chgilber          #+#    #+#             */
-/*   Updated: 2020/01/28 19:11:58 by chgilber         ###   ########.fr       */
+/*   Updated: 2020/08/08 14:10:22 by jabenjam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ char			*ft_strcpy(char *dest, char *src)
 	return (dest);
 }
 
-char			*ft_strjoin(char *s1, char *s2, size_t len)
+char			*ft_strjoinn(char *s1, char *s2, size_t len)
 {
 	char			*str;
 	char			*tmp;

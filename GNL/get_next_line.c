@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: chgilber <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/26 17:42:28 by chgilber          #+#    #+#             */
-/*   Updated: 2020/06/04 17:05:26 by chgilber         ###   ########.fr       */
+/*   Updated: 2020/08/08 13:46:47 by jabenjam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ int				get_next_line(int fd, char **line)
 	{
 		buff[r] = '\0';
 		tmp = st[fd];
-		st[fd] = ft_strjoin(tmp, buff, r);
+		st[fd] = ft_strjoinn(tmp, buff, r);
 		free(tmp);
 	}
 	tmp = ft_substr(st[fd], 0, ft_strlen(st[fd]));

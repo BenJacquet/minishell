@@ -6,7 +6,7 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/04 16:18:54 by jabenjam          #+#    #+#             */
-/*   Updated: 2020/08/07 16:52:18 by jabenjam         ###   ########.fr       */
+/*   Updated: 2020/08/08 14:11:33 by jabenjam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,17 +33,18 @@ int get_dir();
 int end(char *buff);
 int cd(char **dir);
 char *ft_getenv(char *var, char **env);
-int ft_export_core(char *var, char **env);
-int ft_export_null(char **env);
+void ft_export_null(char **env);
+char **ft_export_core(char *var, char **env);
 void ft_putenv(char **env);
 char **tab_dup(char **tab);
 void free_tab(char **tab);
 int ft_tablen(char **tab);
-int ft_find_name(char *var, t_env *env);
+int ft_find_name(char *var, t_env *env, int op);
 void store_variable(char *var, t_env *elem);
 t_env *ft_tab_to_list(char **tab);
 char **ft_list_to_tab(t_env *lst);
-t_env *new_variable(char *var);
+t_env *new_elem(char *var);
+char *ft_strjoin(char const *s1, char const *s2);
 int ft_varlen(char *var, int mode);
 int ft_put_error(char *error, char *var, int mode);
 int ft_check_name(char *var);

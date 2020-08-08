@@ -6,7 +6,7 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/04 17:30:12 by chgilber          #+#    #+#             */
-/*   Updated: 2020/08/07 14:36:11 by jabenjam         ###   ########.fr       */
+/*   Updated: 2020/08/08 13:19:57 by jabenjam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int		end(char *buff)
 	return (0);
 }
 
-/* A FAIRE : REMETTRE A LA LIGNE APRES AFFICHAGE
+/* A FAIRE : REMETTRE A LA LIGNE APRES AFFICHAGE ET NE PAS AFFICHER LE REPERTOIRE SUR ANCIENNE LIGNE
 ** MODE = 0 : NE PAS AFFICHER VAR
 ** MODE = 1 : AFFICHER VAR
 */
