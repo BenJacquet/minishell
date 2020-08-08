@@ -6,14 +6,15 @@
 #    By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/10/16 11:50:11 by chgilber          #+#    #+#              #
-#    Updated: 2020/08/08 13:52:31 by jabenjam         ###   ########.fr        #
+#    Updated: 2020/08/08 18:31:11 by jabenjam         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = Minishell
 
 SRCS =		get_dir.c end.c cd.c check.c freelance.c\
-			parse_env.c env_conversion.c ft_strjoin.c\
+			env_export.c env_unset.c env_display.c ft_strjoin.c\
+			env_conversion.c tab.c\
 			GNL/get_next_line.c GNL/get_next_line_utils.c \
 			main.c
 SRCSLIB =	libft/ft_split.c libft/ft_strlen.c libft/ft_strncmp.c
