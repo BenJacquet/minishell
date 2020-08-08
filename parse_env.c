@@ -6,7 +6,7 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/05 12:35:39 by jabenjam          #+#    #+#             */
-/*   Updated: 2020/08/08 14:28:38 by jabenjam         ###   ########.fr       */
+/*   Updated: 2020/08/08 14:31:51 by jabenjam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ int ft_find_name(char *var, t_env *env, int op)
         return (-1);
     ft_strlcpy(name, var, i);
     printf("name=%s\n", name);
-    i++;
+    i += op;
     while (env)
     {
         if (ft_strcmp(name, env->name) == 0)
@@ -66,8 +66,7 @@ int ft_find_name(char *var, t_env *env, int op)
         env = env->next;
     }
     free(name);
-    return (0);
-    //return (ft_export_new(var, env));
+    return (ft_export_new(var, env));
 }
 
 /*
