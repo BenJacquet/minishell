@@ -6,7 +6,7 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/04 16:18:54 by jabenjam          #+#    #+#             */
-/*   Updated: 2020/08/08 14:11:33 by jabenjam         ###   ########.fr       */
+/*   Updated: 2020/08/08 16:05:50 by chgilber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,5 +51,7 @@ int ft_check_name(char *var);
 int check(char *buff);
 int checkquote(char *buff);
 int freelance(char **dir, char *buff);
+int	pwd(char *buff);
+int	echo(char *buff, char **dir);
 
 #endif

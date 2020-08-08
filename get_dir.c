@@ -6,11 +6,23 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/04 16:16:26 by jabenjam          #+#    #+#             */
-/*   Updated: 2020/08/05 12:15:31 by chgilber         ###   ########.fr       */
+/*   Updated: 2020/08/08 16:07:41 by chgilber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int	pwd(char *buff)
+{
+	char	*path;
+
+	path = NULL;
+	(void)buff;
+	path = getcwd(path, 0);
+	write(1, path, strlen(path));
+	write(1, "\n", 1);
+	return (0);
+}
 
 int	get_dir(void)
 {

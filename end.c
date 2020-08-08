@@ -6,7 +6,7 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/04 17:30:12 by chgilber          #+#    #+#             */
-/*   Updated: 2020/08/08 13:19:57 by jabenjam         ###   ########.fr       */
+/*   Updated: 2020/08/08 16:09:24 by chgilber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ int		end(char *buff)
 ** MODE = 0 : NE PAS AFFICHER VAR
 ** MODE = 1 : AFFICHER VAR
 */
+
 int	ft_put_error(char *error, char *var, int mode)
 {
 	if (mode == 1)

@@ -6,7 +6,7 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/05 14:40:00 by chgilber          #+#    #+#             */
-/*   Updated: 2020/08/07 14:36:34 by jabenjam         ###   ########.fr       */
+/*   Updated: 2020/08/08 16:04:43 by chgilber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ int		check(char *buff)
 	else
 		return (1);
 }
+
 int		checkquote(char *buff)
 {
 	int	i;
@@ -53,4 +54,43 @@ int		checkquote(char *buff)
 	return ((a % 2) + (u % 2));
 }
 
+int		checksquote(char *buff)
+{
+	int	i;
+	int	a;
+
+	i = 0;
+	a = 0;
+	while (buff[i])
+	{
+		while (buff[i] && (buff[i] != 39))
+			i++;
+		if (buff[i] && buff[i] == 39)
+		{
+			a++;
+			i++;
+		}
+	}
+	return (a);
+}
+
+int		checkdquote(char *buff)
+{
+	int	i;
+	int	a;
+
+	i = 0;
+	a = 0;
+	while (buff[i])
+	{
+		while (buff[i] && (buff[i] != 34))
+			i++;
+		if (buff[i] && buff[i] == 34)
+		{
+			a++;
+			i++;
+		}
+	}
+	return (a);
+}
 
