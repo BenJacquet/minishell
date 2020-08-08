@@ -6,7 +6,7 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/06 14:31:34 by jabenjam          #+#    #+#             */
-/*   Updated: 2020/08/08 14:27:07 by jabenjam         ###   ########.fr       */
+/*   Updated: 2020/08/08 15:09:40 by jabenjam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ t_env *new_elem(char *var)
     elem = malloc(sizeof(t_env));
     if (!(elem->name = malloc(sizeof(char) * ft_varlen(var, 0) + 1)))
         return (NULL);
-    while (var[i] != '\0' && var[i] != '=')
+    while (var[i] != '\0' && var[i] != '=' && var[i] != '+')
     {
         elem->name[i] = var[i];
         i++;

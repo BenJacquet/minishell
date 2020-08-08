@@ -6,7 +6,7 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/05 12:35:39 by jabenjam          #+#    #+#             */
-/*   Updated: 2020/08/08 14:31:51 by jabenjam         ###   ########.fr       */
+/*   Updated: 2020/08/08 15:14:47 by jabenjam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,10 +40,24 @@ int ft_export_edit(char *var, t_env *env, int op)
     return (0);
 }
 
-/*int ft_export_new(char *var, t_env)
+int ft_export_new(char *var, t_env *env, int op)
 {
-    
-}*/
+    int i;
+
+    i = 0;
+    printf("var=%s\n", var);
+    while (var[i] != '=' && var[i] != '+')
+        i++;
+    printf("var[%d]=%c\n", i, var[i]);
+    if (!(env->name = malloc(sizeof(char) * i + 1)))
+        return (-1);
+    /*ft_strlcpy(env->name, var, i);
+    printf("env->name=%s\n", env->name);*/
+    /*i += op;
+    printf ("var[%d]=%c\n", i, var[i]);
+    env->value = ft_strdup(var + i);*/
+    return (0);
+}
 
 int ft_find_name(char *var, t_env *env, int op)
 {
@@ -66,7 +80,8 @@ int ft_find_name(char *var, t_env *env, int op)
         env = env->next;
     }
     free(name);
-    return (ft_export_new(var, env));
+    env = new_elem(var);
+    return (0);
 }
 
 /*
@@ -150,7 +165,7 @@ void ft_putenv(char **env)
     }
 }
 
-void ft_export_null(char **env)
+int ft_export_null(char **env)
 {
     int i;
     int j;
@@ -176,6 +191,7 @@ void ft_export_null(char **env)
     }
     ft_putenv(new);
     free(new);
+    return (0);
 }
 
 char **ft_export_core(char *var, char **env)
@@ -190,13 +206,13 @@ char **ft_export_core(char *var, char **env)
     j = 0;
     len = ft_tablen(env);
     if (var == NULL)
-        ft_export_null(env);
+        return (ft_export_null(env));
     if ((op = ft_check_name(var)) < 1)
         return (env);
     lst = ft_tab_to_list(env);
     ft_find_name(var, lst, op);
     env = ft_list_to_tab(lst);
-/*    for (int x=0;env[x];x++)
+    /*    for (int x=0;env[x];x++)
         printf("env[%d]=%s\n", x, env[x]);*/
     //AJOUTER FREE DE LA LISTE PRECEDENTE
     return (env);
