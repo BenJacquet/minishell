@@ -6,34 +6,29 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/05 12:35:39 by jabenjam          #+#    #+#             */
-/*   Updated: 2020/08/08 18:57:41 by jabenjam         ###   ########.fr       */
+/*   Updated: 2020/08/10 16:58:16 by jabenjam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int ft_unset_find_name(char *var, t_env *env, int op)
+int ft_unset_find_name(char *var, t_env *env)
 {
     int i;
-    char *name;
+    t_env *bridge;
 
-    i = ft_varlen(var, 0);
-    if (!(name = malloc(sizeof(char) * i + 1)))
-        return (-1);
-    ft_strlcpy(name, var, i);
-    i += op;
     while (env)
     {
-        if (ft_strcmp(name, env->name) == 0)
+        if (env->next)
+            bridge = env->next;
+        if (ft_strcmp(var, env->name) == 0)
         {
-            free(name);
-            return (ft_export_edit(var + i, env, op));
+            free(env->name);
+            free(env->value);
+            free(env);
         }
-        if (!env->next)
-            env->next = new_elem(var);
         env = env->next;
     }
-    free(name);
     return (0);
 }
 
@@ -44,15 +39,26 @@ int ft_unset_check_name(char *var)
     i = 0;
     if (var[i] != '\0')
     {
-        if (ft_isdigit(var[i]) || var[i] == '=')
+        if (ft_isdigit(var[i]) || var[i] == '=' || !ft_isalnum(var[i]) && var[i] != '_')
             return (ft_put_error("not a valid identifier", var, 1));
-
+        while (ft_isalnum(var[i]) || var[i] == '_')
+            i++;
+        if (var[i] != '\0')
             return (ft_put_error("not a valid identifier", var, 1));
     }
     return (0);
 }
 
-char **ft_unset(char *var, char **env)
+char **ft_unset_core(char *var, char **env)
 {
+    t_env *lst;
+
+    if (!var)
+        return (env);
+    if (!(ft_unset_check_name(var)))
+        return (env);
+    lst = ft_tab_to_list(env);
+    ft_unset_find_name(var, lst);
+    env = ft_list_to_tab(lst);
     return (env);
 }
