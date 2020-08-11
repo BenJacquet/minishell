@@ -6,7 +6,7 @@
 /*   By: chgilber <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/07 16:46:22 by chgilber          #+#    #+#             */
-/*   Updated: 2020/08/11 16:16:57 by chgilber         ###   ########.fr       */
+/*   Updated: 2020/08/11 18:30:42 by chgilber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,22 @@ int	join(char **dir, char *buff, int inc, char quote)
 	if (buff[i + 1] != ' ')
 		write(1, " ", 1);
 	return (i + 1);
+}
+
+int	printnoquote(char **dir)
+{
+	int	i;
+
+	i = 1;
+	if (dir[1])
+		i = (ft_strcmp(dir[1], "-n") == 0) ? 2 : 1;
+	while (dir[i])
+	{
+		write(1, dir[i], ft_strlen(dir[i]));
+		write(1, " ", 1);
+		i++;
+	}
+	return (i);
 }
 
 int	printifquote(char *buff, char **dir, int i)
@@ -60,23 +76,19 @@ int	echo(char *buff, char **dir)
 	int	stop;
 
 	i = ft_strlen(dir[0]) + 1;
+	stop = 1;
+	if (dir[1])
+		stop = (ft_strcmp(dir[1], "-n") == 0) ? 0 : 1;
 	if ((checksquote(buff + i) % 2 == 0 && checksquote(buff + i) > 1) ||
 			(checkdquote(buff + i) % 2 == 0 && checkdquote(buff + i) > 1))
 	{
-		freedir(dir);
+		freedir(&*dir);
 		dir = newdir(&*dir, buff + i);
 		printifquote(buff, &*dir, i);
 	}
 	else
-	{
-		i = 1;
-		while (dir[i])
-		{
-			write(1, dir[i], ft_strlen(dir[i]));
-			write(1, " ", 1);
-			i++;
-		}
-	}
-	write(1, "\n", 1);
+		printnoquote(dir);
+	if (stop == 1)
+		write(1, "\n", 1);
 	return (0);
 }
