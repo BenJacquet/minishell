@@ -6,21 +6,11 @@
 /*   By: chgilber <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/07 16:46:22 by chgilber          #+#    #+#             */
-/*   Updated: 2020/08/11 16:09:20 by chgilber         ###   ########.fr       */
+/*   Updated: 2020/08/11 16:16:57 by chgilber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-int	lenquote(char *buff, char quote)
-{
-	int	i;
-
-	i = 1;
-	while (buff[i] != quote)
-		i++;
-	return (i);
-}
 
 int	join(char **dir, char *buff, int inc, char quote)
 {
