@@ -1,28 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlcpy.c                                       :+:      :+:    :+:   */
+/*   ft_strncpy.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
+/*   By: chgilber <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/10/08 11:56:52 by chgilber          #+#    #+#             */
-/*   Updated: 2020/08/09 13:59:22 by chgilber         ###   ########.fr       */
+/*   Created: 2020/08/09 13:59:43 by chgilber          #+#    #+#             */
+/*   Updated: 2020/08/09 14:02:38 by chgilber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
+#include "minishell.h"
 
-size_t	ft_strlcpy(char *dest, const char *src, size_t dstsize)
+char	*ft_strncpy(char *dest, const char *src, int dstsize)
 {
-	size_t	a;
-	size_t	i;
+	int	a;
+	int	i;
 
 	a = 0;
 	i = 0;
 	if (!dest || !src)
-		return (0);
-	while (src[i])
-		i++;
+		return (NULL);
 	if (dstsize > 0)
 	{
 		while (a < dstsize && src[a])
@@ -32,5 +30,5 @@ size_t	ft_strlcpy(char *dest, const char *src, size_t dstsize)
 		}
 		dest[a] = '\0';
 	}
-	return (i);
+	return (dest);
 }

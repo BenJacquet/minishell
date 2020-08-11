@@ -6,17 +6,16 @@
 #    By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/10/16 11:50:11 by chgilber          #+#    #+#              #
-#    Updated: 2020/08/08 18:31:11 by jabenjam         ###   ########.fr        #
+#    Updated: 2020/08/09 17:53:13 by chgilber         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = Minishell
 
-SRCS =		get_dir.c end.c cd.c check.c freelance.c\
-			env_export.c env_unset.c env_display.c ft_strjoin.c\
-			env_conversion.c tab.c\
+SRCS =		get_dir.c end.c cd.c check.c freelance.c echo.c\
+			parse_env.c env_conversion.c ft_strjoin.c ft_strncpy.c\
 			GNL/get_next_line.c GNL/get_next_line_utils.c \
-			main.c
+			realloc.c main.c
 SRCSLIB =	libft/ft_split.c libft/ft_strlen.c libft/ft_strncmp.c
 
 INCLUDES = .
@@ -25,7 +24,7 @@ LIBFT = ./libft/libft.a
 
 CC = gcc
 
-CFLAGS = -Wall -Wextra
+CFLAGS = -Wall -Wextra  -g3 -fsanitize=address
 
 # Text format
 _DEF = $'\033[0m

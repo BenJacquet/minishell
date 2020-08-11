@@ -6,7 +6,7 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/04 14:09:45 by chgilber          #+#    #+#             */
-/*   Updated: 2020/08/08 16:21:24 by jabenjam         ###   ########.fr       */
+/*   Updated: 2020/08/08 16:18:44 by chgilber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,8 @@ int	main(int ac, char **av, char **env)
 			cd(dir);
 		else if (ft_strlen(buff) > 0 && ft_strcmp(dir[0], "pwd") == 0)
 			pwd(buff);
-/*		else if (ft_strlen(buff) > 0 && ft_strcmp(dir[0], "echo") == 0)
-			echo(buff, dir);*/
+		else if (ft_strlen(buff) > 0 && ft_strcmp(dir[0], "echo") == 0)
+			echo(buff, dir);
 		else if (ft_strncmp(buff, "export ", 7) == 0)
 			env = ft_export_core(buff + 7, env);
 		else if (ft_strncmp(buff, "export", 6) == 0)

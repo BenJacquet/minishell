@@ -6,7 +6,7 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/05 12:35:39 by jabenjam          #+#    #+#             */
-/*   Updated: 2020/08/08 15:14:47 by jabenjam         ###   ########.fr       */
+/*   Updated: 2020/08/09 17:53:02 by chgilber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -205,8 +205,8 @@ char **ft_export_core(char *var, char **env)
     i = 0;
     j = 0;
     len = ft_tablen(env);
-    if (var == NULL)
-        return (ft_export_null(env));
+    //if (var == NULL)
+       // return (ft_export_null(env));
     if ((op = ft_check_name(var)) < 1)
         return (env);
     lst = ft_tab_to_list(env);
