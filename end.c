@@ -6,7 +6,7 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/04 17:30:12 by chgilber          #+#    #+#             */
-/*   Updated: 2020/08/08 16:09:24 by chgilber         ###   ########.fr       */
+/*   Updated: 2020/08/14 15:10:09 by chgilber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,11 +25,17 @@ int		end(char *buff)
 			i++;
 		if (i == ft_strlen(arg[1]))
 		{
-			write(1, "bash: exit: ls: numeric argument required\n", 42);
+			write(1, "minishell: exit: ", 17);
+			write(1, arg[1], ft_strlen(arg[1]));
+			write(1, ": numeric argument required\n", 28);
+			freedir(arg);
 			return (255);
 		}
 		else
+		{
+			freedir(arg);
 			return (atoi(arg[1]));
+		}
 	}
 	return (0);
 }
