@@ -6,7 +6,7 @@
 /*   By: chgilber <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/04 17:17:15 by chgilber          #+#    #+#             */
-/*   Updated: 2020/08/06 19:02:11 by chgilber         ###   ########.fr       */
+/*   Updated: 2020/08/14 15:11:04 by chgilber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int		cd(char **dir)
 		i = chdir((dir[1]));
 		if (i == -1)
 		{
-			write(1, "bash: cd: ", 10);
+			write(1, "minishell: cd: ", 15);
 			write(1, dir[1], ft_strlen(dir[1]));
 			write(1, ": No such file or directory\n", 28);
 		}
