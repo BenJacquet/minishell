@@ -1,49 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   freelance.c                                        :+:      :+:    :+:   */
+/*   token.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: chgilber <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/08/06 18:44:32 by chgilber          #+#    #+#             */
-/*   Updated: 2020/08/11 18:29:54 by chgilber         ###   ########.fr       */
+/*   Created: 2020/08/12 15:52:23 by chgilber          #+#    #+#             */
+/*   Updated: 2020/08/14 12:47:32 by chgilber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int		freedir(char **dir)
+char	*dolar(char *buff, char **env)
 {
-	int	i;
+	int		i;
+	char	*dol;
+	char	*tmp;
 
 	i = 0;
-	if (dir)
-	{
-		while (dir[i])
-		{
-			free(dir[i]);
-			i++;
-		}
-		free(dir);
-	}
-	return (0);
-}
-
-int		freelance(char **dir, char *buff)
-{
-	int	i;
-
+	while (buff[i] != ' ')
+		i++;
+	tmp = malloc(sizeof(char) * i + 1);
 	i = 0;
-	if (dir)
+	while (buff[i] != ' ')
 	{
-		while (dir[i])
-		{
-			free(dir[i]);
-			i++;
-		}
-		free(dir);
+		tmp[i] = buff[i];
+		i++;
 	}
-	if(buff)
-		free(buff);
-	return (0);
+	dol = ft_getenv(tmp, env);
+	free(tmp);
+	return (dol);
 }

@@ -6,7 +6,7 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/04 14:09:45 by chgilber          #+#    #+#             */
-/*   Updated: 2020/08/08 16:18:44 by chgilber         ###   ########.fr       */
+/*   Updated: 2020/08/14 12:46:00 by chgilber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,45 +15,47 @@
 
 int	main(int ac, char **av, char **env)
 {
-	int		i;
-	char	**dir;
-	char	*buff;
+	t_all	all;
+//	int		i;
+//	char	**dir;
+//	char	*buff;
 
-	i = 0;
+	all.i = 0;
 	get_dir();
 	(void)ac;
 	(void)av;
-	i = get_next_line(0, &buff);
-	while (check(buff) == 1 && i > 0)
+	all.dir = NULL;
+	all.i= get_next_line(0, &all.buff);
+	while (check(all.buff) == 1 && all.i> 0)
 	{
-		dir = ft_split(buff, ' ');
-		if (ft_strlen(buff) > 0 && ft_strcmp(dir[0], "cd") == 0)
-			cd(dir);
-		else if (ft_strlen(buff) > 0 && ft_strcmp(dir[0], "pwd") == 0)
-			pwd(buff);
-		else if (ft_strlen(buff) > 0 && ft_strcmp(dir[0], "echo") == 0)
-			echo(buff, dir);
-		else if (ft_strncmp(buff, "export ", 7) == 0)
-			env = ft_export_core(buff + 7, env);
-		else if (ft_strncmp(buff, "export", 6) == 0)
+		all.dir = ft_split(all.buff, ' ');
+		if (ft_strlen(all.buff) > 0 && ft_strcmp(all.dir[0], "cd") == 0)
+			cd(all.dir);
+		else if (ft_strlen(all.buff) > 0 && ft_strcmp(all.dir[0], "pwd") == 0)
+			pwd(all.buff);
+		else if (ft_strlen(all.buff) > 0 && ft_strcmp(all.dir[0], "echo") == 0)
+			echo(all.buff, all.dir);
+		else if (ft_strncmp(all.buff, "export ", 7) == 0)
+			env = ft_export_core(all.buff + 7, env);
+		else if (ft_strncmp(all.buff, "export", 6) == 0)
 			env = ft_export_core(NULL, env);
-		else if (ft_strncmp(buff, "env", 3) == 0)
+		else if (ft_strncmp(all.buff, "env", 3) == 0)
 			ft_putenv(env);
-		else if (ft_strlen(buff) > 0 && ft_strcmp(dir[0], "test") == 0)
+		else if (ft_strlen(all.buff) > 0 && ft_strcmp(all.dir[0], "test") == 0)
 			ft_tab_to_list(env);
-		else if (ft_strlen(buff) > 0 && ft_strcmp(dir[0], "env") == 0)
+		else if (ft_strlen(all.buff) > 0 && ft_strcmp(all.dir[0], "env") == 0)
 			ft_putenv(env);
 		else
 		{
 			write(1, "minishell: ", 11);
-			write(1, buff, ft_strlen(buff));
-			write(1, ": command not found\n", 22);
-		//	system(buff);
+			write(1, all.buff, ft_strlen(all.buff));
+			write(1, ": command not found\n", 21);
+		//	system(all.buff);
 		}
 		get_dir();
-		free(buff);
-		i = get_next_line(0, &buff);
+		free(all.buff);
+		all.i= get_next_line(0, &all.buff);
 	}
-	freelance(dir, buff);
+//	freelance(&*all.dir, all.buff);
 	return (0);
 }
