@@ -6,7 +6,7 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/08 18:01:17 by jabenjam          #+#    #+#             */
-/*   Updated: 2020/08/08 18:50:17 by jabenjam         ###   ########.fr       */
+/*   Updated: 2020/08/14 15:08:55 by jabenjam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,20 +73,23 @@ int ft_export_check_name(char *var)
     int i;
 
     i = 0;
-    if (var[i] != '\0')
+    if (var)
     {
-        if (ft_isdigit(var[i]) || var[i] == '=')
-            return (ft_put_error("not a valid identifier", var, 1));
-        while (ft_isalnum(var[i]) || var[i] == '_')
-            i++;
-        if (var[i] == '\0')
-            return (0);
-        else if (var[i] == '=')
-            return (1);
-        else if (ft_strncmp(&var[i], "+=", 2) == 0)
-            return (2);
-        else
-            return (ft_put_error("not a valid identifier", var, 1));
+        if (var[i] != '\0')
+        {
+            if (ft_isdigit(var[i]) || var[i] == '=')
+                return (ft_put_error("not a valid identifier\n", var, 1));
+            while (ft_isalnum(var[i]) || var[i] == '_')
+                i++;
+            if (var[i] == '\0')
+                return (0);
+            else if (var[i] == '=')
+                return (1);
+            else if (ft_strncmp(&var[i], "+=", 2) == 0)
+                return (2);
+            else
+                return (ft_put_error("not a valid identifier\n", var, 1));
+        }
     }
     return (0);
 }
@@ -123,23 +126,28 @@ int ft_export_null(char **env)
 char **ft_export_core(char *var, char **env)
 {
     int i;
-    int j;
     int op;
     int len;
     t_env *lst;
+    char **vars;
 
     i = 0;
-    j = 0;
     len = ft_tablen(env);
     if (var == NULL)
     {
         ft_export_null(env);
         return (env);
     }
-    if ((op = ft_export_check_name(var)) < 1)
-        return (env);
+    vars = ft_split(var, ' ');
     lst = ft_tab_to_list(env);
-    ft_export_find_name(var, lst, op);
+    while (vars[i])
+    {
+        if ((op = ft_export_check_name(vars[i])) < 1)
+            i++;
+        ft_export_find_name(vars[i], lst, op);
+        i++;
+    }
+    free_tab(vars);
     return (ft_list_to_tab(lst));
     //AJOUTER FREE DE LA LISTE PRECEDENTE
 }

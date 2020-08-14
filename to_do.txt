@@ -1,0 +1,4 @@
+- export -> Mettre les quotes autours des values
+- export -> gerer le segfault pendant la copie avec un argument nul
+- export -> gerer les arguments entre quote (simple et double)
+- export -> 

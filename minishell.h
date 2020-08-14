@@ -6,7 +6,7 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/04 16:18:54 by jabenjam          #+#    #+#             */
-/*   Updated: 2020/08/14 12:28:33 by chgilber         ###   ########.fr       */
+/*   Updated: 2020/08/14 14:30:26 by jabenjam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ typedef struct	s_env
 	char	*value;
 	void	*next;
 }				t_env;
+
 typedef struct	s_all
 {
 	char	**env;
@@ -41,13 +42,15 @@ int				get_dir();
 int				end(char *buff);
 int				cd(char **dir);
 char			*ft_getenv(char *var, char **env);
-int				ft_export_null(char **env);
-char			**ft_export_core(char *var, char **env);
 void			ft_putenv(char **env);
+char			**ft_export_core(char *var, char **env);
+int				ft_export_null(char **env);
+int				ft_export_edit(char *var, t_env *env, int op);
+int				ft_export_check_name(char *var);
+int				ft_export_find_name(char *var, t_env *env, int op);
 char			**tab_dup(char **tab);
 void			free_tab(char **tab);
 int				ft_tablen(char **tab);
-int				ft_find_name(char *var, t_env *env, int op);
 void			store_variable(char *var, t_env *elem);
 t_env			*ft_tab_to_list(char **tab);
 char			**ft_list_to_tab(t_env *lst);

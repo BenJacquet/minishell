@@ -6,7 +6,7 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/06 14:31:34 by jabenjam          #+#    #+#             */
-/*   Updated: 2020/08/08 15:09:40 by jabenjam         ###   ########.fr       */
+/*   Updated: 2020/08/14 14:12:44 by jabenjam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,7 +122,7 @@ char **ft_list_to_tab(t_env *lst)
     t_env *current;
 
     i = 0;
-    if (!(tab = malloc(sizeof(char *) * ft_envsize(lst) + 1)))
+    if (!(tab = malloc(sizeof(char *) * (ft_envsize(lst) + 1))))
         return (NULL);
     current = lst;
     while (current != NULL)
