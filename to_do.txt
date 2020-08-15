@@ -1,4 +1,10 @@
 - export -> Mettre les quotes autours des values
 - export -> gerer le segfault pendant la copie avec un argument nul
 - export -> gerer les arguments entre quote (simple et double)
-- export -> 
+- export -> afficher les variables nulles declarees sans '=' avec "export"
+- export -> transformer le char **env en liste des le debut (avant d'appeler une fonction en rapport avec l'environnement)
+- export -> ajouter un flag "null", il servira a ignorer les variables nulles pendant l'affichage avec env, mais a tout print avec export
+- environnement -> ajouter a la structure une variable qui va etre set a zero et passer a 1 si on effectue une operation sur les variables pour etre sur de ne pas free le char **env de base a la fin
+- environnement -> adapter toutes les fonctions a l'utilisation de all
+- unset -> finir l'implementation du retrait
+-
