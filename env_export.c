@@ -6,7 +6,7 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/08 18:01:17 by jabenjam          #+#    #+#             */
-/*   Updated: 2020/08/14 15:08:55 by jabenjam         ###   ########.fr       */
+/*   Updated: 2020/08/15 14:30:37 by jabenjam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,7 @@ int ft_export_find_name(char *var, t_env *env, int op)
 ** RETURN = 1 : OP = "="
 ** RETURN = 2 : OP = "+="
 */
+
 int ft_export_check_name(char *var)
 {
     int i;
@@ -127,12 +128,10 @@ char **ft_export_core(char *var, char **env)
 {
     int i;
     int op;
-    int len;
     t_env *lst;
     char **vars;
 
     i = 0;
-    len = ft_tablen(env);
     if (var == NULL)
     {
         ft_export_null(env);
@@ -142,9 +141,8 @@ char **ft_export_core(char *var, char **env)
     lst = ft_tab_to_list(env);
     while (vars[i])
     {
-        if ((op = ft_export_check_name(vars[i])) < 1)
-            i++;
-        ft_export_find_name(vars[i], lst, op);
+        if ((op = ft_export_check_name(vars[i])) >= 1)
+            ft_export_find_name(vars[i], lst, op);
         i++;
     }
     free_tab(vars);

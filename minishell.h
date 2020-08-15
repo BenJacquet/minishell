@@ -6,7 +6,7 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/04 16:18:54 by jabenjam          #+#    #+#             */
-/*   Updated: 2020/08/14 14:30:26 by jabenjam         ###   ########.fr       */
+/*   Updated: 2020/08/15 14:30:42 by jabenjam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,16 +24,16 @@
 
 typedef struct	s_env
 {
-	char	*name;
-	char	*value;
-	void	*next;
+	char		*name;
+	char		*value;
+	void		*next;
 }				t_env;
 
 typedef struct	s_all
 {
-	char	**env;
-	char	*buff;
-	char	**dir;
+	t_env		*env;
+	char		*buff;
+	char		**dir;
 	int			i;
 	int			j;
 }				t_all;
@@ -48,6 +48,9 @@ int				ft_export_null(char **env);
 int				ft_export_edit(char *var, t_env *env, int op);
 int				ft_export_check_name(char *var);
 int				ft_export_find_name(char *var, t_env *env, int op);
+char			**ft_unset_core(char *var, char **env);
+int				ft_unset_check_name(char *var);
+int				ft_unset_find_name(char *var, t_env *current);
 char			**tab_dup(char **tab);
 void			free_tab(char **tab);
 int				ft_tablen(char **tab);

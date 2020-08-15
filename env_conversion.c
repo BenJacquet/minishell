@@ -6,7 +6,7 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/06 14:31:34 by jabenjam          #+#    #+#             */
-/*   Updated: 2020/08/14 15:14:34 by jabenjam         ###   ########.fr       */
+/*   Updated: 2020/08/15 12:52:03 by jabenjam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,14 +82,17 @@ t_env *ft_tab_to_list(char **tab)
     t_env *current;
 
     i = 0;
-    current = new_elem(tab[i++]);
-    head = current;
-    while (tab[i] != NULL)
+    head = NULL;
+    if (tab)
     {
-        current->next = new_elem(tab[i++]);
-        current = current->next;
+        current = new_elem(tab[i++]);
+        head = current;
+        while (tab[i] != NULL)
+        {
+            current->next = new_elem(tab[i++]);
+            current = current->next;
+        }
     }
-    ft_list_to_tab(head);
     return (head);
 }
 
