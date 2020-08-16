@@ -6,7 +6,7 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/04 16:18:54 by jabenjam          #+#    #+#             */
-/*   Updated: 2020/08/15 14:30:42 by jabenjam         ###   ########.fr       */
+/*   Updated: 2020/08/16 17:43:33 by chgilber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,14 @@ typedef struct	s_all
 {
 	t_env		*env;
 	char		*buff;
+	char		*oldbuff;
 	char		**dir;
+	char		**pdir;
 	int			i;
 	int			j;
+	int			data;
+	int			pipe;
+	int			countpipe;
 }				t_all;
 
 int				get_dir();
@@ -72,5 +77,7 @@ int				echo(char *buff, char **dir);
 int				checkdquote(char *buff);
 int				checksquote(char *buff);
 char			*ft_strncpy(char *dest, const char *src, int dstsize);
+int				pipecount(t_all all, char c);
+char			**ft_splitmini(char *s, char c);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/05 14:40:00 by chgilber          #+#    #+#             */
-/*   Updated: 2020/08/09 16:50:51 by chgilber         ###   ########.fr       */
+/*   Updated: 2020/08/14 15:03:52 by chgilber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,18 @@
 
 int		check(char *buff)
 {
+	int i;
+
+	i = 0;
+	while (buff[i] == ' ')
+		i++;
 	//	printf("%d,%s\n", ft_strlen(buff), buff);
-	if (ft_strlen(buff) == 4 && ft_strncmp(buff, "exit", 4) == 0)
+	if (ft_strlen(buff + i) == 4 && ft_strncmp(buff + i, "exit", 4) == 0)
 	{
 		write(1, "exit\n", 5);
 		return (0);
 	}
-	if (ft_strlen(buff) > 4 && ft_strncmp(buff, "exit ", 5) == 0)
+	if (ft_strlen(buff + i) > 4 && ft_strncmp(buff + i, "exit ", 5) == 0)
 	{
 		write(1, "exit\n", 5);
 		return (end(buff));
