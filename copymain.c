@@ -6,7 +6,7 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/04 14:09:45 by chgilber          #+#    #+#             */
-/*   Updated: 2020/08/16 19:06:45 by chgilber         ###   ########.fr       */
+/*   Updated: 2020/08/16 19:00:12 by chgilber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int	main(int ac, char **av, char **env)
 	{
 		all.dir = (all.countpipe > 0) ?
 			ft_split(all.pdir[all.data - all.countpipe], ' ') : ft_split(all.buff, ' ');
-				printf("dir {%s} et pdri{%s}, all.countpipe = %d\n", all.dir[1], all.pdir[all.data - all.countpipe], all.countpipe);
+		//		printf("dir {%s} et pdri{%s}, all.countpipe = %d\n", all.dir[1], all.pdir[all.data - all.countpipe], all.countpipe);
 		if (ft_strlen(all.buff) > 0 && ft_strcmp(all.dir[0], "cd") == 0)
 		{
 			cd(all.dir);

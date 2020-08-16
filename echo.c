@@ -6,7 +6,7 @@
 /*   By: chgilber <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/07 16:46:22 by chgilber          #+#    #+#             */
-/*   Updated: 2020/08/11 18:30:42 by chgilber         ###   ########.fr       */
+/*   Updated: 2020/08/16 19:09:51 by chgilber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,12 +79,15 @@ int	echo(char *buff, char **dir)
 	stop = 1;
 	if (dir[1])
 		stop = (ft_strcmp(dir[1], "-n") == 0) ? 0 : 1;
-	if ((checksquote(buff + i) % 2 == 0 && checksquote(buff + i) > 1) ||
-			(checkdquote(buff + i) % 2 == 0 && checkdquote(buff + i) > 1))
+	if (dir[1])
 	{
-		freedir(&*dir);
-		dir = newdir(&*dir, buff + i);
-		printifquote(buff, &*dir, i);
+		if ((checksquote(buff + i) % 2 == 0 && checksquote(buff + i) > 1) ||
+				(checkdquote(buff + i) % 2 == 0 && checkdquote(buff + i) > 1))
+		{
+			freedir(&*dir);
+			dir = newdir(&*dir, buff + i);
+			printifquote(buff, &*dir, i);
+		}
 	}
 	else
 		printnoquote(dir);
