@@ -6,7 +6,7 @@
 /*   By: chgilber <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/16 12:01:29 by chgilber          #+#    #+#             */
-/*   Updated: 2020/08/16 17:45:03 by chgilber         ###   ########.fr       */
+/*   Updated: 2020/08/16 18:53:52 by chgilber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ int	pipecount(t_all all, char c)
 			while (all.buff[i] != '\"')
 				i++;
 		}
-		if (all.buff[i] == 'c')
+		if (all.buff[i] == c)
 			all.pipe++;
 		i++;
 	}
