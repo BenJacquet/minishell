@@ -6,7 +6,7 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/04 16:18:54 by jabenjam          #+#    #+#             */
-/*   Updated: 2020/08/16 17:43:33 by chgilber         ###   ########.fr       */
+/*   Updated: 2020/08/16 18:09:00 by jabenjam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # include <string.h>
 # include <sys/types.h>
 # include <sys/uio.h>
+# include <dirent.h>
 # include "GNL/get_next_line.h"
 # include "libft/libft.h"
 
@@ -36,6 +37,7 @@ typedef struct	s_all
 	char		*oldbuff;
 	char		**dir;
 	char		**pdir;
+	char		*exec;
 	int			i;
 	int			j;
 	int			data;
@@ -46,6 +48,10 @@ typedef struct	s_all
 int				get_dir();
 int				end(char *buff);
 int				cd(char **dir);
+char			*get_path(t_all *all);
+char			*find_exec(t_all *all, DIR *dir, char *path);
+char			*make_exec(t_all *all, char *path);
+int				run_exec(char *exec, char **args, char **envp);
 char			*ft_getenv(char *var, char **env);
 void			ft_putenv(char **env);
 char			**ft_export_core(char *var, char **env);
