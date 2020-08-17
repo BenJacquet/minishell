@@ -6,7 +6,7 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/06 14:31:34 by jabenjam          #+#    #+#             */
-/*   Updated: 2020/08/15 12:52:03 by jabenjam         ###   ########.fr       */
+/*   Updated: 2020/08/17 12:39:44 by jabenjam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,19 +32,19 @@ int ft_varlen(char *var, int mode)
     return (j);
 }
 
-int	ft_envsize(t_env *lst)
+int ft_envsize(t_env *lst)
 {
-	int	i;
+    int i;
 
-	if (!lst)
-		return (0);
-	i = 1;
-	while (lst->next != NULL)
-	{
-		lst = lst->next;
-		i++;
-	}
-	return (i);
+    if (!lst)
+        return (0);
+    i = 0;
+    while (lst != NULL)
+    {
+        lst = lst->next;
+        i++;
+    }
+    return (i);
 }
 
 t_env *new_elem(char *var)
@@ -133,6 +133,6 @@ char **ft_list_to_tab(t_env *lst)
         tab[i++] = ft_data_to_string(current);
         current = current->next;
     }
-    tab[i] = 0;
+    tab[i] = NULL;
     return (tab);
 }
