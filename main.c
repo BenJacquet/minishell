@@ -6,9 +6,10 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/04 14:09:45 by chgilber          #+#    #+#             */
-/*   Updated: 2020/08/16 19:06:45 by chgilber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include "minishell.h"
 
 #include "minishell.h"
 
@@ -23,6 +24,7 @@ int	main(int ac, char **av, char **env)
 	(void)av;
 	all.dir = NULL;
 	all.i = get_next_line(0, &all.buff);
+	all.env = ft_tab_to_list(env);
 	all.dir = ft_splitmini(all.buff, ';');
 	all.countpipe = pipecount(all, ';') + 1;
 	all.data = all.countpipe;
@@ -33,6 +35,7 @@ int	main(int ac, char **av, char **env)
 		all.dir = (all.countpipe > 0) ?
 			ft_split(all.pdir[all.data - all.countpipe], ' ') : ft_split(all.buff, ' ');
 				printf("dir {%s} et pdri{%s}, all.countpipe = %d\n", all.dir[1], all.pdir[all.data - all.countpipe], all.countpipe);
+				//printf("dir {%s} et pdri{%s}, all.countpipe = %d\n", all.dir[1], all.pdir[all.data - all.countpipe], all.countpipe);
 		if (ft_strlen(all.buff) > 0 && ft_strcmp(all.dir[0], "cd") == 0)
 		{
 			cd(all.dir);
@@ -43,11 +46,11 @@ int	main(int ac, char **av, char **env)
 			pwd(all.buff);
 			all.countpipe--;
 		}
-		else if (ft_strlen(all.buff) > 0 && ft_strcmp(all.dir[0], "echo") == 0)
+		/*else if (ft_strlen(all.buff) > 0 && ft_strcmp(all.dir[0], "echo") == 0)
 		{
 			echo(all.pdir[all.data - all.countpipe], all.dir);
 			all.countpipe--;
-		}
+		}*/
 		else if (ft_strncmp(all.buff, "export ", 7) == 0)
 		{
 			env = ft_export_core(all.buff + 7, env);
@@ -66,6 +69,12 @@ int	main(int ac, char **av, char **env)
 		else if (ft_strlen(all.buff) > 0 && ft_strcmp(all.dir[0], "env") == 0)
 		{
 			ft_putenv(env);
+			all.countpipe--;
+		}
+		else if ((all.exec = get_path(&all)) != NULL)
+		{
+			printf("exec=%s\n", all.exec);
+			run_exec(all.exec, all.dir, env);
 			all.countpipe--;
 		}
 		else
