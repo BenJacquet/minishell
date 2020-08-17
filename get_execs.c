@@ -6,7 +6,7 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/15 15:23:06 by jabenjam          #+#    #+#             */
-/*   Updated: 2020/08/17 14:35:53 by jabenjam         ###   ########.fr       */
+/*   Updated: 2020/08/17 16:02:38 by jabenjam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,8 @@ int run_exec(char *exec, char **args, char **envp)
     pid_t child_pid;
     if ((child_pid = fork()) == 0)
     {
-        printf("pid=%d\n", getpid());
+        printf("parent pid=%d\n", getppid());
+        printf("child pid=%d\n", getpid());
         execve(exec, args, envp);
     }
     else
