@@ -6,7 +6,7 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/15 15:23:06 by jabenjam          #+#    #+#             */
-/*   Updated: 2020/08/17 12:30:49 by jabenjam         ###   ########.fr       */
+/*   Updated: 2020/08/17 14:35:53 by jabenjam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,16 +76,18 @@ char *get_path(t_all *all)
         }
     }
     free_tab(path);
-    printf("exec=%s\n", exec);
     return (exec);
 }
 
 int run_exec(char *exec, char **args, char **envp)
 {
-    //int pid;
-    for (int i=0; args[i]; i++)
-        printf("args[%d]=%s\n", i, args[i]);
-    //pid = fork();
-    execve(exec, args, envp);
+    pid_t child_pid;
+    if ((child_pid = fork()) == 0)
+    {
+        printf("pid=%d\n", getpid());
+        execve(exec, args, envp);
+    }
+    else
+        waitpid(child_pid, 0, 0);
     return (1);
 }
