@@ -6,7 +6,7 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/15 15:23:06 by jabenjam          #+#    #+#             */
-/*   Updated: 2020/08/17 19:02:18 by jabenjam         ###   ########.fr       */
+/*   Updated: 2020/08/18 17:46:18 by jabenjam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ char *find_exec(t_all *all, DIR *dir, char *path)
     {
         while ((sd = readdir(dir)) != NULL)
         {
+            printf("all->dir[]=%s\n", all->dir[all->i - 1]);
             if (ft_strcmp(all->dir[all->i - 1], sd->d_name) == 0)
             {
                 closedir(dir);
@@ -47,6 +48,48 @@ char *find_exec(t_all *all, DIR *dir, char *path)
     return (NULL);
 }
 
+char *go_to_parent(char *str)
+{
+    int i;
+
+    i = 0;
+    if (str)
+    {
+        while (str[i])
+        {
+            
+        }
+    }
+}
+
+char *is_exec(t_all *all)
+{
+    char *path;
+
+    path = NULL;
+    getcwd(path, 0);
+    if (all->dir)
+    {
+        if (ft_strncmp(all->dir[0], "./", 2) == 0)
+        {
+            printf("\n./\n");
+            printf("path=%s\n", path);
+            return (path);
+        }
+        else if (ft_strncmp(all->dir[0], "../", 3) == 0)
+        {
+            printf("\n../\n");
+            return (path);
+        }
+        else
+        {
+            printf("\nbad\n");
+            return (path);
+        }
+    }
+    return (path);
+}
+
 char *get_path(t_all *all)
 {
     int             i;
@@ -56,11 +99,18 @@ char *get_path(t_all *all)
 
     i = 0;
     exec = NULL;
-    path = ft_split(ft_getenv("PATH", ft_list_to_tab(all->env)), ':');
+    path = NULL;
+    if (all->dir[0] && all->dir[0][0] == '.')
+        path[i] = is_exec(all);
+    else
+        path = ft_split(ft_getenv("PATH", ft_list_to_tab(all->env)), ':');
     if (path)
     {
         while (path[i] != NULL)
-        i++;
+        {
+            printf("i=%d\n", i);
+            i++;
+        }
     }
     if (!(dir = malloc(sizeof(DIR) * (i + 1))))
         return (NULL);

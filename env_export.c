@@ -6,7 +6,7 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/08 18:01:17 by jabenjam          #+#    #+#             */
-/*   Updated: 2020/08/15 14:30:37 by jabenjam         ###   ########.fr       */
+/*   Updated: 2020/08/18 19:00:54 by jabenjam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,14 +24,14 @@ int ft_export_edit(char *var, t_env *env, int op)
             free(env->value);
             if (!(env->value = malloc(sizeof(char) * ft_strlen(var))))
                 return (-1);
-            env->value = ft_strdup(var);
+            env->value = ft_strtrim(ft_strdup(var), "\'\"");
         }
         else if (op == 2)
         {
             len = ft_strlen(var) + ft_strlen(env->value);
-            new = ft_strjoin(env->value, var);
+            new = ft_strjoin(env->value, ft_strtrim(var, "\'\""));
             free(env->value);
-            env->value = new;
+            env->value = (ft_strtrim(new, "\'\""));
         }
     }
     return (0);
@@ -88,8 +88,7 @@ int ft_export_check_name(char *var)
                 return (1);
             else if (ft_strncmp(&var[i], "+=", 2) == 0)
                 return (2);
-            else
-                return (ft_put_error("not a valid identifier\n", var, 1));
+            return (ft_put_error("not a valid identifier\n", var, 1));
         }
     }
     return (0);
@@ -137,7 +136,9 @@ char **ft_export_core(char *var, char **env)
         ft_export_null(env);
         return (env);
     }
-    vars = ft_split(var, ' ');
+    vars = (ft_split(var, ' '));
+    for (int x = 0; vars[x]; x++)
+        printf("vars[%d]=|%s|\n", x, vars[x]);
     lst = ft_tab_to_list(env);
     while (vars[i])
     {

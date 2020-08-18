@@ -6,7 +6,7 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/04 16:18:54 by jabenjam          #+#    #+#             */
-/*   Updated: 2020/08/16 18:09:00 by jabenjam         ###   ########.fr       */
+/*   Updated: 2020/08/18 18:17:12 by jabenjam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,13 +41,36 @@ typedef struct	s_all
 	int			i;
 	int			j;
 	int			data;
+	int			stop;
 	int			pipe;
 	int			countpipe;
 }				t_all;
 
+/*
+** -------------CHARLES---------------------------------------------------------
+*/
+
 int				get_dir();
 int				end(char *buff);
 int				cd(char **dir);
+int				check(char *buff);
+int				checkquote(char *buff);
+int				freelance(char **dir, char *buff);
+int				freedir(char **dir);
+char			**newdir(char **dir, char *buff);
+int				pwd(char *buff);
+int				echo(t_all all);
+int				checkdquote(char *buff);
+int				checksquote(char *buff);
+char			*ft_strncpy(char *dest, const char *src, int dstsize);
+int				pipecount(t_all all, char c);
+char			**ft_splitmini(char *s, char c);
+
+
+/*
+** -------------BEN------------------------------------------------------------
+*/
+
 char			*get_path(t_all *all);
 char			*find_exec(t_all *all, DIR *dir, char *path);
 char			*make_exec(t_all *all, char *path);
@@ -73,17 +96,7 @@ char			*ft_strjoin(char const *s1, char const *s2);
 int				ft_varlen(char *var, int mode);
 int				ft_put_error(char *error, char *var, int mode);
 int				ft_check_name(char *var);
-int				check(char *buff);
-int				checkquote(char *buff);
-int				freelance(char **dir, char *buff);
-int				freedir(char **dir);
-char			**newdir(char **dir, char *buff);
-int				pwd(char *buff);
-int				echo(char *buff, char **dir);
-int				checkdquote(char *buff);
-int				checksquote(char *buff);
-char			*ft_strncpy(char *dest, const char *src, int dstsize);
-int				pipecount(t_all all, char c);
-char			**ft_splitmini(char *s, char c);
+int				expand_token(char **token, t_all *all);
+int				env_exists(char *var, t_env *env);
 
 #endif
