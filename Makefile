@@ -6,14 +6,14 @@
 #    By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/10/16 11:50:11 by chgilber          #+#    #+#              #
-#    Updated: 2020/08/16 18:11:12 by jabenjam         ###   ########.fr        #
+#    Updated: 2020/08/18 17:50:21 by jabenjam         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = Minishell
+NAME = minishell
 
 SRCS =		get_dir.c end.c cd.c check.c freelance.c echo.c\
-			env_conversion.c tab.c env_export.c pipe.c\
+			env_conversion.c tab.c env_export.c pipe.c expand.c\
 			env_display.c ft_strjoin.c ft_strncpy.c\
 			GNL/get_next_line.c GNL/get_next_line_utils.c ft_splitmini.c\
 			realloc.c get_execs.c main.c
