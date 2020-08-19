@@ -2,9 +2,13 @@
 - export -> gerer le segfault pendant la copie avec un argument nul
 - export -> gerer les arguments entre quote (simple et double)
 - export -> afficher les variables nulles declarees sans '=' avec "export"
+- export -> gerer l'expansion des tokens avec ou sans " " ' '
+- export -> stocker l'op dans chaque element de la liste pour faire le tri pendant export et env
+- export -> gerer l'attribution de la value d'une variable qui existe deja avec test=$test0 par ex (si plusieurs variables, prendre la derniere)
 - export -> transformer le char **env en liste des le debut (avant d'appeler une fonction en rapport avec l'environnement)
 - export -> ajouter un flag "null", il servira a ignorer les variables nulles pendant l'affichage avec env, mais a tout print avec export
 - environnement -> ajouter a la structure une variable qui va etre set a zero et passer a 1 si on effectue une operation sur les variables pour etre sur de ne pas free le char **env de base a la fin
 - environnement -> adapter toutes les fonctions a l'utilisation de all
 - unset -> finir l'implementation du retrait
--
+- get_path() ou get_exec() -> verifier le sd->d_type pour chdir si c'est un dossier et executer si un executable
+- a l'ouverture d'un nouveau minishell, update SHLVL

@@ -6,7 +6,7 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/15 15:23:06 by jabenjam          #+#    #+#             */
-/*   Updated: 2020/08/18 17:46:18 by jabenjam         ###   ########.fr       */
+/*   Updated: 2020/08/19 17:45:13 by jabenjam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,9 +36,9 @@ char *find_exec(t_all *all, DIR *dir, char *path)
     {
         while ((sd = readdir(dir)) != NULL)
         {
-            printf("all->dir[]=%s\n", all->dir[all->i - 1]);
             if (ft_strcmp(all->dir[all->i - 1], sd->d_name) == 0)
             {
+                printf("sd->d_type=%d\n", sd->d_type);
                 closedir(dir);
                 return (make_exec(all, path));
             }
@@ -48,49 +48,22 @@ char *find_exec(t_all *all, DIR *dir, char *path)
     return (NULL);
 }
 
-char *go_to_parent(char *str)
-{
-    int i;
-
-    i = 0;
-    if (str)
-    {
-        while (str[i])
-        {
-            
-        }
-    }
-}
-
 char *is_exec(t_all *all)
 {
-    char *path;
-
-    path = NULL;
-    getcwd(path, 0);
     if (all->dir)
     {
-        if (ft_strncmp(all->dir[0], "./", 2) == 0)
+        if (ft_strncmp(all->dir[0], "./", 2) == 0 ||
+            ft_strncmp(all->dir[0], "../", 3) == 0)
         {
-            printf("\n./\n");
-            printf("path=%s\n", path);
-            return (path);
-        }
-        else if (ft_strncmp(all->dir[0], "../", 3) == 0)
-        {
-            printf("\n../\n");
-            return (path);
+            return (all->dir[0]);
         }
         else
-        {
-            printf("\nbad\n");
-            return (path);
-        }
+            return (NULL);
     }
-    return (path);
+    return (NULL);
 }
 
-char *get_path(t_all *all)
+char *get_path(t_all *all, char **env)
 {
     int             i;
     DIR             **dir;
@@ -101,16 +74,13 @@ char *get_path(t_all *all)
     exec = NULL;
     path = NULL;
     if (all->dir[0] && all->dir[0][0] == '.')
-        path[i] = is_exec(all);
+        run_exec(is_exec(all), all->dir, env);
     else
         path = ft_split(ft_getenv("PATH", ft_list_to_tab(all->env)), ':');
     if (path)
     {
         while (path[i] != NULL)
-        {
-            printf("i=%d\n", i);
             i++;
-        }
     }
     if (!(dir = malloc(sizeof(DIR) * (i + 1))))
         return (NULL);
@@ -125,8 +95,8 @@ char *get_path(t_all *all)
             i++;
         }
     }
-    free_tab(path);
     return (exec);
+    free_tab(path);
 }
 
 int run_exec(char *exec, char **args, char **envp)
