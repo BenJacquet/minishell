@@ -25,15 +25,12 @@ int	main(int ac, char **av, char **env)
 	all.dir = NULL;
 	all.i = get_next_line(0, &all.buff);
 	all.env = ft_tab_to_list(env);
-//	all.dir = ft_splitmini(all.buff, ';');
 	all.countpipe = pipecount(all, all.buff, ';') + 1;
 	all.data = all.countpipe;
 	all.pdir = (all.countpipe > 1) ?
 		ft_splitmini(all.buff, ';') : ft_split(all.buff, '\0');
 	while (check(all.buff) == 1 && all.i > 0)
 	{
-	//	printf("token = %d\n" , counttoken(all));
-	//	all.pdir[all.data - all.countpipe] = (all.countpipe > 0) ? dolar(&all) : all.pdir[all.data - all.countpipe];
 		i = counttoken(all);
 		index = 0;
 		while (index <= i)
@@ -42,12 +39,11 @@ int	main(int ac, char **av, char **env)
 			index++;
 		}
 		all.dir = ft_split(all.pdir[all.data - all.countpipe], ' ');
-	//	all.dir = (all.countpipe > 0) ? ft_split(all.pdir[all.data - all.countpipe], ' ') : ft_split(all.pdir[all.data - all.countpipe], ' ');
 		//		printf("dir {%s} et pdri{%s}, all.countpipe = %d\n", all.dir[1], all.pdir[all.data - all.countpipe], all.countpipe);
 		
 		if (ft_strlen(all.buff) > 0 && ft_strcmp(all.dir[0], "cd") == 0)
 		{
-			cd(all.dir);
+			cd(all.dir, all);
 			all.countpipe--;
 		}
 		else if (ft_strlen(all.buff) > 0 && ft_strcmp(all.dir[0], "pwd") == 0)
@@ -57,7 +53,6 @@ int	main(int ac, char **av, char **env)
 		}
 		else if (ft_strlen(all.buff) > 0 && ft_strcmp(all.dir[0], "echo") == 0)
 		{
-	//		echo(all.pdir[all.data - all.countpipe], all.dir);
 			echo(all);
 			all.countpipe--;
 		}
@@ -93,7 +88,6 @@ int	main(int ac, char **av, char **env)
 			write(1, all.pdir[all.data - all.countpipe], ft_strlen(all.pdir[all.data - all.countpipe]));
 			write(1, ": command not found\n", 21);
 			all.countpipe--;
-			//	system(all.buff);
 		}
 		if (all.countpipe < 1)
 		{

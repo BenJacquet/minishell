@@ -6,13 +6,13 @@
 /*   By: chgilber <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/04 17:17:15 by chgilber          #+#    #+#             */
-/*   Updated: 2020/08/14 15:11:04 by chgilber         ###   ########.fr       */
+/*   Updated: 2020/08/19 17:17:34 by chgilber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int		cdnoarg(int i)
+int		cdnoarg(int i, t_all all)
 {
 	int		a;
 	char	*path;
@@ -28,12 +28,12 @@ int		cdnoarg(int i)
 		i++;
 	}
 	//	printf("(%s)%d{%s}\n" , path,i, ft_substr(path, 0, i - 1));
-	i = chdir(ft_substr(path, 0, i - 1));
-//	i = chdir("$HOME");
+//	i = chdir(ft_substr(path, 0, i - 1));
+	i = chdir(ft_getenv("HOME", ft_list_to_tab(all.env)));
 	return (i);
 }
 
-int		cd(char **dir)
+int		cd(char **dir, t_all all)
 {
 	int		i;
 
@@ -49,6 +49,6 @@ int		cd(char **dir)
 		}
 	}
 	else
-		i = cdnoarg(i);
+		i = cdnoarg(i, all);
 	return (i);
 }
