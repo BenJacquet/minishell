@@ -6,7 +6,7 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/04 16:18:54 by jabenjam          #+#    #+#             */
-/*   Updated: 2020/08/18 18:17:12 by jabenjam         ###   ########.fr       */
+/*   Updated: 2020/08/19 15:32:43 by chgilber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,9 +63,10 @@ int				echo(t_all all);
 int				checkdquote(char *buff);
 int				checksquote(char *buff);
 char			*ft_strncpy(char *dest, const char *src, int dstsize);
-int				pipecount(t_all all, char c);
+int				pipecount(t_all all,char *str, char c);
 char			**ft_splitmini(char *s, char c);
-
+int				counttoken(t_all all);
+char			*dolar(t_all all);
 
 /*
 ** -------------BEN------------------------------------------------------------
