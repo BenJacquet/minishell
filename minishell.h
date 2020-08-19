@@ -6,7 +6,7 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/04 16:18:54 by jabenjam          #+#    #+#             */
-/*   Updated: 2020/08/19 15:32:43 by chgilber         ###   ########.fr       */
+/*   Updated: 2020/08/19 17:17:36 by chgilber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ typedef struct	s_all
 
 int				get_dir();
 int				end(char *buff);
-int				cd(char **dir);
+int				cd(char **dir, t_all all);
 int				check(char *buff);
 int				checkquote(char *buff);
 int				freelance(char **dir, char *buff);
