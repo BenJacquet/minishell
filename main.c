@@ -12,6 +12,31 @@
 #include "minishell.h"
 
 // pensez a revoir le parsing du strcmp
+//
+int			 writenotfound(t_all all)
+{
+	write(1, "minishell: ", 11);
+	write(1, all.pdir[all.data - all.countpipe], 
+			ft_strlen(all.pdir[all.data - all.countpipe]));
+	write(1, ": command not found\n", 21);
+	all.countpipe--;
+	return (all.countpipe);
+}
+
+int			letsgnl(t_all *all)
+{
+	get_dir();
+	free(all->buff);
+	all->i = get_next_line(0, &all->buff);
+	all->countpipe = pipecount(*all, all->buff, ';') + 1;
+	all->data = all->countpipe;
+	//		freedir(all->pdir);
+	//		freedir(all->dir);
+	all->pdir = (all->countpipe > 1) ?
+		ft_splitmini(all->buff, ';') : ft_split(all->buff, '\0');
+	return (0);
+}
+
 int	main(int ac, char **av, char **env)
 {
 	t_all	all;
@@ -83,26 +108,9 @@ int	main(int ac, char **av, char **env)
 			all.countpipe--;
 		}
 		else
-		{
-			write(1, "minishell: ", 11);
-			write(1, all.pdir[all.data - all.countpipe], ft_strlen(all.pdir[all.data - all.countpipe]));
-			write(1, ": command not found\n", 21);
-			all.countpipe--;
-		}
+			all.countpipe = writenotfound(all);
 		if (all.countpipe < 1)
-		{
-			get_dir();
-			free(all.buff);
-			all.i = get_next_line(0, &all.buff);
-			all.countpipe = pipecount(all, all.buff, ';') + 1;
-			all.data = all.countpipe;
-			//		freedir(all.pdir);
-			//		freedir(all.dir);
-			all.pdir = (all.countpipe > 1) ?
-				ft_splitmini(all.buff, ';') : ft_split(all.buff, '\0');
-		}
-		//	else
-		//		freedir(all.dir);
+			letsgnl(&all);
 	}
 	//	freelance(&*all.dir, all.buff);
 	return (0);
