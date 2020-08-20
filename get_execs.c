@@ -6,7 +6,7 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/15 15:23:06 by jabenjam          #+#    #+#             */
-/*   Updated: 2020/08/19 17:45:13 by jabenjam         ###   ########.fr       */
+/*   Updated: 2020/08/20 15:13:20 by jabenjam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ char *get_path(t_all *all, char **env)
         while (path[i] != NULL)
             i++;
     }
-    if (!(dir = malloc(sizeof(DIR) * (i + 1))))
+    if (!(dir = malloc(sizeof(DIR*) * (i + 1))))
         return (NULL);
     i = 0;
     if (path)

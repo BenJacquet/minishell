@@ -6,7 +6,7 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/04 16:18:54 by jabenjam          #+#    #+#             */
-/*   Updated: 2020/08/19 17:17:36 by chgilber         ###   ########.fr       */
+/*   Updated: 2020/08/20 15:22:29 by jabenjam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,10 @@
 # include <stdlib.h>
 # include <string.h>
 # include <sys/types.h>
+# include <sys/wait.h>
 # include <sys/uio.h>
 # include <dirent.h>
+# include <stddef.h>
 # include "GNL/get_next_line.h"
 # include "libft/libft.h"
 
@@ -72,7 +74,7 @@ char			*dolar(t_all all);
 ** -------------BEN------------------------------------------------------------
 */
 
-char			*get_path(t_all *all);
+char			*get_path(t_all *all, char **env);
 char			*find_exec(t_all *all, DIR *dir, char *path);
 char			*make_exec(t_all *all, char *path);
 int				run_exec(char *exec, char **args, char **envp);
