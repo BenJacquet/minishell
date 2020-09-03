@@ -38,12 +38,15 @@ int		counttoken(t_all all)
 	all.j = 0;
 	j = all.data - all.countpipe;
 	i = 0;
-	while (all.pdir[j][i])
+	if(all.pdir[j])
 	{
-		skipsquot(all, &all.j, &i);
-		if (all.pdir[j][i] == '$')
-			token++;
-		i++;
+		while (all.pdir[j][i])
+		{
+			skipsquot(all, &all.j, &i);
+			if (all.pdir[j][i] == '$')
+				token++;
+			i++;
+		}
 	}
 	printf("tok = {%d}\n", token);
 	return (token);
@@ -102,15 +105,18 @@ char	*dolar(t_all all)
 	j = all.data - all.countpipe;
 	i = 0;
 	all.pipe = 0;
-	while (all.pdir[j][i])
+	if (all.pdir[j])
 	{
-		skipsquot(all, &all.pipe, &i);
-		if (all.pdir[j][i] == '$')
+		while (all.pdir[j][i])
 		{
-			i = nicedolbro(all, i, j, &*tmp);
-			return (tmp[3]);
+			skipsquot(all, &all.pipe, &i);
+			if (all.pdir[j][i] == '$')
+			{
+				i = nicedolbro(all, i, j, &*tmp);
+				return (tmp[3]);
+			}
+			i++;
 		}
-		i++;
 	}
 	return (all.pdir[j]);
 }
