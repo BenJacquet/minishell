@@ -16,7 +16,7 @@ SRCS =		get_dir.c end.c cd.c check.c freelance.c echo.c\
 			env_conversion.c tab.c env_export.c pipe.c expand.c\
 			env_display.c ft_strjoin.c ft_strncpy.c\
 			GNL/get_next_line.c GNL/get_next_line_utils.c ft_splitmini.c\
-			realloc.c get_execs.c main.c
+			realloc.c get_execs.c main.c token.c  
 SRCSLIB =	libft/ft_split.c libft/ft_strlen.c libft/ft_strncmp.c
 
 INCLUDES = .
@@ -66,7 +66,8 @@ bonus : $(NAME_BONUS)
 $(NAME) : $(OBJS)
 	@echo "$(_END)$(_GREEN) [OK]\t"
 	@make bonus -C libft
-	@gcc $(CFLAGS) -L libft -lft -o $@ $(OBJS) $(LMINX)
+	@gcc $(CFLAGS) -o $@ $(OBJS) $(LIBFT)
+#	@gcc $(CFLAGS) -L libft -lft -o $@ $(OBJS) $(LMINX)
 	@echo "$(_END)$(_GREEN)[Minishell-Done]"
 
 %.o : %.c
