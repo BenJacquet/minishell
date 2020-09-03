@@ -6,7 +6,7 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/08 18:06:32 by jabenjam          #+#    #+#             */
-/*   Updated: 2020/08/08 18:31:13 by jabenjam         ###   ########.fr       */
+/*   Updated: 2020/09/03 12:30:00 by jabenjam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,13 +41,15 @@ char **tab_dup(char **tab)
 
     i = 0;
     new = NULL;
-    if (!(new = malloc(sizeof(char *) * ft_tablen(tab))))
+    if (tab == NULL)
+        return (NULL);
+    if (!(new = malloc(sizeof(char *) * (ft_tablen(tab) + 1))))
         return (NULL);
     while (tab[i])
     {
         new[i] = ft_strdup(tab[i]);
         i++;
     }
-    new[i] = 0;
+    new[i] = NULL;
     return (new);
 }

@@ -6,8 +6,10 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/04 14:09:45 by chgilber          #+#    #+#             */
+/*   Updated: 2020/09/03 14:53:52 by jabenjam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #include "minishell.h"
 
@@ -36,6 +38,42 @@ int			letsgnl(t_all *all)
 		ft_splitmini(all->buff, ';') : ft_split(all->buff, '\0');
 	return (0);
 }
+
+/*int main(int ac, char **av, char **env)
+{
+	int i = 0;
+    for (i = 0; env[i]; i++)
+        printf("old env[%d]=%s\n", i, env[i]);
+	printf("-------------------TEST PUTENV(old)------------------\n");	
+	ft_putenv(env);
+	char **new = tab_dup(env);
+    printf("------------------------------------------------------------\n");
+    for (i = 0; new[i]; i++)
+        printf("new env[%d]=%s\n", i, new[i]);
+	printf("old_len=%d\n", ft_tablen(env));
+	printf("new_len=%d\n", ft_tablen(new));
+	t_env *new_list = ft_tab_to_list(new);
+	t_env *backup = new_list;
+    printf("------------------------------------------------------------\n");
+	for (i = 0 ;new_list != NULL; new_list = new_list->next, i++)
+	{
+		printf("new_list(%p)->name=%s\n", new_list, new_list->name);
+		printf("new_list(%p)->value=%s\n", new_list, new_list->value);
+	}
+	new_list = backup;
+	free_tab(new);
+	printf("new_list_len=%d\n", i);
+	new = ft_list_to_tab(new_list);
+	
+    printf("------------------------------------------------------------\n");
+    for (i = 0; new[i]; i++)
+        printf("new env[%d]=%s\n", i, new[i]);
+	printf("new_len=%d\n", ft_tablen(new));
+	printf("-------------------TEST PUTENV(new)------------------\n");	
+	ft_putenv(new);
+	free_tab(new);
+}*/
+
 
 int	main(int ac, char **av, char **env)
 {
@@ -101,7 +139,7 @@ int	main(int ac, char **av, char **env)
 			ft_putenv(env);
 			all.countpipe--;
 		}
-		else if ((all.exec = get_path(&all)) != NULL)
+		else if ((all.exec = get_path(&all, env)) != NULL)
 		{
 			printf("exec=%s\n", all.exec);
 			run_exec(all.exec, all.dir, env);

@@ -6,7 +6,7 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/08 18:26:01 by jabenjam          #+#    #+#             */
-/*   Updated: 2020/08/17 19:02:16 by jabenjam         ###   ########.fr       */
+/*   Updated: 2020/09/03 14:38:16 by jabenjam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ char *remove_space(char *str)
     {
         while (str[j] != '\0' && str[j] == ' ' && i == 0)
         {
-            printf("str[%d+%d]=%d\n", i, j, str[i+j]);
+            //printf("str[%d+%d]=%d\n", i, j, str[i+j]);
             j++;
         }
         while (str[j] != '\0' && str[j] != ' ')
@@ -53,7 +53,7 @@ char *remove_space(char *str)
     }
     new[i] = '\0';
     free(str);
-    printf("new=%s\n",new);
+    //printf("new=%s\n",new);
     return (new);
 }
 
@@ -65,7 +65,7 @@ char *ft_getenv(char *var, char **env)
 
     i = 0;
     value = NULL;
-    printf("var=%s\n", var);
+    //printf("var=%s\n", var);
     if (env == NULL || var == NULL)
         return (NULL);
     while (env[i] != NULL)
