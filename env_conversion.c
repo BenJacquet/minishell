@@ -6,7 +6,7 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/06 14:31:34 by jabenjam          #+#    #+#             */
-/*   Updated: 2020/08/17 12:39:44 by jabenjam         ###   ########.fr       */
+/*   Updated: 2020/09/04 13:54:11 by jabenjam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,5 +134,9 @@ char **ft_list_to_tab(t_env *lst)
         current = current->next;
     }
     tab[i] = NULL;
+/*    printf("------------------------------------------------------------\n");
+    for (i = 0; tab[i]; i++)
+        printf("new tab[%d]=%s\n", i, tab[i]);
+	printf("tab_len=%d\n", ft_tablen(tab));*/
     return (tab);
 }

@@ -6,7 +6,7 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/08 18:01:17 by jabenjam          #+#    #+#             */
-/*   Updated: 2020/08/18 19:00:54 by jabenjam         ###   ########.fr       */
+/*   Updated: 2020/09/04 13:54:03 by jabenjam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,9 @@ int ft_export_edit(char *var, t_env *env, int op)
 {
     int len;
     char *new;
+    t_env *backup;
 
+    backup = env;
     if (var)
     {
         if (op == 1)
@@ -34,7 +36,8 @@ int ft_export_edit(char *var, t_env *env, int op)
             env->value = (ft_strtrim(new, "\'\""));
         }
     }
-    return (0);
+    env = backup;
+    return (1);
 }
 
 int ft_export_find_name(char *var, t_env *env, int op)
@@ -137,8 +140,8 @@ char **ft_export_core(char *var, char **env)
         return (env);
     }
     vars = (ft_split(var, ' '));
-    for (int x = 0; vars[x]; x++)
-        printf("vars[%d]=|%s|\n", x, vars[x]);
+/*    for (int x = 0; vars[x]; x++)
+        printf("EXPORT : vars[%d]=|%s|\n", x, vars[x]);*/
     lst = ft_tab_to_list(env);
     while (vars[i])
     {

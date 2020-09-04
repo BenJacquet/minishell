@@ -6,7 +6,7 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/05 12:35:39 by jabenjam          #+#    #+#             */
-/*   Updated: 2020/08/18 18:40:25 by jabenjam         ###   ########.fr       */
+/*   Updated: 2020/09/04 14:10:54 by jabenjam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,10 @@
 int ft_unset_find_name(char *var, t_env *current)
 {
     t_env *backup;
+    t_env *start;
 
-    backup = NULL;
+    start = current;
+    backup = current;
     if (ft_strcmp(var, current->name) == 0)
     {
         if (current->next)
@@ -29,17 +31,17 @@ int ft_unset_find_name(char *var, t_env *current)
     }
     while (current)
     {
-        backup = current;
-        if (ft_strcmp(var, current->name) == 0)
+        backup = (current->next ? current->next : current);
+        if (ft_strcmp(var, backup->name) == 0)
         {
-            if (current->next)
-                backup = current->next;
-            free(current->name);
-            free(current->value);
-            free(current);
+            current->next = backup->next;
+            free(backup->name);
+            free(backup->value);
+            free(backup);
         }
         current = current->next;
     }
+    current = start;
     return (0);
 }
 
@@ -56,6 +58,8 @@ int ft_unset_check_name(char *var)
             i++;
         if (var[i] != '\0')
             return (ft_put_error("not a valid identifier\n", var, 1));
+        else
+            return (1);
     }
     return (0);
 }
@@ -73,7 +77,7 @@ char **ft_unset_core(char *var, char **env)
     lst = ft_tab_to_list(env);
     while (vars[i])
     {
-        if (ft_unset_check_name(vars[i]) >= 1)
+        if (ft_unset_check_name(vars[i]) == 1)
             ft_unset_find_name(vars[i], lst);
         i++;
     }

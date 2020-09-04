@@ -6,10 +6,9 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/04 14:09:45 by chgilber          #+#    #+#             */
-/*   Updated: 2020/09/03 14:53:52 by jabenjam         ###   ########.fr       */
+/*   Updated: 2020/09/04 13:52:44 by jabenjam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #include "minishell.h"
 
@@ -42,16 +41,7 @@ int			letsgnl(t_all *all)
 /*int main(int ac, char **av, char **env)
 {
 	int i = 0;
-    for (i = 0; env[i]; i++)
-        printf("old env[%d]=%s\n", i, env[i]);
-	printf("-------------------TEST PUTENV(old)------------------\n");	
-	ft_putenv(env);
 	char **new = tab_dup(env);
-    printf("------------------------------------------------------------\n");
-    for (i = 0; new[i]; i++)
-        printf("new env[%d]=%s\n", i, new[i]);
-	printf("old_len=%d\n", ft_tablen(env));
-	printf("new_len=%d\n", ft_tablen(new));
 	t_env *new_list = ft_tab_to_list(new);
 	t_env *backup = new_list;
     printf("------------------------------------------------------------\n");
@@ -60,17 +50,20 @@ int			letsgnl(t_all *all)
 		printf("new_list(%p)->name=%s\n", new_list, new_list->name);
 		printf("new_list(%p)->value=%s\n", new_list, new_list->value);
 	}
+	printf("new_list_len=%d\n", i);
 	new_list = backup;
 	free_tab(new);
-	printf("new_list_len=%d\n", i);
 	new = ft_list_to_tab(new_list);
-	
+	new = ft_export_core("test=123", new);
     printf("------------------------------------------------------------\n");
     for (i = 0; new[i]; i++)
         printf("new env[%d]=%s\n", i, new[i]);
 	printf("new_len=%d\n", ft_tablen(new));
-	printf("-------------------TEST PUTENV(new)------------------\n");	
+	new = ft_unset_core("test", new);
+	printf("-------------------TEST PUTENV(new)------------------\n");
 	ft_putenv(new);
+	printf("-------------------TEST EXPORT(NULL)------------------\n");
+	new = ft_export_core(NULL, new);
 	free_tab(new);
 }*/
 
@@ -129,9 +122,9 @@ int	main(int ac, char **av, char **env)
 			env = ft_export_core(NULL, env);
 			all.countpipe--;
 		}
-		else if (ft_strncmp(all.buff, "env", 3) == 0)
+		else if (ft_strncmp(all.buff, "unset", 5) == 0)
 		{
-			ft_putenv(env);
+			env = ft_unset_core(all.buff + 6, env);
 			all.countpipe--;
 		}
 		else if (ft_strlen(all.buff) > 0 && ft_strcmp(all.dir[0], "env") == 0)
