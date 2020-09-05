@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: chgilber <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/04 17:17:15 by chgilber          #+#    #+#             */
-/*   Updated: 2020/08/19 17:17:34 by chgilber         ###   ########.fr       */
+/*   Updated: 2020/09/05 18:11:18 by jabenjam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int		cdnoarg(int i, t_all all)
 	}
 	//	printf("(%s)%d{%s}\n" , path,i, ft_substr(path, 0, i - 1));
 //	i = chdir(ft_substr(path, 0, i - 1));
-	i = chdir(ft_getenv("HOME", ft_list_to_tab(all.env)));
+	i = chdir(ft_getenv("HOME", ft_list_to_tab(all.env, 0)));
 	return (i);
 }
 

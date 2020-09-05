@@ -6,63 +6,47 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/08 18:01:17 by jabenjam          #+#    #+#             */
-/*   Updated: 2020/09/04 13:54:03 by jabenjam         ###   ########.fr       */
+/*   Updated: 2020/09/05 18:13:10 by jabenjam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int ft_export_edit(char *var, t_env *env, int op)
+t_env	*ft_export_edit(t_env *var, t_env *env)
 {
-    int len;
-    char *new;
-    t_env *backup;
+    t_env *head;
 
-    backup = env;
+    head = env;
     if (var)
     {
-        if (op == 1)
+        if (var->op == 1)
         {
             free(env->value);
-            if (!(env->value = malloc(sizeof(char) * ft_strlen(var))))
-                return (-1);
-            env->value = ft_strtrim(ft_strdup(var), "\'\"");
+            env->value = ft_strtrim(ft_strdup(var->value), "\'\"");
         }
-        else if (op == 2)
-        {
-            len = ft_strlen(var) + ft_strlen(env->value);
-            new = ft_strjoin(env->value, ft_strtrim(var, "\'\""));
-            free(env->value);
-            env->value = (ft_strtrim(new, "\'\""));
-        }
+        else if (var->op == 2)
+            env->value = ft_strjoinf(env->value, ft_strtrim(var->value, "\'\""));
     }
-    env = backup;
-    return (1);
+    return (head);
 }
 
-int ft_export_find_name(char *var, t_env *env, int op)
+t_env	*ft_export_find_name(t_env *var, t_env *env)
 {
-    int i;
-    char *name;
+	t_env *head;
 
-    i = ft_varlen(var, 0);
-    if (!(name = malloc(sizeof(char) * i + 1)))
-        return (-1);
-    ft_strlcpy(name, var, i);
-    i += op;
+	head = env;
     while (env)
     {
-        if (ft_strcmp(name, env->name) == 0)
+        if (ft_strcmp(var->name, env->name) == 0)
         {
-            free(name);
-            return (ft_export_edit(var + i, env, op));
+            ft_export_edit(var, env);
+			return (head);
         }
         if (!env->next)
-            env->next = new_elem(var);
-        env = env->next;
+            env->next = elem_dup(var);
+		env = env->next;
     }
-    free(name);
-    return (0);
+    return (head);
 }
 
 /*
@@ -97,7 +81,7 @@ int ft_export_check_name(char *var)
     return (0);
 }
 
-int ft_export_null(char **env)
+int ft_export_null(t_env *env)
 {
     int i;
     int j;
@@ -106,7 +90,7 @@ int ft_export_null(char **env)
 
     i = 0;
     j = 0;
-    new = tab_dup(env);
+    new = ft_list_to_tab(env, 1);
     while (new[i])
     {
         if (new[i + 1] && j == i)
@@ -121,35 +105,32 @@ int ft_export_null(char **env)
         }
         i++;
     }
-    ft_putenv(new);
+    ft_puttab(new);
     free(new);
     return (0);
 }
 
-char **ft_export_core(char *var, char **env)
+int		ft_export_core(t_all *all, char *var)
 {
     int i;
-    int op;
-    t_env *lst;
     char **vars;
+	t_env *var_lst;
 
     i = 0;
     if (var == NULL)
-    {
-        ft_export_null(env);
-        return (env);
-    }
-    vars = (ft_split(var, ' '));
-/*    for (int x = 0; vars[x]; x++)
-        printf("EXPORT : vars[%d]=|%s|\n", x, vars[x]);*/
-    lst = ft_tab_to_list(env);
+        return (ft_export_null(all->env));
+    var_lst = ft_tab_to_list(vars = ft_split(var, ' '));
     while (vars[i])
     {
-        if ((op = ft_export_check_name(vars[i])) >= 1)
-            ft_export_find_name(vars[i], lst, op);
-        i++;
+        if (ft_export_check_name(vars[i]) >= 0)
+		{
+			// ajouter expansion de tokens
+			all->env = ft_export_find_name(var_lst, all->env);
+		}
+		i++;
+		var_lst = var_lst->next;
     }
+	//free de var_lst a ajouter;
     free_tab(vars);
-    return (ft_list_to_tab(lst));
-    //AJOUTER FREE DE LA LISTE PRECEDENTE
+    return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/06 14:31:34 by jabenjam          #+#    #+#             */
-/*   Updated: 2020/09/04 13:54:11 by jabenjam         ###   ########.fr       */
+/*   Updated: 2020/09/05 18:14:30 by jabenjam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,33 @@ int ft_envsize(t_env *lst)
     return (i);
 }
 
+int		get_op(char *var)
+{
+	if (*var == '\0')
+        return (0);
+    else if (*var == '=')
+        return (1);
+    else if (ft_strncmp(var, "+=", 2) == 0)
+        return (2);
+	return (-1);
+}
+
+t_env *elem_dup(t_env *elem)
+{
+	t_env	*new;
+
+	if (!(new = malloc(sizeof(t_env))))
+		return (NULL);
+	new->next = NULL;
+	if (elem)
+	{
+		new->name = ft_strdup(elem->name);
+		new->op = elem->op;
+		new->value = ft_strdup(elem->value);
+	}
+	return (new);
+}
+
 t_env *new_elem(char *var)
 {
     int i;
@@ -55,7 +82,7 @@ t_env *new_elem(char *var)
 
     i = 0;
     j = 0;
-    elem = malloc(sizeof(t_env));
+    elem = malloc(sizeof(t_env) + 1);
     if (!(elem->name = malloc(sizeof(char) * ft_varlen(var, 0) + 1)))
         return (NULL);
     while (var[i] != '\0' && var[i] != '=' && var[i] != '+')
@@ -64,8 +91,7 @@ t_env *new_elem(char *var)
         i++;
     }
     elem->name[i] = '\0';
-    if (var[i])
-        i++;
+	i += (elem->op = get_op(var + i));
     if (!(elem->value = malloc(sizeof(char) * ft_varlen(var, 1) + 1)))
         return (NULL);
     while (var[i] != '\0')
@@ -96,7 +122,7 @@ t_env *ft_tab_to_list(char **tab)
     return (head);
 }
 
-char *ft_data_to_string(t_env *elem)
+char *ft_data_to_string(t_env *elem, int mode)
 {
     char *new;
     int len;
@@ -106,19 +132,23 @@ char *ft_data_to_string(t_env *elem)
     i = 0;
     j = 0;
     len = ft_strlen(elem->name) + ft_strlen(elem->value) + 1;
-    if (!(new = calloc(sizeof(char), len + 1)))
+    if (!(new = calloc(sizeof(char), len + 1 + 2)))
         return (NULL);
     while (elem->name[j] != '\0')
         new[i++] = elem->name[j++];
     new[i++] = '=';
     j = 0;
+	if (mode == 1)
+		new[i++] = '\"';
     while (elem->value[j] != '\0')
         new[i++] = elem->value[j++];
+	if (mode == 1)
+		new[i++] = '\"';
     new[i] = '\0';
     return (new);
 }
 
-char **ft_list_to_tab(t_env *lst)
+char **ft_list_to_tab(t_env *lst, int mode)
 {
     int i;
     char **tab;
@@ -130,13 +160,9 @@ char **ft_list_to_tab(t_env *lst)
     current = lst;
     while (current != NULL)
     {
-        tab[i++] = ft_data_to_string(current);
+        tab[i++] = ft_data_to_string(current, mode);
         current = current->next;
     }
     tab[i] = NULL;
-/*    printf("------------------------------------------------------------\n");
-    for (i = 0; tab[i]; i++)
-        printf("new tab[%d]=%s\n", i, tab[i]);
-	printf("tab_len=%d\n", ft_tablen(tab));*/
     return (tab);
 }

@@ -6,11 +6,24 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/08 18:06:32 by jabenjam          #+#    #+#             */
-/*   Updated: 2020/09/03 12:30:00 by jabenjam         ###   ########.fr       */
+/*   Updated: 2020/09/05 14:00:51 by jabenjam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	ft_puttab(char **tab)
+{
+	int i;
+
+	i = 0;
+	while (tab[i] != 0)
+    {
+        ft_putstr_fd(tab[i++], 1);
+        write(1, "\n", 1);
+    }
+	free_tab(tab);
+}
 
 int ft_tablen(char **tab)
 {

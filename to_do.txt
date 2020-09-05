@@ -12,3 +12,4 @@
 - unset -> finir l'implementation du retrait
 - get_path() ou get_exec() -> verifier le sd->d_type pour chdir si c'est un dossier et executer si un executable
 - a l'ouverture d'un nouveau minishell, update SHLVL
+- creer une variable $? pour le return des processus, non imprimee et impossible a unset

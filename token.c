@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: chgilber <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/12 15:52:23 by chgilber          #+#    #+#             */
-/*   Updated: 2020/08/19 16:58:33 by chgilber         ###   ########.fr       */
+/*   Updated: 2020/09/05 18:11:36 by jabenjam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ int		counttoken(t_all all)
 			i++;
 		}
 	}
-	printf("tok = {%d}\n", token);
+	//printf("tok = {%d}\n", token);
 	return (token);
 }
 
@@ -72,7 +72,7 @@ char	*finddolar(t_all all, int *i, int j, char **tmp)
 		all.j++;
 	}
 	tmp[1][all.j] = '\0';
-	tmp[2] = ft_getenv(tmp[1], ft_list_to_tab(all.env));
+	tmp[2] = ft_getenv(tmp[1], ft_list_to_tab(all.env, 0));
 	dol = (all.j == 0) ? ft_strjoin(tmp[0], "$") : ft_strjoin(tmp[0], tmp[2]);
 	free(tmp[0]);
 	free(tmp[2]);

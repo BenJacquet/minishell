@@ -6,7 +6,7 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/15 15:23:06 by jabenjam          #+#    #+#             */
-/*   Updated: 2020/09/04 14:16:35 by jabenjam         ###   ########.fr       */
+/*   Updated: 2020/09/05 18:11:56 by jabenjam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ char *get_path(t_all *all, char **env)
     if (all->dir && all->dir[0] && all->dir[0][0] == '.')
         run_exec(is_exec(all), all->dir, env);
     else
-        path = ft_split(ft_getenv("PATH", ft_list_to_tab(all->env)), ':');
+        path = ft_split(ft_getenv("PATH", ft_list_to_tab(all->env, 0)), ':');
     if (path)
     {
         while (path[i] != NULL)

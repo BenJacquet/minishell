@@ -6,22 +6,25 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/08 18:26:01 by jabenjam          #+#    #+#             */
-/*   Updated: 2020/09/03 14:38:16 by jabenjam         ###   ########.fr       */
+/*   Updated: 2020/09/05 18:10:04 by jabenjam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void ft_putenv(char **env)
+void ft_putenv(t_env *env)
 {
     int i;
+	char **new;
 
     i = 0;
-    while (env[i] != 0)
+	new = ft_list_to_tab(env, 0);
+    while (new[i] != 0)
     {
-        ft_putstr_fd(env[i++], 1);
+        ft_putstr_fd(new[i++], 1);
         write(1, "\n", 1);
     }
+	free_tab(new);
 }
 
 char *remove_space(char *str)
@@ -65,9 +68,10 @@ char *ft_getenv(char *var, char **env)
 
     i = 0;
     value = NULL;
-    //printf("var=%s\n", var);
     if (env == NULL || var == NULL)
         return (NULL);
+/*	if (var[0] == '?')
+		return (ft_itoa(all->ret));*/
     while (env[i] != NULL)
     {
         j = 0;

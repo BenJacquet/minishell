@@ -6,7 +6,7 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/04 14:09:45 by chgilber          #+#    #+#             */
-/*   Updated: 2020/09/04 13:52:44 by jabenjam         ###   ########.fr       */
+/*   Updated: 2020/09/05 18:08:23 by jabenjam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,10 @@
 //
 int			 writenotfound(t_all all)
 {
+	if (all.buff[0] == '\0')
+		return (0);
 	write(1, "minishell: ", 11);
-	write(1, all.pdir[all.data - all.countpipe], 
+	write(1, all.pdir[all.data - all.countpipe],
 			ft_strlen(all.pdir[all.data - all.countpipe]));
 	write(1, ": command not found\n", 21);
 	all.countpipe--;
@@ -38,19 +40,41 @@ int			letsgnl(t_all *all)
 	return (0);
 }
 
-/*int main(int ac, char **av, char **env)
+/*int	test(t_all *all)
+{
+	for (;all->env != NULL; all->env = all->env->next)
+	{
+		printf("During - all->env(%p)->name=%s\n", all->env, all->env->name);
+		printf("During - all->env(%p)->value=%s\n", all->env, all->env->value);
+	}
+}
+
+int main(int ac, char **av, char **env)
 {
 	int i = 0;
 	char **new = tab_dup(env);
+	t_all all;
 	t_env *new_list = ft_tab_to_list(new);
 	t_env *backup = new_list;
+	all.env = new_list;
     printf("------------------------------------------------------------\n");
-	for (i = 0 ;new_list != NULL; new_list = new_list->next, i++)
+	for (i = 0 ;all.env != NULL; all.env = all.env->next, i++)
 	{
-		printf("new_list(%p)->name=%s\n", new_list, new_list->name);
-		printf("new_list(%p)->value=%s\n", new_list, new_list->value);
+		printf("Before - all.env(%p)->name=%s\n", all.env, all.env->name);
+		printf("Before - all.env(%p)->value=%s\n", all.env, all.env->value);
 	}
-	printf("new_list_len=%d\n", i);
+	all.env = backup;
+	printf("all.env_len=%d\n", i);
+	printf("------------------------------------------------------------\n");
+	test(&all);
+	all.env = backup;
+	printf("------------------------------------------------------------\n");
+	for (i = 0 ;all.env != NULL; all.env = all.env->next, i++)
+	{
+		printf("After - all.env(%p)->name=%s\n", all.env, all.env->name);
+		printf("After - all.env(%p)->value=%s\n", all.env, all.env->value);
+	}
+	printf("all.env_len=%d\n", i);
 	new_list = backup;
 	free_tab(new);
 	new = ft_list_to_tab(new_list);
@@ -96,7 +120,6 @@ int	main(int ac, char **av, char **env)
 		}
 		all.dir = ft_split(all.pdir[all.data - all.countpipe], ' ');
 		//		printf("dir {%s} et pdri{%s}, all.countpipe = %d\n", all.dir[1], all.pdir[all.data - all.countpipe], all.countpipe);
-		
 		if (ft_strlen(all.buff) > 0 && ft_strcmp(all.dir[0], "cd") == 0)
 		{
 			cd(all.dir, all);
@@ -114,22 +137,22 @@ int	main(int ac, char **av, char **env)
 		}
 		else if (ft_strncmp(all.buff, "export ", 7) == 0)
 		{
-			env = ft_export_core(all.buff + 7, env);
+			ft_export_core(&all, all.buff + 7);
 			all.countpipe--;
 		}
 		else if (ft_strncmp(all.buff, "export", 6) == 0)
 		{
-			env = ft_export_core(NULL, env);
+			ft_export_core(&all, NULL);
 			all.countpipe--;
 		}
 		else if (ft_strncmp(all.buff, "unset", 5) == 0)
 		{
-			env = ft_unset_core(all.buff + 6, env);
+			ft_unset_core(&all, all.buff + 6);
 			all.countpipe--;
 		}
 		else if (ft_strlen(all.buff) > 0 && ft_strcmp(all.dir[0], "env") == 0)
 		{
-			ft_putenv(env);
+			ft_putenv(all.env);
 			all.countpipe--;
 		}
 		else if ((all.exec = get_path(&all, env)) != NULL)
