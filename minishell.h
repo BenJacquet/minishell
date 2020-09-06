@@ -6,7 +6,7 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/04 16:18:54 by jabenjam          #+#    #+#             */
-/*   Updated: 2020/09/05 16:56:55 by jabenjam         ###   ########.fr       */
+/*   Updated: 2020/09/06 17:40:55 by jabenjam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 # include <sys/uio.h>
 # include <dirent.h>
 # include <stddef.h>
+# include <fcntl.h>
 # include "GNL/get_next_line.h"
 # include "libft/libft.h"
 
@@ -36,6 +37,7 @@ typedef struct	s_env
 typedef struct	s_all
 {
 	t_env		*env;
+	t_env		*ret;
 	char		*buff;
 	char		*oldbuff;
 	char		**dir;
@@ -75,11 +77,11 @@ char			*dolar(t_all all);
 ** -------------BEN------------------------------------------------------------
 */
 
-char			*get_path(t_all *all, char **env);
+char			*get_path(t_all *all, char **envp);
 char			*find_exec(t_all *all, DIR *dir, char *path);
 char			*make_exec(t_all *all, char *path);
-int				run_exec(char *exec, char **args, char **envp);
-char			*ft_getenv(char *var, char **env);
+int				run_exec(t_all *all, char *exec, char **args, char **envp);
+char			*ft_getenv(t_all *all, char *name);
 void			ft_putenv(t_env *env);
 int				ft_export_core(t_all *all, char *var);
 int				ft_export_null(t_env *env);
@@ -104,7 +106,8 @@ char			*ft_strjoinf(char *s1, char *s2);
 int				ft_varlen(char *var, int mode);
 int				ft_put_error(char *error, char *var, int mode);
 int				ft_check_name(char *var);
-int				expand_token(char **token, t_all *all);
-int				env_exists(char *var, t_env *env);
+int				expand_value(t_env *var, t_all *all);
+char			*get_new_value(t_all *all, t_env *var, int len);
+t_env			*env_exists(char *name, t_env *env);
 
 #endif

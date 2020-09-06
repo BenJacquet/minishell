@@ -6,7 +6,7 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/04 14:09:45 by chgilber          #+#    #+#             */
-/*   Updated: 2020/09/05 18:08:23 by jabenjam         ###   ########.fr       */
+/*   Updated: 2020/09/06 14:41:17 by jabenjam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,20 @@
 //
 int			 writenotfound(t_all all)
 {
+	int open_ret;
+
+	open_ret = 0;
 	if (all.buff[0] == '\0')
 		return (0);
 	write(1, "minishell: ", 11);
 	write(1, all.pdir[all.data - all.countpipe],
 			ft_strlen(all.pdir[all.data - all.countpipe]));
-	write(1, ": command not found\n", 21);
+	/*printf("return d'open =%d\n", open(all.pdir[all.data - all.countpipe], O_RDONLY));
+	if ((ft_strncmp(all.pdir[all.data - all.countpipe], "./", 2) == 0) ||
+		(ft_strncmp(all.pdir[all.data - all.countpipe], "../", 3) == 0))
+		write(1, ": No such file or directory\n", 29);
+	else*/
+		write(1, ": command not found\n", 21);
 	all.countpipe--;
 	return (all.countpipe);
 }
@@ -105,12 +113,14 @@ int	main(int ac, char **av, char **env)
 	all.dir = NULL;
 	all.i = get_next_line(0, &all.buff);
 	all.env = ft_tab_to_list(env);
+	all.ret = new_elem("?=0");
 	all.countpipe = pipecount(all, all.buff, ';') + 1;
 	all.data = all.countpipe;
 	all.pdir = (all.countpipe > 1) ?
 		ft_splitmini(all.buff, ';') : ft_split(all.buff, '\0');
 	while (check(all.buff) == 1 && all.i > 0)
 	{
+		env = ft_list_to_tab(all.env, 0);
 		i = counttoken(all);
 		index = 0;
 		while (index <= i)
@@ -158,7 +168,7 @@ int	main(int ac, char **av, char **env)
 		else if ((all.exec = get_path(&all, env)) != NULL)
 		{
 			printf("exec=%s\n", all.exec);
-			run_exec(all.exec, all.dir, env);
+			run_exec(&all, all.exec, all.dir, env);
 			all.countpipe--;
 		}
 		else

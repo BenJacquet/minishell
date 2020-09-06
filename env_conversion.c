@@ -6,7 +6,7 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/06 14:31:34 by jabenjam          #+#    #+#             */
-/*   Updated: 2020/09/05 18:14:30 by jabenjam         ###   ########.fr       */
+/*   Updated: 2020/09/06 12:52:44 by jabenjam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,6 +109,7 @@ t_env *ft_tab_to_list(char **tab)
 
     i = 0;
     head = NULL;
+	current = NULL;
     if (tab)
     {
         current = new_elem(tab[i++]);
@@ -136,13 +137,13 @@ char *ft_data_to_string(t_env *elem, int mode)
         return (NULL);
     while (elem->name[j] != '\0')
         new[i++] = elem->name[j++];
-    new[i++] = '=';
+    new[i++] = (elem->op != 0 ? '=' : '\0');
     j = 0;
-	if (mode == 1)
+	if (mode == 1 && elem->op != 0)
 		new[i++] = '\"';
     while (elem->value[j] != '\0')
         new[i++] = elem->value[j++];
-	if (mode == 1)
+	if (mode == 1 && elem->op != 0)
 		new[i++] = '\"';
     new[i] = '\0';
     return (new);
@@ -160,7 +161,8 @@ char **ft_list_to_tab(t_env *lst, int mode)
     current = lst;
     while (current != NULL)
     {
-        tab[i++] = ft_data_to_string(current, mode);
+		if ((mode == 0 && current->op != 0) || mode == 1)
+        	tab[i++] = ft_data_to_string(current, mode);
         current = current->next;
     }
     tab[i] = NULL;

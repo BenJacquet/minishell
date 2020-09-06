@@ -6,7 +6,7 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/08 18:26:01 by jabenjam          #+#    #+#             */
-/*   Updated: 2020/09/05 18:10:04 by jabenjam         ###   ########.fr       */
+/*   Updated: 2020/09/06 14:02:07 by jabenjam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,29 +60,30 @@ char *remove_space(char *str)
     return (new);
 }
 
-char *ft_getenv(char *var, char **env)
+char *ft_getenv(t_all *all, char *name)
 {
     int i;
     int j;
     char *value;
+	t_env *current;
 
     i = 0;
     value = NULL;
-    if (env == NULL || var == NULL)
+	if (all->env)
+		current = all->env;
+    if (name == NULL || name == NULL)
         return (NULL);
-/*	if (var[0] == '?')
-		return (ft_itoa(all->ret));*/
-    while (env[i] != NULL)
+	if (name[0] == '?')
+		return (all->ret->value);
+    while (current != NULL)
     {
         j = 0;
-        if (!(ft_strncmp(var, env[i], ft_strlen(var))))
+        if (!(ft_strncmp(name, current->name, ft_strlen(current->name))))
         {
-            while (env[i][j] != '=')
-                j++;
-            value = remove_space(ft_strdup(env[i] + (j + 1)));
+            value = remove_space(ft_strdup(current->value));
             break;
         }
-        i++;
+        current = current->next;
     }
     return (value);
 }

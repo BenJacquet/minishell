@@ -6,7 +6,7 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/08 18:01:17 by jabenjam          #+#    #+#             */
-/*   Updated: 2020/09/05 18:13:10 by jabenjam         ###   ########.fr       */
+/*   Updated: 2020/09/06 17:42:16 by jabenjam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,7 +124,7 @@ int		ft_export_core(t_all *all, char *var)
     {
         if (ft_export_check_name(vars[i]) >= 0)
 		{
-			// ajouter expansion de tokens
+			expand_value(var_lst, all);
 			all->env = ft_export_find_name(var_lst, all->env);
 		}
 		i++;

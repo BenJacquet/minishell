@@ -6,7 +6,7 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/15 15:23:06 by jabenjam          #+#    #+#             */
-/*   Updated: 2020/09/05 18:11:56 by jabenjam         ###   ########.fr       */
+/*   Updated: 2020/09/06 14:40:50 by jabenjam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ char *is_exec(t_all *all)
     return (NULL);
 }
 
-char *get_path(t_all *all, char **env)
+char *get_path(t_all *all, char **envp)
 {
     int             i;
     DIR             **dir;
@@ -76,9 +76,9 @@ char *get_path(t_all *all, char **env)
     if (!all->dir || !all->dir[0])
         return (0);
     if (all->dir && all->dir[0] && all->dir[0][0] == '.')
-        run_exec(is_exec(all), all->dir, env);
+        run_exec(all, is_exec(all), all->dir, envp);
     else
-        path = ft_split(ft_getenv("PATH", ft_list_to_tab(all->env, 0)), ':');
+        path = ft_split(ft_getenv(all, "PATH"), ':');
     if (path)
     {
         while (path[i] != NULL)
@@ -101,9 +101,14 @@ char *get_path(t_all *all, char **env)
     return (exec);
 }
 
-int run_exec(char *exec, char **args, char **envp)
+int run_exec(t_all *all, char *exec, char **args, char **envp)
 {
+	int	ret;
     pid_t child_pid;
+
+	ret = 0;
+	envp = ft_list_to_tab(all->env, 0);
+	printf("exec=%s\n", exec);
     if ((child_pid = fork()) == 0)
     {
         printf("parent pid=%d\n", getppid());
@@ -111,6 +116,9 @@ int run_exec(char *exec, char **args, char **envp)
         execve(exec, args, envp);
     }
     else
-        waitpid(child_pid, 0, 0);
+        waitpid(child_pid, &ret, 0);
+	all->ret->value = ft_itoa(ret / 256);
+	printf("all->ret->value=%s\n", all->ret->value);
+	free_tab(envp);
     return (1);
 }
