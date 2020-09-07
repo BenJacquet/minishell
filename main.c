@@ -14,24 +14,23 @@
 
 // pensez a revoir le parsing du strcmp
 //
-int			 writenotfound(t_all all)
+void		 writenotfound(t_all *all)
 {
-	int open_ret;
-
-	open_ret = 0;
-	if (all.buff[0] == '\0')
-		return (0);
+	if (all->buff[0] == '\0')
+	{
+		free(all->ret->value);
+		all->ret->value = malloc(sizeof(char) * 2);
+		all->ret->value = "0\0";
+		return ;
+	}
 	write(1, "minishell: ", 11);
-	write(1, all.pdir[all.data - all.countpipe],
-			ft_strlen(all.pdir[all.data - all.countpipe]));
-	/*printf("return d'open =%d\n", open(all.pdir[all.data - all.countpipe], O_RDONLY));
-	if ((ft_strncmp(all.pdir[all.data - all.countpipe], "./", 2) == 0) ||
-		(ft_strncmp(all.pdir[all.data - all.countpipe], "../", 3) == 0))
-		write(1, ": No such file or directory\n", 29);
-	else*/
-		write(1, ": command not found\n", 21);
-	all.countpipe--;
-	return (all.countpipe);
+	write(1, all->pdir[all->data - all->countpipe],
+		ft_strlen(all->pdir[all->data - all->countpipe]));
+	write(1, ": command not found\n", 21);
+	free(all->ret->value);
+	all->ret->value = malloc(sizeof(char) * 4);
+	all->ret->value = "127\0";
+	all->countpipe--;
 }
 
 int			letsgnl(t_all *all)
@@ -47,58 +46,6 @@ int			letsgnl(t_all *all)
 		ft_splitmini(all->buff, ';') : ft_split(all->buff, '\0');
 	return (0);
 }
-
-/*int	test(t_all *all)
-{
-	for (;all->env != NULL; all->env = all->env->next)
-	{
-		printf("During - all->env(%p)->name=%s\n", all->env, all->env->name);
-		printf("During - all->env(%p)->value=%s\n", all->env, all->env->value);
-	}
-}
-
-int main(int ac, char **av, char **env)
-{
-	int i = 0;
-	char **new = tab_dup(env);
-	t_all all;
-	t_env *new_list = ft_tab_to_list(new);
-	t_env *backup = new_list;
-	all.env = new_list;
-    printf("------------------------------------------------------------\n");
-	for (i = 0 ;all.env != NULL; all.env = all.env->next, i++)
-	{
-		printf("Before - all.env(%p)->name=%s\n", all.env, all.env->name);
-		printf("Before - all.env(%p)->value=%s\n", all.env, all.env->value);
-	}
-	all.env = backup;
-	printf("all.env_len=%d\n", i);
-	printf("------------------------------------------------------------\n");
-	test(&all);
-	all.env = backup;
-	printf("------------------------------------------------------------\n");
-	for (i = 0 ;all.env != NULL; all.env = all.env->next, i++)
-	{
-		printf("After - all.env(%p)->name=%s\n", all.env, all.env->name);
-		printf("After - all.env(%p)->value=%s\n", all.env, all.env->value);
-	}
-	printf("all.env_len=%d\n", i);
-	new_list = backup;
-	free_tab(new);
-	new = ft_list_to_tab(new_list);
-	new = ft_export_core("test=123", new);
-    printf("------------------------------------------------------------\n");
-    for (i = 0; new[i]; i++)
-        printf("new env[%d]=%s\n", i, new[i]);
-	printf("new_len=%d\n", ft_tablen(new));
-	new = ft_unset_core("test", new);
-	printf("-------------------TEST PUTENV(new)------------------\n");
-	ft_putenv(new);
-	printf("-------------------TEST EXPORT(NULL)------------------\n");
-	new = ft_export_core(NULL, new);
-	free_tab(new);
-}*/
-
 
 int	main(int ac, char **av, char **env)
 {
@@ -172,7 +119,7 @@ int	main(int ac, char **av, char **env)
 			all.countpipe--;
 		}
 		else
-			all.countpipe = writenotfound(all);
+			writenotfound(&all);
 		if (all.countpipe < 1)
 			letsgnl(&all);
 	}
