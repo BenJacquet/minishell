@@ -18,9 +18,10 @@ void		 writenotfound(t_all *all)
 {
 	if (all->buff[0] == '\0')
 	{
-		free(all->ret->value);
+//		free(all->ret->value);
 		all->ret->value = malloc(sizeof(char) * 2);
 		all->ret->value = "0\0";
+		get_dir();
 		return ;
 	}
 	write(1, "minishell: ", 11);
