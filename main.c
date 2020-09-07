@@ -21,7 +21,7 @@ void		 writenotfound(t_all *all)
 //		free(all->ret->value);
 		all->ret->value = malloc(sizeof(char) * 2);
 		all->ret->value = "0\0";
-		get_dir();
+		all->countpipe--;
 		return ;
 	}
 	write(1, "minishell: ", 11);
