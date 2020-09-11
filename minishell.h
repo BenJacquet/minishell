@@ -6,7 +6,7 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/04 16:18:54 by jabenjam          #+#    #+#             */
-/*   Updated: 2020/09/06 17:40:55 by jabenjam         ###   ########.fr       */
+/*   Updated: 2020/09/11 13:34:49 by jabenjam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,8 @@ typedef struct	s_all
 	int			stop;
 	int			pipe;
 	int			countpipe;
+	int			fd;
+	int			red;
 }				t_all;
 
 /*
@@ -72,6 +74,8 @@ int				pipecount(t_all all,char *str, char c);
 char			**ft_splitmini(char *s, char c);
 int				counttoken(t_all all);
 char			*dolar(t_all all);
+int				join(t_all *all, char *buff, int inc, char quote);
+int				silence(t_all all);
 
 /*
 ** -------------BEN------------------------------------------------------------
@@ -87,7 +91,7 @@ int				ft_export_core(t_all *all, char *var);
 int				ft_export_null(t_env *env);
 t_env			*ft_export_edit(t_env *var, t_env *env);
 int				ft_export_check_name(char *var);
-t_env			*ft_export_find_name(t_env *var, t_env *env);
+t_env		 	*ft_export_find_name(t_env *var, t_env *env);
 void			ft_unset_core(t_all *all, char *var);
 int				ft_unset_check_name(char *var);
 t_env			*ft_unset_find_name(char *var, t_env *current);
@@ -109,5 +113,8 @@ int				ft_check_name(char *var);
 int				expand_value(t_env *var, t_all *all);
 char			*get_new_value(t_all *all, t_env *var, int len);
 t_env			*env_exists(char *name, t_env *env);
+void			init_all(t_all *all, char **env);
+int				builtins_env(t_all *all);
+int				builtins_others(t_all *all);
 
 #endif
