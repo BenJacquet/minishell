@@ -6,7 +6,7 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/04 16:18:54 by jabenjam          #+#    #+#             */
-/*   Updated: 2020/09/11 13:34:49 by jabenjam         ###   ########.fr       */
+/*   Updated: 2020/09/13 17:46:42 by jabenjam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ typedef struct	s_all
 	int			pipe;
 	int			countpipe;
 	int			fd;
+	int			fd_backup; // servira a stocker la valeur de stdin ou stdout selon la redireciton
 	int			red;
 }				t_all;
 
@@ -114,7 +115,9 @@ int				expand_value(t_env *var, t_all *all);
 char			*get_new_value(t_all *all, t_env *var, int len);
 t_env			*env_exists(char *name, t_env *env);
 void			init_all(t_all *all, char **env);
+int				parse_command(t_all *all, char **env);
 int				builtins_env(t_all *all);
 int				builtins_others(t_all *all);
+int				io_manager_dup(t_all *all, int mode);
 
 #endif

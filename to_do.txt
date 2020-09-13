@@ -10,3 +10,14 @@
 - cd -> gerer les chemins avec des quotes
 - main-> crash quand un ; ou un ' ' des le debut
 - general -> "cat <" affiche bash: syntax error near unexpected token `newline'
+- redir -> gerer par exemple "> blabla.txt" ou ">> blabla.txt"
+- redir -> gerer uniquement le dernier fichier recu en argument 
+- redir -> tester "echo e > a > b > c > d > e"
+- redir -> tester "cat < (fichier qui existe pas)", display de l'erreur par minishell
+- redir -> tester "cat < (fichier qui existe) (fichier qui existe pas)", display de l'erreur par l'exec
+- general -> tester "cat < ."
+
+MEMO :
+- ">" = (O_CREAT | O_TRUNC | O_RDWR)
+- ">>" = (O_CREAT | O_APPEND | O_RDWR)
+- "<" = (O_RDWR)

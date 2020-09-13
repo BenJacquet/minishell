@@ -6,7 +6,7 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/04 14:09:45 by chgilber          #+#    #+#             */
-/*   Updated: 2020/09/11 16:58:36 by jabenjam         ###   ########.fr       */
+/*   Updated: 2020/09/13 18:43:09 by jabenjam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,37 @@ int		builtins_env(t_all *all)
 	return (all->countpipe != pipe_bkp ? 1 : 0);
 }
 
+int	parse_command(t_all *all, char **env)
+{
+//	for (int i = 0; all->dir[i]; i++)
+//		printf("all->dir[%d]=%s\n--------------------------------\n", i, all->dir[i]);
+//	for (int i = 0; all->pdir[i]; i++)
+//		printf("all->pdir[%d]=%s\n--------------------------------\n", i, all->pdir[i]);
+	if ((ft_strlen(all->buff) > 0 &&
+		((ft_strcmp(all->dir[0], "cd") == 0) ||
+		ft_strcmp(all->dir[0], "pwd") == 0 ||
+		ft_strcmp(all->dir[0], "echo") == 0)))
+	{
+		builtins_others(all);
+		return (1);
+	}
+	else if ((ft_strlen(all->buff) > 0 &&
+			((ft_strcmp(all->dir[0], "env") == 0) ||
+			ft_strncmp(all->buff, "unset", 5) == 0 ||
+			ft_strncmp(all->buff, "export", 6) == 0)))
+	{
+		builtins_env(all);
+		return (1);
+	}
+	else if ((all->exec = get_path(all, env)) != NULL)
+	{
+		run_exec(all, all->exec, all->dir, env);
+		all->countpipe--;
+		return (1);
+	}
+	return (0);
+}
+
 void	init_all(t_all *all, char **env)
 {
 	all->i = 0;
@@ -103,8 +134,36 @@ void	init_all(t_all *all, char **env)
 	all->data = all->countpipe;
 	all->pdir = (all->countpipe > 1) ?
 		ft_splitmini(all->buff, ';') : ft_split(all->buff, '\0');
-	all->fd = 1;
-	all->red = 2; // 1024 = '>' ; 8 = '>>'
+	all->fd = 0;
+	all->fd_backup = 0;
+	all->red = (O_CREAT | O_TRUNC | O_RDWR);	// '>'
+	//all->red = (O_CREAT | O_APPEND | O_RDWR);	// '>>'
+	//all->red = (O_RDWR);						// '<'
+}
+
+void	handle_sigint(int sig)
+{
+	if (sig == SIGINT)
+		printf("received SIGINT\n");
+}
+
+void	handle_sigquit(int sig)
+{
+	if (sig == SIGQUIT)
+		printf(" received SIGQUIT\n");
+}
+
+/*void	handle_sigeof(int sig)
+{
+	write(0, "0", 1);
+}*/
+
+int		signal_manager()
+{
+	signal(SIGINT, &handle_sigint);
+	signal(SIGQUIT, &handle_sigquit);
+	//signal(SIGINT, &handle_sigeof);
+	return (0);
 }
 
 int	main(int ac, char **av, char **env)
@@ -119,6 +178,7 @@ int	main(int ac, char **av, char **env)
 	init_all(&all, env);
 	while (check(all.buff) == 1 && all.i > 0)
 	{
+		signal_manager();
 		env = ft_list_to_tab(all.env, 0);
 		i = counttoken(all);
 		index = 0;
@@ -129,20 +189,7 @@ int	main(int ac, char **av, char **env)
 		}
 		all.dir = ft_split(all.pdir[all.data - all.countpipe], ' ');
 		//		printf("dir {%s} et pdri{%s}, all.countpipe = %d\n", all.dir[1], all.pdir[all.data - all.countpipe], all.countpipe);
-		if ((ft_strlen(all.buff) > 0 && ((ft_strcmp(all.dir[0], "cd") == 0) ||
-				ft_strcmp(all.dir[0], "pwd") == 0 ||
-				ft_strcmp(all.dir[0], "echo") == 0)))
-			builtins_others(&all);
-		else if ((ft_strlen(all.buff) > 0 && ((ft_strcmp(all.dir[0], "env") == 0) ||
-				ft_strncmp(all.buff, "unset", 5) == 0 ||
-				ft_strncmp(all.buff, "export", 6) == 0)))
-			builtins_env(&all);
-		else if ((all.exec = get_path(&all, env)) != NULL)
-		{
-			run_exec(&all, all.exec, all.dir, env);
-			all.countpipe--;
-		}
-		else
+		if	(parse_command(&all, env) == 0)
 			writenotfound(&all);
 		if (all.countpipe < 1)
 			letsgnl(&all);

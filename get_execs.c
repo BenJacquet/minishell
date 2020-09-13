@@ -6,7 +6,7 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/15 15:23:06 by jabenjam          #+#    #+#             */
-/*   Updated: 2020/09/11 16:58:51 by jabenjam         ###   ########.fr       */
+/*   Updated: 2020/09/13 18:25:56 by jabenjam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,37 +101,61 @@ char *get_path(t_all *all, char **envp)
 	return (exec);
 }
 
-int run_exec(t_all *all, char *exec, char **args, char **envp)
-{
-	int ret;
-	pid_t child_pid;
+/*
+** MODE = 1 : REMPLACEMENT DE STDIN/STDOUT PAR LE FD
+** MODE = 2 : RESTAURATION DE STDIN/STDOUT
+*/
 
-	ret = 0;
-	if (all->red == 8 || all->red == 1024 || all->red == 2)
-		all->fd = open("text.txt", O_CREAT | (all->red & O_RDWR));
-	printf("all->fd=%d\n", all->fd);
-	envp = ft_list_to_tab(all->env, 0);
-	if ((child_pid = fork()) == 0)
+int	io_manager_dup(t_all *all, int mode)
+{
+	if (mode == 1)
 	{
 		if (all->red == 2)
 		{
 			dup2(all->fd, STDIN_FILENO);
 			close(all->fd);
 		}
-		else if (all->red == 8 || all->red == 1024)
+		else if (all->red == 522 || all->red == 1538)
 		{
 			dup2(all->fd, STDOUT_FILENO);
 			close(all->fd);
 		}
-		execve(exec, args, 0);
-		if (all->red == 2)
-			dup2(0, STDIN_FILENO);
-		else if (all->red == 8 || all->red == 1024)
-			dup2(1, STDOUT_FILENO);
-		close(all->fd);
 	}
 	else
+	{
+		if (all->red == 2)
+			dup2(0, STDIN_FILENO);
+		else if (all->red == 522 || all->red == 1538)
+			dup2(1, STDOUT_FILENO);
+	}
+	return (0);
+}
+
+int run_exec(t_all *all, char *exec, char **args, char **envp)
+{
+	int ret;
+	pid_t child_pid;
+
+	ret = 0;
+	envp = ft_list_to_tab(all->env, 0);
+	if (all->red == 522 || all->red == 1538 || all->red == 2)
+		all->fd = open("text.txt", all->red);
+	printf("all->fd=%d\n", all->fd);
+	if ((child_pid = fork()) == 0)
+	{
+		io_manager_dup(all, 1);
+		if (all->red == 2 && all->fd != -1)
+			execve(exec, args, envp);
+		else
+			execve(exec, args, envp);
+		io_manager_dup(all, 2);
+	}
+	else
+	{
+		if (all->red)
+			close(all->fd);
 		waitpid(child_pid, &ret, 0);
+	}
 	all->ret->value = ft_itoa(ret / 256);
 	printf("all->ret->value=%s\n", all->ret->value);
 	free_tab(envp);
