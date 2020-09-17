@@ -6,7 +6,7 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/04 14:09:45 by chgilber          #+#    #+#             */
-/*   Updated: 2020/09/13 18:43:09 by jabenjam         ###   ########.fr       */
+/*   Updated: 2020/09/17 13:37:32 by chgilber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void		 writenotfound(t_all *all)
 {
 	if (all->buff[0] == '\0')
 	{
-		free(all->ret->value);
+	//	free(all->ret->value);
 		all->ret->value = ft_itoa(0);
 		all->countpipe--;
 		return ;
@@ -27,7 +27,7 @@ void		 writenotfound(t_all *all)
 	write(1, all->pdir[all->data - all->countpipe],
 		ft_strlen(all->pdir[all->data - all->countpipe]));
 	write(1, ": command not found\n", 21);
-	free(all->ret->value);
+//	free(all->ret->value);
 	all->ret->value = ft_itoa(127);
 	all->countpipe--;
 }
@@ -53,17 +53,17 @@ int		builtins_others(t_all *all)
 	pipe_bkp = all->countpipe;
 	if (ft_strlen(all->buff) > 0 && ft_strcmp(all->dir[0], "cd") == 0)
 	{
-		cd(all->dir, *all);
+		all->ret->value = ft_itoa(cd(all->dir, *all));
 		all->countpipe--;
 	}
 	else if (ft_strlen(all->buff) > 0 && ft_strcmp(all->dir[0], "pwd") == 0)
 	{
-		pwd(all->buff);
+		all->ret->value = ft_itoa(pwd(all->buff));
 		all->countpipe--;
 	}
 	else if (ft_strlen(all->buff) > 0 && ft_strcmp(all->dir[0], "echo") == 0)
 	{
-		echo(*all);
+		all->ret->value = ft_itoa(echo(*all));
 		all->countpipe--;
 	}
 	return (all->countpipe != pipe_bkp ? 1 : 0);
@@ -98,7 +98,12 @@ int	parse_command(t_all *all, char **env)
 //		printf("all->dir[%d]=%s\n--------------------------------\n", i, all->dir[i]);
 //	for (int i = 0; all->pdir[i]; i++)
 //		printf("all->pdir[%d]=%s\n--------------------------------\n", i, all->pdir[i]);
-	if ((ft_strlen(all->buff) > 0 &&
+	if (!(all->pdir[all->data - all->countpipe]))
+	{
+		all->countpipe--;
+		return (1);
+	}
+	if ((ft_strlen(all->pdir[all->data - all->countpipe]) > 0 &&
 		((ft_strcmp(all->dir[0], "cd") == 0) ||
 		ft_strcmp(all->dir[0], "pwd") == 0 ||
 		ft_strcmp(all->dir[0], "echo") == 0)))
@@ -106,10 +111,10 @@ int	parse_command(t_all *all, char **env)
 		builtins_others(all);
 		return (1);
 	}
-	else if ((ft_strlen(all->buff) > 0 &&
+	else if ((ft_strlen(all->pdir[all->data - all->countpipe]) > 0 &&
 			((ft_strcmp(all->dir[0], "env") == 0) ||
-			ft_strncmp(all->buff, "unset", 5) == 0 ||
-			ft_strncmp(all->buff, "export", 6) == 0)))
+			ft_strncmp(all->pdir[all->data - all->countpipe], "unset", 5) == 0 ||
+			ft_strncmp(all->pdir[all->data - all->countpipe], "export", 6) == 0)))
 	{
 		builtins_env(all);
 		return (1);
@@ -136,6 +141,7 @@ void	init_all(t_all *all, char **env)
 		ft_splitmini(all->buff, ';') : ft_split(all->buff, '\0');
 	all->fd = 0;
 	all->fd_backup = 0;
+	all->ret->value = ft_itoa(0);
 	all->red = (O_CREAT | O_TRUNC | O_RDWR);	// '>'
 	//all->red = (O_CREAT | O_APPEND | O_RDWR);	// '>>'
 	//all->red = (O_RDWR);						// '<'
@@ -189,11 +195,11 @@ int	main(int ac, char **av, char **env)
 		}
 		all.dir = ft_split(all.pdir[all.data - all.countpipe], ' ');
 		//		printf("dir {%s} et pdri{%s}, all.countpipe = %d\n", all.dir[1], all.pdir[all.data - all.countpipe], all.countpipe);
-		if	(parse_command(&all, env) == 0)
+		if	(all.countpipe > 0 && parse_command(&all, env) == 0)
 			writenotfound(&all);
 		if (all.countpipe < 1)
 			letsgnl(&all);
 	}
 	//	freelance(&*all.dir, all.buff);
-	return (0);
+	return (0); //check(all.buff)); // retourner l'exit et free
 }

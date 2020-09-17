@@ -6,7 +6,7 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/04 17:17:15 by chgilber          #+#    #+#             */
-/*   Updated: 2020/09/06 14:03:46 by jabenjam         ###   ########.fr       */
+/*   Updated: 2020/09/16 20:20:05 by chgilber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,9 +46,10 @@ int		cd(char **dir, t_all all)
 			write(1, "minishell: cd: ", 15);
 			write(1, dir[1], ft_strlen(dir[1]));
 			write(1, ": No such file or directory\n", 28);
+			return (1);
 		}
 	}
 	else
 		i = cdnoarg(i, all);
-	return (i);
+	return (0);
 }

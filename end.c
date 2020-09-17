@@ -6,7 +6,7 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/04 17:30:12 by chgilber          #+#    #+#             */
-/*   Updated: 2020/08/14 15:10:09 by chgilber         ###   ########.fr       */
+/*   Updated: 2020/09/16 20:24:18 by chgilber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,11 +33,11 @@ int		end(char *buff)
 		}
 		else
 		{
+			i = atoi(arg[1]);
 			freedir(arg);
-			return (atoi(arg[1]));
 		}
 	}
-	return (0);
+	return (i);
 }
 
 /* A FAIRE : REMETTRE A LA LIGNE APRES AFFICHAGE ET NE PAS AFFICHER LE REPERTOIRE SUR ANCIENNE LIGNE
