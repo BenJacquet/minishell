@@ -6,7 +6,7 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/15 15:23:06 by jabenjam          #+#    #+#             */
-/*   Updated: 2020/09/13 18:25:56 by jabenjam         ###   ########.fr       */
+/*   Updated: 2020/09/17 16:53:10 by jabenjam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,18 +52,16 @@ char *is_exec(t_all *all)
 {
 	if (all->dir)
 	{
-		if (ft_strncmp(all->dir[0], "./", 2) == 0 ||
-			ft_strncmp(all->dir[0], "../", 3) == 0)
-		{
+		if (ft_strncmp(all->dir[0], ".", 1) == 0 ||
+			ft_strncmp(all->dir[0], "/", 1) == 0)
 			return (all->dir[0]);
-		}
 		else
 			return (NULL);
 	}
 	return (NULL);
 }
 
-char *get_path(t_all *all, char **envp)
+char *get_path(t_all *all)
 {
 	int i;
 	DIR **dir;
@@ -75,8 +73,8 @@ char *get_path(t_all *all, char **envp)
 	path = NULL;
 	if (!all->dir || !all->dir[0])
 		return (0);
-	if (all->dir && all->dir[0] && all->dir[0][0] == '.')
-		run_exec(all, is_exec(all), all->dir, envp);
+	if (all->dir && all->dir[0] && (all->dir[0][0] == '.' || all->dir[0][0] == '/'))
+		return (is_exec(all));
 	else
 		path = ft_split(ft_getenv(all, "PATH"), ':');
 	if (path)
@@ -134,9 +132,11 @@ int	io_manager_dup(t_all *all, int mode)
 int run_exec(t_all *all, char *exec, char **args, char **envp)
 {
 	int ret;
+	int	status;
 	pid_t child_pid;
 
 	ret = 0;
+	status = 0;
 	envp = ft_list_to_tab(all->env, 0);
 	if (all->red == 522 || all->red == 1538 || all->red == 2)
 		all->fd = open("text.txt", all->red);
@@ -145,10 +145,11 @@ int run_exec(t_all *all, char *exec, char **args, char **envp)
 	{
 		io_manager_dup(all, 1);
 		if (all->red == 2 && all->fd != -1)
-			execve(exec, args, envp);
+			status = execve(exec, args, envp);
 		else
-			execve(exec, args, envp);
-		io_manager_dup(all, 2);
+			status = execve(exec, args, envp);
+		if (status == -1)
+			ft_put_error(strerror(errno), exec, 1);
 	}
 	else
 	{

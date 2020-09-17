@@ -6,7 +6,7 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/04 17:30:12 by chgilber          #+#    #+#             */
-/*   Updated: 2020/09/16 20:24:18 by chgilber         ###   ########.fr       */
+/*   Updated: 2020/09/17 16:58:15 by jabenjam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,9 @@ int		end(char *buff)
 			i++;
 		if (i == ft_strlen(arg[1]))
 		{
-			write(1, "minishell: exit: ", 17);
-			write(1, arg[1], ft_strlen(arg[1]));
-			write(1, ": numeric argument required\n", 28);
+			write(2, "minishell: exit: ", 17);
+			write(2, arg[1], ft_strlen(arg[1]));
+			write(2, ": numeric argument required", 28);
 			freedir(arg);
 			return (255);
 		}
@@ -40,13 +40,15 @@ int		end(char *buff)
 	return (i);
 }
 
-/* A FAIRE : REMETTRE A LA LIGNE APRES AFFICHAGE ET NE PAS AFFICHER LE REPERTOIRE SUR ANCIENNE LIGNE
+/* 
+** A FAIRE : REMETTRE A LA LIGNE APRES AFFICHAGE ET NE PAS AFFICHER LE REPERTOIRE SUR ANCIENNE LIGNE
 ** MODE = 0 : NE PAS AFFICHER VAR
 ** MODE = 1 : AFFICHER VAR
 */
 
 int	ft_put_error(char *error, char *var, int mode)
 {
+	write(2, "minishell:", 10);
 	if (mode == 1)
 	{
 		ft_putstr_fd(" \'", 2);
@@ -55,5 +57,6 @@ int	ft_put_error(char *error, char *var, int mode)
 	}
 	ft_putstr_fd(" ", 2);
 	ft_putstr_fd(error, 2);
+	write(2, "\n", 1);
 	return (-1);
 }
