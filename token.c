@@ -6,15 +6,15 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/12 15:52:23 by chgilber          #+#    #+#             */
-/*   Updated: 2020/09/06 12:40:07 by jabenjam         ###   ########.fr       */
+/*   Updated: 2020/09/18 16:11:23 by chgilber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void skipsquot(t_all all, int *j, int *i)
+void	skipsquot(t_all all, int *j, int *i)
 {
-	int index;
+	int	index;
 
 	index = all.data - all.countpipe;
 	if (all.pdir[index][*i] == '\"')
@@ -28,11 +28,11 @@ void skipsquot(t_all all, int *j, int *i)
 	}
 }
 
-int counttoken(t_all all)
+int		counttoken(t_all all)
 {
-	int token;
-	int i;
-	int j;
+	int	token;
+	int	i;
+	int	j;
 
 	token = 0;
 	all.j = 0;
@@ -55,12 +55,12 @@ int counttoken(t_all all)
 	return (token);
 }
 
-char *finddolar(t_all all, int *i, int j, char **tmp)
+char	*finddolar(t_all all, int *i, int j, char **tmp)
 {
-	char *dol;
+	char	*dol;
 
 	dol = NULL;
-	tmp[0] = malloc(sizeof(char) * *i + 1);
+	tmp[0] = malloc(sizeof(char) * (*i + 1));
 	tmp[0] = ft_strncpy(tmp[0], all.pdir[j], *i);
 	tmp[1] = malloc(sizeof(char) * ft_strlen(all.pdir[j]));
 	ft_bzero(tmp[1], ft_strlen(all.pdir[j]));
@@ -69,7 +69,7 @@ char *finddolar(t_all all, int *i, int j, char **tmp)
 	while (*i < ft_strlen(all.pdir[j]) && all.pdir[j][*i] != ' ')
 	{
 		if (all.pdir[j][*i] == '\'' || all.pdir[j][*i] == '\"')
-			break;
+			break ;
 		tmp[1][all.j] = all.pdir[j][*i];
 		(*i)++;
 		all.j++;
@@ -82,7 +82,7 @@ char *finddolar(t_all all, int *i, int j, char **tmp)
 	return (dol);
 }
 
-int nicedolbro(t_all all, int i, int j, char **tmp)
+int		nicedolbro(t_all all, int i, int j, char **tmp)
 {
 	tmp[3] = finddolar(all, &i, j, tmp);
 	all.j = 0;
@@ -98,11 +98,11 @@ int nicedolbro(t_all all, int i, int j, char **tmp)
 	return (i);
 }
 
-char *dolar(t_all all)
+char	*dolar(t_all all)
 {
-	int i;
-	int j;
-	char *tmp[4];
+	int		i;
+	int		j;
+	char	*tmp[4];
 
 	tmp[3] = NULL;
 	j = all.data - all.countpipe;

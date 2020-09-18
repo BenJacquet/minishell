@@ -6,7 +6,7 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/04 16:18:54 by jabenjam          #+#    #+#             */
-/*   Updated: 2020/09/13 17:46:42 by jabenjam         ###   ########.fr       */
+/*   Updated: 2020/09/18 15:29:14 by chgilber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ typedef struct	s_all
 ** -------------CHARLES---------------------------------------------------------
 */
 
+int				cnt(int i, t_all *all, int here);
 int				get_dir();
 int				end(char *buff);
 int				cd(char **dir, t_all all);
@@ -77,6 +78,7 @@ int				counttoken(t_all all);
 char			*dolar(t_all all);
 int				join(t_all *all, char *buff, int inc, char quote);
 int				silence(t_all all);
+int				joinquote(t_all *all);
 
 /*
 ** -------------BEN------------------------------------------------------------

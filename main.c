@@ -6,7 +6,7 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/04 14:09:45 by chgilber          #+#    #+#             */
-/*   Updated: 2020/09/17 13:37:32 by chgilber         ###   ########.fr       */
+/*   Updated: 2020/09/18 15:34:23 by chgilber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,9 @@ void		 writenotfound(t_all *all)
 		return ;
 	}
 	write(1, "minishell: ", 11);
-	write(1, all->pdir[all->data - all->countpipe],
-		ft_strlen(all->pdir[all->data - all->countpipe]));
+//	write(1, all->pdir[all->data - all->countpipe],
+//		ft_strlen(all->pdir[all->data - all->countpipe]));
+	write(1, all->dir[0] , ft_strlen(all->dir[0]));
 	write(1, ": command not found\n", 21);
 //	free(all->ret->value);
 	all->ret->value = ft_itoa(127);
@@ -96,9 +97,12 @@ int	parse_command(t_all *all, char **env)
 {
 //	for (int i = 0; all->dir[i]; i++)
 //		printf("all->dir[%d]=%s\n--------------------------------\n", i, all->dir[i]);
-//	for (int i = 0; all->pdir[i]; i++)
+
 //		printf("all->pdir[%d]=%s\n--------------------------------\n", i, all->pdir[i]);
-	if (!(all->pdir[all->data - all->countpipe]))
+	joinquote(all);
+//	for (int i = 0; all->dir[i]; i++)
+//		printf("all->dir[%d]=%s\n--------------------------------\n", i, all->dir[i]);
+if (!(all->pdir[all->data - all->countpipe]))
 	{
 		all->countpipe--;
 		return (1);
@@ -184,7 +188,7 @@ int	main(int ac, char **av, char **env)
 	init_all(&all, env);
 	while (check(all.buff) == 1 && all.i > 0)
 	{
-		signal_manager();
+		//signal_manager();
 		env = ft_list_to_tab(all.env, 0);
 		i = counttoken(all);
 		index = 0;
