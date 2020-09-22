@@ -6,7 +6,7 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/04 14:09:45 by chgilber          #+#    #+#             */
-/*   Updated: 2020/09/18 15:34:23 by chgilber         ###   ########.fr       */
+/*   Updated: 2020/09/21 19:03:05 by chgilber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,17 +18,13 @@ void		 writenotfound(t_all *all)
 {
 	if (all->buff[0] == '\0')
 	{
-	//	free(all->ret->value);
 		all->ret->value = ft_itoa(0);
 		all->countpipe--;
 		return ;
 	}
 	write(1, "minishell: ", 11);
-//	write(1, all->pdir[all->data - all->countpipe],
-//		ft_strlen(all->pdir[all->data - all->countpipe]));
 	write(1, all->dir[0] , ft_strlen(all->dir[0]));
 	write(1, ": command not found\n", 21);
-//	free(all->ret->value);
 	all->ret->value = ft_itoa(127);
 	all->countpipe--;
 }
@@ -40,8 +36,8 @@ int			letsgnl(t_all *all)
 	all->i = get_next_line(0, &all->buff);
 	all->countpipe = pipecount(*all, all->buff, ';') + 1;
 	all->data = all->countpipe;
-	//		freedir(all->pdir);
-	//		freedir(all->dir);
+	freedir(all->pdir);
+	freedir(all->dir);
 	all->pdir = (all->countpipe > 1) ?
 		ft_splitmini(all->buff, ';') : ft_split(all->buff, '\0');
 	return (0);
@@ -52,17 +48,17 @@ int		builtins_others(t_all *all)
 	int pipe_bkp;
 
 	pipe_bkp = all->countpipe;
-	if (ft_strlen(all->buff) > 0 && ft_strcmp(all->dir[0], "cd") == 0)
+	if (ft_strcmp(all->dir[0], "cd") == 0)
 	{
 		all->ret->value = ft_itoa(cd(all->dir, *all));
 		all->countpipe--;
 	}
-	else if (ft_strlen(all->buff) > 0 && ft_strcmp(all->dir[0], "pwd") == 0)
+	else if (ft_strcmp(all->dir[0], "pwd") == 0)
 	{
 		all->ret->value = ft_itoa(pwd(all->buff));
 		all->countpipe--;
 	}
-	else if (ft_strlen(all->buff) > 0 && ft_strcmp(all->dir[0], "echo") == 0)
+	else if (ft_strcmp(all->dir[0], "echo") == 0)
 	{
 		all->ret->value = ft_itoa(echo(*all));
 		all->countpipe--;
@@ -85,7 +81,7 @@ int		builtins_env(t_all *all)
 		ft_unset_core(all, all->buff + 6);
 		all->countpipe--;
 	}
-	else if (ft_strlen(all->buff) > 0 && ft_strcmp(all->dir[0], "env") == 0)
+	else if (ft_strcmp(all->dir[0], "env") == 0)
 	{
 		ft_putenv(all->env);
 		all->countpipe--;
@@ -95,18 +91,12 @@ int		builtins_env(t_all *all)
 
 int	parse_command(t_all *all, char **env)
 {
-//	for (int i = 0; all->dir[i]; i++)
-//		printf("all->dir[%d]=%s\n--------------------------------\n", i, all->dir[i]);
-
-//		printf("all->pdir[%d]=%s\n--------------------------------\n", i, all->pdir[i]);
-	joinquote(all);
-//	for (int i = 0; all->dir[i]; i++)
-//		printf("all->dir[%d]=%s\n--------------------------------\n", i, all->dir[i]);
-if (!(all->pdir[all->data - all->countpipe]))
+	if ((!(all->pdir[all->data - all->countpipe])) || (!(all->dir[0])))
 	{
 		all->countpipe--;
 		return (1);
 	}
+	joinquote(all);
 	if ((ft_strlen(all->pdir[all->data - all->countpipe]) > 0 &&
 		((ft_strcmp(all->dir[0], "cd") == 0) ||
 		ft_strcmp(all->dir[0], "pwd") == 0 ||
@@ -123,7 +113,7 @@ if (!(all->pdir[all->data - all->countpipe]))
 		builtins_env(all);
 		return (1);
 	}
-	else if ((all->exec = get_path(all, env)) != NULL)
+	else if ((all->exec = get_path(all)) != NULL)
 	{
 		run_exec(all, all->exec, all->dir, env);
 		all->countpipe--;
@@ -146,9 +136,6 @@ void	init_all(t_all *all, char **env)
 	all->fd = 0;
 	all->fd_backup = 0;
 	all->ret->value = ft_itoa(0);
-	all->red = (O_CREAT | O_TRUNC | O_RDWR);	// '>'
-	//all->red = (O_CREAT | O_APPEND | O_RDWR);	// '>>'
-	//all->red = (O_RDWR);						// '<'
 }
 
 void	handle_sigint(int sig)
@@ -186,7 +173,7 @@ int	main(int ac, char **av, char **env)
 	(void)ac;
 	(void)av;
 	init_all(&all, env);
-	while (check(all.buff) == 1 && all.i > 0)
+	while (check(all.pdir[all.data - all.countpipe], &all) == 1 && all.i > 0)
 	{
 		//signal_manager();
 		env = ft_list_to_tab(all.env, 0);
@@ -198,12 +185,11 @@ int	main(int ac, char **av, char **env)
 			index++;
 		}
 		all.dir = ft_split(all.pdir[all.data - all.countpipe], ' ');
-		//		printf("dir {%s} et pdri{%s}, all.countpipe = %d\n", all.dir[1], all.pdir[all.data - all.countpipe], all.countpipe);
 		if	(all.countpipe > 0 && parse_command(&all, env) == 0)
 			writenotfound(&all);
 		if (all.countpipe < 1)
 			letsgnl(&all);
 	}
-	//	freelance(&*all.dir, all.buff);
-	return (0); //check(all.buff)); // retourner l'exit et free
+		freelance(&all);
+	return (ft_atoi(all.ret->value)); //check(all.buff)); // retourner l'exit et free
 }

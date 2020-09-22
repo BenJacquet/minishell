@@ -6,7 +6,7 @@
 /*   By: chgilber <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/07 16:46:22 by chgilber          #+#    #+#             */
-/*   Updated: 2020/09/17 17:09:47 by chgilber         ###   ########.fr       */
+/*   Updated: 2020/09/21 17:49:11 by chgilber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ int	join(t_all *all, char *buff, int inc, char quote)
 	int	i;
 
 	i = 0;
+	
 	while (buff[i] != quote)
 		i++;
 	all->dir[inc] = malloc(sizeof(char) * i + 2);
@@ -56,7 +57,7 @@ int	printnoquote(t_all all)
 	while (all.dir[i])
 	{
 		write(1, all.dir[i], ft_strlen(all.dir[i]));
-		write(1, " ", 1);
+		silence(all) == 1 ? write(1, " ", 1) : 0;
 		i++;
 	}
 	return (silence(all));
@@ -67,6 +68,7 @@ int	printifquote(int i, t_all all)
 	int	j;
 
 	j = 0;
+	
 	while (all.buff[i])
 	{
 		if (all.buff[i] == ' ')

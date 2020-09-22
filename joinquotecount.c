@@ -6,7 +6,7 @@
 /*   By: chgilber <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/18 11:52:32 by chgilber          #+#    #+#             */
-/*   Updated: 2020/09/18 16:19:49 by chgilber         ###   ########.fr       */
+/*   Updated: 2020/09/20 16:30:43 by chgilber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ int		ifjoincount(char *buff, char quote)
 	int	i;
 
 	i = 0;
+//	printf("count -> [%s]\n", buff);
 	while (buff[i] != quote)
 		i++;
 	return (i + 1);
@@ -52,17 +53,18 @@ int		cnt(int i, t_all *all, int here)
 			i++;
 		if (all->pdir[here][i] == '\'')
 		{
-			i = i + ifjoincount(all->pdir[here] + i + 1, '\'');
+			i = i + ifjoincount(all->pdir[here] + i + 1, '\'') + 1;
 			inc++;
 		}
 		else if (all->pdir[here][i] == '\"')
 		{
-			i = i + ifjoincount(all->pdir[here] + i + 1, '\"');
+			i = i + ifjoincount(all->pdir[here] + i + 1, '\"') + 1;
 			inc++;
 		}
+		else if (all->pdir[here][i])
+			i = i + noquotecount(all->pdir[here] + i, &inc) + 1;
 		else
-			i = i + noquotecount(all->pdir[here] + i, &inc);
-		i++;
+			break ;
 	}
 	return (inc);
 }

@@ -6,7 +6,7 @@
 /*   By: chgilber <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/17 14:07:55 by chgilber          #+#    #+#             */
-/*   Updated: 2020/09/18 16:19:50 by chgilber         ###   ########.fr       */
+/*   Updated: 2020/09/20 16:18:57 by chgilber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ int		noquote(t_all *all, char *buff, int *inc)
 	int	i;
 
 	i = 0;
+//	printf("noquote - > [%s]\n", buff);
 	if (buff[i])
 	{
 		i = buff[0] == ' ' ? 1 : 0;
@@ -64,17 +65,18 @@ int		ifquote(int i, t_all *all, int here)
 			i++;
 		if (all->pdir[here][i] == '\'')
 		{
-			i = i + ifjoin(all, all->pdir[here] + i + 1, inc, '\'');
+			i = i + ifjoin(all, all->pdir[here] + i + 1, inc, '\'') + 1;
 			inc++;
 		}
 		else if (all->pdir[here][i] == '\"')
 		{
-			i = i + ifjoin(all, all->pdir[here] + i + 1, inc, '\"');
+			i = i + ifjoin(all, all->pdir[here] + i + 1, inc, '\"') + 1;
 			inc++;
 		}
+		else if (all->pdir[here][i])
+			i = i + noquote(all, all->pdir[here] + i, &inc) + 1;
 		else
-			i = i + noquote(all, all->pdir[here] + i, &inc);
-		i++;
+			break ;
 	}
 	return (all->stop);
 }

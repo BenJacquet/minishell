@@ -6,13 +6,13 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/04 17:30:12 by chgilber          #+#    #+#             */
-/*   Updated: 2020/09/17 16:58:15 by jabenjam         ###   ########.fr       */
+/*   Updated: 2020/09/21 15:36:14 by chgilber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int		end(char *buff)
+int		end(char *buff, t_all *all)
 {
 	int		i;
 	char	**arg;
@@ -28,16 +28,16 @@ int		end(char *buff)
 			write(2, "minishell: exit: ", 17);
 			write(2, arg[1], ft_strlen(arg[1]));
 			write(2, ": numeric argument required", 28);
-			freedir(arg);
-			return (255);
+			all->ret->value = ft_itoa(255);
 		}
 		else
 		{
-			i = atoi(arg[1]);
-			freedir(arg);
+			free(all->ret->value);
+			all->ret->value = ft_strdup(arg[1]);
 		}
 	}
-	return (i);
+	freedir(arg);
+	return (0);
 }
 
 /* 
