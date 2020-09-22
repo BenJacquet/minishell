@@ -6,13 +6,14 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/04 16:18:54 by jabenjam          #+#    #+#             */
-/*   Updated: 2020/09/18 15:29:14 by chgilber         ###   ########.fr       */
+/*   Updated: 2020/09/21 15:49:30 by chgilber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
+# include <errno.h>
 # include <unistd.h>
 # include <stdio.h>
 # include <stdlib.h>
@@ -25,6 +26,7 @@
 # include <fcntl.h>
 # include "GNL/get_next_line.h"
 # include "libft/libft.h"
+
 
 typedef struct	s_env
 {
@@ -60,11 +62,11 @@ typedef struct	s_all
 
 int				cnt(int i, t_all *all, int here);
 int				get_dir();
-int				end(char *buff);
+int				end(char *buff, t_all *all);
 int				cd(char **dir, t_all all);
-int				check(char *buff);
+int				check(char *buff, t_all *all);
 int				checkquote(char *buff);
-int				freelance(char **dir, char *buff);
+int				freelance(t_all *all);
 int				freedir(char **dir);
 char			**newdir(char **dir, char *buff);
 int				pwd(char *buff);
@@ -79,12 +81,13 @@ char			*dolar(t_all all);
 int				join(t_all *all, char *buff, int inc, char quote);
 int				silence(t_all all);
 int				joinquote(t_all *all);
+int				croco(t_all *all);
 
 /*
 ** -------------BEN------------------------------------------------------------
 */
 
-char			*get_path(t_all *all, char **envp);
+char			*get_path(t_all *all);
 char			*find_exec(t_all *all, DIR *dir, char *path);
 char			*make_exec(t_all *all, char *path);
 int				run_exec(t_all *all, char *exec, char **args, char **envp);
