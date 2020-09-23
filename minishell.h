@@ -6,7 +6,7 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/04 16:18:54 by jabenjam          #+#    #+#             */
-/*   Updated: 2020/09/23 15:00:26 by jabenjam         ###   ########.fr       */
+/*   Updated: 2020/09/23 15:17:45 by jabenjam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,5 +128,7 @@ int				parse_command(t_all *all, char **env);
 int				builtins_env(t_all *all);
 int				builtins_others(t_all *all);
 int				io_manager_dup(t_all *all, int mode);
+int				handle_files(t_all *all);
+int				which_redirection(t_all *all, char *token);
 
 #endif
