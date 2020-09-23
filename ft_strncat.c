@@ -1,7 +1,7 @@
 
 #include "minishell.h"
 
-char	*ft_strncat(char *dest, const char *src, size_t dstsize)
+char	*ft_strncat(char *dest, char *src, int dstsize)
 {
 	size_t		i;
 	size_t		o;
