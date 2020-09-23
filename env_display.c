@@ -6,7 +6,7 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/08 18:26:01 by jabenjam          #+#    #+#             */
-/*   Updated: 2020/09/06 14:02:07 by jabenjam         ###   ########.fr       */
+/*   Updated: 2020/09/23 13:21:14 by jabenjam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,53 +14,102 @@
 
 void ft_putenv(t_env *env)
 {
-    int i;
+	int i;
 	char **new;
 
-    i = 0;
+	i = 0;
 	new = ft_list_to_tab(env, 0);
-    while (new[i] != 0)
-    {
-        ft_putstr_fd(new[i++], 1);
-        write(1, "\n", 1);
-    }
+	while (new[i] != 0)
+	{
+		ft_putstr_fd(new[i++], 1);
+		write(1, "\n", 1);
+	}
 	free_tab(new);
 }
 
 char *remove_space(char *str)
 {
-    int i;
-    int j;
-    char *new;
+	int i;
+	int j;
+	char *new;
 
-    i = 0;
-    j = 0;
-    if (!(new = malloc(sizeof(char) * (ft_strlen(str) + 1))))
-        return (NULL);
-    //printf("str=%s\n", str);
-    while (str[j] != '\0')
-    {
-        while (str[j] != '\0' && str[j] == ' ' && i == 0)
-        {
-            //printf("str[%d+%d]=%d\n", i, j, str[i+j]);
-            j++;
-        }
-        while (str[j] != '\0' && str[j] != ' ')
-            new[i++] = str[j++];
-        if (str[j] != '\0' && str[j] == ' ' && (j) < ft_strlen(str))
-        {
-            new[i++] = ' ';
-            while (str[j] != '\0' && str[j] == ' ')
-            j++;
-        }
-    }
-    new[i] = '\0';
-    free(str);
-    //printf("new=%s\n",new);
-    return (new);
+	i = 0;
+	j = 0;
+	if (!(new = malloc(sizeof(char) * (ft_strlen(str) + 1))))
+		return (NULL);
+	while (str[j] != '\0')
+	{
+		while (str[j] != '\0' && str[j] == ' ' && i == 0)
+			j++;
+		while (str[j] != '\0' && str[j] != ' ')
+			new[i++] = str[j++];
+		if (str[j] != '\0' && str[j] == ' ' && (j) < ft_strlen(str))
+		{
+			new[i++] = ' ';
+			while (str[j] != '\0' && str[j] == ' ')
+				j++;
+		}
+	}
+	new[i] = '\0';
+	free(str);
+	return (new);
+}
+/*
+t_env	*get_biggest(char *name, t_env *current, t_env *biggest)
+{
+	int len;
+
+	len = 0;
+	biggest = NULL;
+	while (current != NULL)
+	{
+		if (!ft_strncmp(name, current->name, ft_strlen(current->name)))
+		{
+			if (ft_strlen(current->name) > len)
+			{
+				biggest = current;
+				len = ft_strlen(current->name);
+			}
+		}
+		current = current->next;
+	}
+	return (biggest);
 }
 
-char *ft_getenv(t_all *all, char *name)
+char *ft_getenv(t_all *all, char *name, int mode)
+{
+	char *value;
+	t_env *current;
+
+	value = NULL;
+	if (all->env)
+		current = all->env;
+	if (name == NULL || name == NULL)
+		return (NULL);
+	if (name[0] == '?')
+		return (all->ret->value);
+	value = ft_getenv2(name, current, mode);
+	return (value);
+}*/
+
+/*
+** MODE = 0 : pas de quote donc token tel quel
+** MODE = 1 : double quote donc token trim
+*/
+
+char *ft_getenv2(char *name, t_env *current, int mode)
+{
+	if (!(ft_strcmp(name, current->name)))
+	{
+		if (mode == 0)
+			return (ft_strdup(current->value));
+		else
+			return (remove_space(ft_strdup(current->value)));
+	}
+	return (NULL);
+}
+
+char *ft_getenv(t_all *all, char *name, int mode)
 {
     int i;
     int j;
@@ -71,16 +120,16 @@ char *ft_getenv(t_all *all, char *name)
     value = NULL;
 	if (all->env)
 		current = all->env;
-    if (name == NULL || name == NULL)
+    if (name == NULL)
         return (NULL);
 	if (name[0] == '?')
 		return (all->ret->value);
     while (current != NULL)
     {
         j = 0;
-        if (!(ft_strncmp(name, current->name, ft_strlen(current->name))))
+        if (!(ft_strcmp(name, current->name)))
         {
-            value = remove_space(ft_strdup(current->value));
+            value = ft_getenv2(name, current, mode);
             break;
         }
         current = current->next;

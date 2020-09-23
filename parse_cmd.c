@@ -6,7 +6,7 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/05 15:21:37 by jabenjam          #+#    #+#             */
-/*   Updated: 2020/08/05 15:28:10 by jabenjam         ###   ########.fr       */
+/*   Updated: 2020/09/23 12:13:46 by jabenjam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,14 +40,14 @@ int		builtins_env(t_all *all)
 	int pipe_bkp;
 
 	pipe_bkp = all->countpipe;
-	if (ft_strncmp(all->buff, "export", 6) == 0)
+	if (ft_strcmp(all->dir[0], "export") == 0)
 	{
-		ft_export_core(all, all->buff + 6);
+		ft_export_core(all);
 		all->countpipe--;
 	}
-	else if (ft_strncmp(all->buff, "unset", 5) == 0)
+	else if (ft_strcmp(all->dir[0], "unset") == 0)
 	{
-		ft_unset_core(all, all->buff + 6);
+		ft_unset_core(all);
 		all->countpipe--;
 	}
 	else if (ft_strcmp(all->dir[0], "env") == 0)

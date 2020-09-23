@@ -6,7 +6,7 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/08 18:01:17 by jabenjam          #+#    #+#             */
-/*   Updated: 2020/09/11 12:46:11 by jabenjam         ###   ########.fr       */
+/*   Updated: 2020/09/23 12:21:23 by jabenjam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,51 +110,24 @@ int ft_export_null(t_env *env)
 	return (0);
 }
 
-int	join_if_quote(int i, t_all all)
+int ft_export_core(t_all *all)
 {
-	int	j;
-
-	j = 0;
-	while (all.buff[i])
-	{
-		if (all.buff[i] == '\'')
-		{
-			i = i + join(&all, all.buff + i + 1, j, '\'');
-			j++;
-		}
-		else if (all.buff[i] == '\"')
-		{
-			i = i + join(&all, all.buff + i + 1, j, '\"');
-			j++;
-		}
-		i++;
-	}
-	return (i);
-}
-
-int		ft_export_core(t_all *all, char *var)
-{
-    int i;
-    char **vars;
+	int i;
 	t_env *var_lst;
 
-    i = 0;
-    if (var == NULL || var[i] == '\0')
-        return (ft_export_null(all->env));
-    var_lst = ft_tab_to_list(vars = ft_split(var, ' '));
-    while (vars[i])
-    {
-        if (ft_export_check_name(vars[i]) >= 0)
-		{
-			expand_value(var_lst, all);
+	i = 1;
+	if (all->dir[1] == NULL || all->dir[1][0] == '\0')
+		return (ft_export_null(all->env));
+	var_lst = ft_tab_to_list(&all->dir[1]);
+	while (all->dir[i])
+	{
+		if (ft_export_check_name(all->dir[i]) >= 0)
 			all->env = ft_export_find_name(var_lst, all->env);
-		}
 		i++;
 		var_lst = var_lst->next;
-    }
+	}
 	//free de var_lst a ajouter;
-    free_tab(vars);
-    return (0);
+	return (0);
 }
 
 /*int ft_export_core(t_all *all, char *var)

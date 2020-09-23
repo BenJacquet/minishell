@@ -6,7 +6,7 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/04 16:18:54 by jabenjam          #+#    #+#             */
-/*   Updated: 2020/09/21 15:49:30 by chgilber         ###   ########.fr       */
+/*   Updated: 2020/09/23 12:17:08 by jabenjam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,14 +93,15 @@ char			*get_path(t_all *all);
 char			*find_exec(t_all *all, DIR *dir, char *path);
 char			*make_exec(t_all *all, char *path);
 int				run_exec(t_all *all, char *exec, char **args, char **envp);
-char			*ft_getenv(t_all *all, char *name);
+char			*ft_getenv(t_all *all, char *name, int mode);
+char			*ft_getenv2(char *name, t_env *current, int mode);
 void			ft_putenv(t_env *env);
-int				ft_export_core(t_all *all, char *var);
+int				ft_export_core(t_all *all);
 int				ft_export_null(t_env *env);
 t_env			*ft_export_edit(t_env *var, t_env *env);
 int				ft_export_check_name(char *var);
 t_env		 	*ft_export_find_name(t_env *var, t_env *env);
-void			ft_unset_core(t_all *all, char *var);
+void			ft_unset_core(t_all *all);
 int				ft_unset_check_name(char *var);
 t_env			*ft_unset_find_name(char *var, t_env *current);
 void			ft_puttab(char **tab);
