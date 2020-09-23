@@ -3,8 +3,8 @@
 
 char	*ft_strncat(char *dest, char *src, int dstsize)
 {
-	size_t		i;
-	size_t		o;
+	int		i;
+	int		o;
 
 	o = 0;
 	i = 0;
