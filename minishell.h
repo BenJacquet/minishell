@@ -6,7 +6,7 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/04 16:18:54 by jabenjam          #+#    #+#             */
-/*   Updated: 2020/09/23 12:17:08 by jabenjam         ###   ########.fr       */
+/*   Updated: 2020/09/23 15:00:26 by jabenjam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,7 @@ int				silence(t_all all);
 int				joinquote(t_all *all);
 int				croco(t_all *all);
 int				parse_command(t_all *all, char **env);
+char			*ft_strncat(char *s1, char *s2, int len);
 
 /*
 ** -------------BEN------------------------------------------------------------
