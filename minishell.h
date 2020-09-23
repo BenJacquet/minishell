@@ -65,6 +65,7 @@ int				get_dir();
 int				end(char *buff, t_all *all);
 int				cd(char **dir, t_all all);
 int				check(char *buff, t_all *all);
+int				checkonlyret(char *buff, t_all *all);
 int				checkquote(char *buff);
 int				freelance(t_all *all);
 int				freedir(char **dir);
@@ -82,6 +83,7 @@ int				join(t_all *all, char *buff, int inc, char quote);
 int				silence(t_all all);
 int				joinquote(t_all *all);
 int				croco(t_all *all);
+int				parse_command(t_all *all, char **env);
 
 /*
 ** -------------BEN------------------------------------------------------------

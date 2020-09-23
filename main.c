@@ -31,94 +31,19 @@ void		 writenotfound(t_all *all)
 
 int			letsgnl(t_all *all)
 {
+	int ok;
+
+	ok = checkonlyret(all->pdir[0], all);
 	get_dir();
 	free(all->buff);
 	all->i = get_next_line(0, &all->buff);
 	all->countpipe = pipecount(*all, all->buff, ';') + 1;
 	all->data = all->countpipe;
+	if (ok == 1)
+		freedir(all->dir);
 	freedir(all->pdir);
-	freedir(all->dir);
 	all->pdir = (all->countpipe > 1) ?
 		ft_splitmini(all->buff, ';') : ft_split(all->buff, '\0');
-	return (0);
-}
-
-int		builtins_others(t_all *all)
-{
-	int pipe_bkp;
-
-	pipe_bkp = all->countpipe;
-	if (ft_strcmp(all->dir[0], "cd") == 0)
-	{
-		all->ret->value = ft_itoa(cd(all->dir, *all));
-		all->countpipe--;
-	}
-	else if (ft_strcmp(all->dir[0], "pwd") == 0)
-	{
-		all->ret->value = ft_itoa(pwd(all->buff));
-		all->countpipe--;
-	}
-	else if (ft_strcmp(all->dir[0], "echo") == 0)
-	{
-		all->ret->value = ft_itoa(echo(*all));
-		all->countpipe--;
-	}
-	return (all->countpipe != pipe_bkp ? 1 : 0);
-}
-
-int		builtins_env(t_all *all)
-{
-	int pipe_bkp;
-
-	pipe_bkp = all->countpipe;
-	if (ft_strncmp(all->buff, "export", 6) == 0)
-	{
-		ft_export_core(all, all->buff + 6);
-		all->countpipe--;
-	}
-	else if (ft_strncmp(all->buff, "unset", 5) == 0)
-	{
-		ft_unset_core(all, all->buff + 6);
-		all->countpipe--;
-	}
-	else if (ft_strcmp(all->dir[0], "env") == 0)
-	{
-		ft_putenv(all->env);
-		all->countpipe--;
-	}
-	return (all->countpipe != pipe_bkp ? 1 : 0);
-}
-
-int	parse_command(t_all *all, char **env)
-{
-	if ((!(all->pdir[all->data - all->countpipe])) || (!(all->dir[0])))
-	{
-		all->countpipe--;
-		return (1);
-	}
-	joinquote(all);
-	if ((ft_strlen(all->pdir[all->data - all->countpipe]) > 0 &&
-		((ft_strcmp(all->dir[0], "cd") == 0) ||
-		ft_strcmp(all->dir[0], "pwd") == 0 ||
-		ft_strcmp(all->dir[0], "echo") == 0)))
-	{
-		builtins_others(all);
-		return (1);
-	}
-	else if ((ft_strlen(all->pdir[all->data - all->countpipe]) > 0 &&
-			((ft_strcmp(all->dir[0], "env") == 0) ||
-			ft_strncmp(all->pdir[all->data - all->countpipe], "unset", 5) == 0 ||
-			ft_strncmp(all->pdir[all->data - all->countpipe], "export", 6) == 0)))
-	{
-		builtins_env(all);
-		return (1);
-	}
-	else if ((all->exec = get_path(all)) != NULL)
-	{
-		run_exec(all, all->exec, all->dir, env);
-		all->countpipe--;
-		return (1);
-	}
 	return (0);
 }
 
@@ -190,6 +115,6 @@ int	main(int ac, char **av, char **env)
 		if (all.countpipe < 1)
 			letsgnl(&all);
 	}
-		freelance(&all);
-	return (ft_atoi(all.ret->value)); //check(all.buff)); // retourner l'exit et free
+	return (freelance(&all));
+//	return (ft_atoi(all.ret->value));
 }

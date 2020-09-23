@@ -21,9 +21,10 @@ int	silence(t_all all)
 	if (all.dir[1])
 	{
 		len = ft_strlen(all.dir[1]);
-		i = (ft_strncmp(all.dir[1], "-n ", len) == 0) ||
-			(ft_strncmp(all.dir[1], "'-n' ", len) == 0) ||
-			(ft_strncmp(all.dir[1], "\"-n\" ", len) == 0) ? 0 : 1;
+		i =  ((len == 3 && (ft_strncmp(all.dir[1], "-n ", 3) == 0)) ||
+		 (len == 2 && (ft_strncmp(all.dir[1], "-n", 2) == 0)) ||
+		 (len == 4 && (ft_strncmp(all.dir[1], "'-n'", 4) == 0)) ||
+			(len == 4 && (ft_strncmp(all.dir[1], "\"-n\"", 4) == 0))) ? 0 : 1;
 	}
 	return (i);
 }
@@ -104,8 +105,8 @@ int	echo(t_all all)
 					1) || (checkdquote(all.buff + i) % 2 == 0 &&
 						checkdquote(all.buff + i) > 1))
 		{
-			freedir(&*all.dir);
-			all.dir = newdir(&*all.dir, all.buff + i);
+		//	freedir(all.dir);
+			all.dir = newdir(all.dir, all.buff + i);
 			all.stop = printifquote(i, all);
 		}
 		else

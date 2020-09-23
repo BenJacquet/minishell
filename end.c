@@ -23,6 +23,7 @@ int		end(char *buff, t_all *all)
 	{
 		while (arg[1][i] && ft_isdigit(arg[1][i]) == 0)
 			i++;
+		free(all->ret->value);
 		if (i == ft_strlen(arg[1]))
 		{
 			write(2, "minishell: exit: ", 17);
@@ -31,10 +32,7 @@ int		end(char *buff, t_all *all)
 			all->ret->value = ft_itoa(255);
 		}
 		else
-		{
-			free(all->ret->value);
 			all->ret->value = ft_strdup(arg[1]);
-		}
 	}
 	freedir(arg);
 	return (0);

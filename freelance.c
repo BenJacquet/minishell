@@ -17,7 +17,7 @@ int		freedir(char **dir)
 	int	i;
 
 	i = 0;
-	if (dir)
+	if (dir && dir != NULL)
 	{
 		if (dir[0])
 		{
@@ -37,11 +37,11 @@ int		freelance(t_all *all)
 	int	i;
 
 	i = 0;
-	if (all->dir)
+	if (all->dir && (all->dir != NULL))
 		freedir(all->dir);
 	if (all->buff)
 		free(all->buff);
 	if (all->pdir)
 		freedir(all->pdir);
-	return (0);
+	return (ft_atoi(all->ret->value));
 }
