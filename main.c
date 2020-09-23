@@ -39,9 +39,10 @@ int			letsgnl(t_all *all)
 	all->i = get_next_line(0, &all->buff);
 	all->countpipe = pipecount(*all, all->buff, ';') + 1;
 	all->data = all->countpipe;
-	if (ok == 1)
-		freedir(all->dir);
+//	freedir(all->dir);
+//	all->dir = NULL;
 	freedir(all->pdir);
+	all->pdir = NULL;
 	all->pdir = (all->countpipe > 1) ?
 		ft_splitmini(all->buff, ';') : ft_split(all->buff, '\0');
 	return (0);
@@ -49,9 +50,8 @@ int			letsgnl(t_all *all)
 
 void	init_all(t_all *all, char **env)
 {
-	all->i = 0;
-	all->dir = NULL;
 	all->i = get_next_line(0, &all->buff);
+	all->dir = ft_split(all->buff, ' ');
 	all->env = ft_tab_to_list(env);
 	all->ret = new_elem("?=0");
 	all->countpipe = pipecount(*all, all->buff, ';') + 1;
@@ -109,7 +109,8 @@ int	main(int ac, char **av, char **env)
 			all.pdir[all.data - all.countpipe] =  dolar(all);
 			index++;
 		}
-		all.dir = ft_split(all.pdir[all.data - all.countpipe], ' ');
+		
+	//	all.dir = ft_split(all.pdir[all.data - all.countpipe], ' ');
 		if	(all.countpipe > 0 && parse_command(&all, env) == 0)
 			writenotfound(&all);
 		if (all.countpipe < 1)

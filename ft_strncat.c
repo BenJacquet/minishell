@@ -15,7 +15,6 @@ char	*ft_strncat(char *dest, char *src, int dstsize)
 		dest[i + o] = src[o];
 		o++;
 	}
-	if (o != dstsize)
-		dest[i + o] = '\0';
+	dest[i + o] = '\0';
 	return (dest);
 }

@@ -60,7 +60,7 @@ int		builtins_env(t_all *all)
 
 int	parse_command(t_all *all, char **env)
 {
-	if ((!(all->pdir[all->data - all->countpipe])) || (!(all->dir[0])))
+	if ((!(all->pdir[all->data - all->countpipe])))
 	{
 		all->countpipe--;
 		return (1);
@@ -82,6 +82,7 @@ int	parse_command(t_all *all, char **env)
 		all->countpipe--;
 		return (1);
 	}
+//	printf(" parse[%s]\n" , all->pdir[all->data - all->countpipe]);
 	return (0);
 }
 

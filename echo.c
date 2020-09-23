@@ -97,6 +97,7 @@ int	echo(t_all all)
 	int	i;
 
 	all.buff = all.pdir[all.data - all.countpipe];
+	printf("[%s]\n" , all.buff);
 	i = ft_strlen(all.dir[0]) + 1;
 	all.stop = 1;
 	if (all.dir[1])

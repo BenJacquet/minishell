@@ -42,15 +42,32 @@ int		noquote(t_all *all, char *buff, int *inc)
 	return (i);
 }
 
-int		ifjoin(t_all *all, char *buff, int inc, char quote)
+int		ifjoin(t_all *all, char *buff, int *inc, char quote)
 {
-	int	i;
+	int		i;
+	char	*tmp;
 
 	i = 0;
 	while (buff[i] != quote)
 		i++;
-	all->dir[inc] = malloc(sizeof(char) * i + 2);
-	all->dir[inc] = ft_strncpy(all->dir[inc], buff, i);
+	all->dir[*inc] = malloc(sizeof(char) * i + ((*inc > 0) ? ft_strlen(all->dir[*inc - 1]) + 1  : 2));
+	if (*inc > 1 && all->dir[*inc - 1][ft_strlen(all->dir[*inc - 1]) - 1] == ' ')
+		all->dir[*inc] = ft_strncpy(all->dir[*inc], buff, i);
+	else if (*inc > 1)
+	{
+		(*inc)--;
+		tmp = ft_strdup(all->dir[*inc]);
+//		printf("buff = -> [%s], i{%d}\n", buff, i);
+		free(all->dir[*inc]);
+		free(all->dir[*inc + 1]);
+	all->dir[*inc] = malloc(sizeof(char) * i + ft_strlen(tmp) + 1);
+		all->dir[*inc] = ft_strncpy(all->dir[*inc], tmp, ft_strlen(tmp));
+		all->dir[*inc] = ft_strncat(all->dir[*inc], buff, i);
+//		printf("dir[inc] = -> [%s],\n", all->dir[*inc]);
+		free(tmp);
+	}
+	else
+		all->dir[*inc] = ft_strncpy(all->dir[*inc], buff, i);
 	return (i + 1);
 }
 
@@ -65,12 +82,12 @@ int		ifquote(int i, t_all *all, int here)
 			i++;
 		if (all->pdir[here][i] == '\'')
 		{
-			i = i + ifjoin(all, all->pdir[here] + i + 1, inc, '\'') + 1;
+			i = i + ifjoin(all, all->pdir[here] + i + 1, &inc, '\'') + 1;
 			inc++;
 		}
 		else if (all->pdir[here][i] == '\"')
 		{
-			i = i + ifjoin(all, all->pdir[here] + i + 1, inc, '\"') + 1;
+			i = i + ifjoin(all, all->pdir[here] + i + 1, &inc, '\"') + 1;
 			inc++;
 		}
 		else if (all->pdir[here][i])
@@ -88,14 +105,16 @@ int		joinquote(t_all *all)
 
 	here = all->data - all->countpipe;
 	i = 0;
+	freedir(all->dir);
 	if ((checksquote(all->pdir[here] + i) % 2 == 0 &&
 				checksquote(all->pdir[here] + i) > 1) ||
 			(checkdquote(all->pdir[here] + i) % 2 == 0 &&
 			checkdquote(all->pdir[here] + i) > 1))
 	{
-		freedir(all->dir);
 		all->dir = newdirquote(all->dir, cnt(i, all, here));
 		all->stop = ifquote(i, all, here);
 	}
+	else
+		all->dir = ft_split(all->pdir[all->data - all->countpipe], ' ');
 	return (0);
 }
