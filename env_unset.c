@@ -6,7 +6,7 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/05 12:35:39 by jabenjam          #+#    #+#             */
-/*   Updated: 2020/09/23 12:16:56 by jabenjam         ###   ########.fr       */
+/*   Updated: 2020/09/25 12:35:59 by jabenjam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,6 @@ int ft_unset_check_name(char *var)
 
 void ft_unset_core(t_all *all)
 {
-	char **vars;
 	int i;
 
 	i = 0;
@@ -77,6 +76,5 @@ void ft_unset_core(t_all *all)
 			all->env = ft_unset_find_name(all->dir[i + 1], all->env);
 		i++;
 	}
-	free_tab(vars);
 	return;
 }
