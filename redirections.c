@@ -6,15 +6,69 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/23 14:38:04 by jabenjam          #+#    #+#             */
-/*   Updated: 2020/09/25 17:00:57 by jabenjam         ###   ########.fr       */
+/*   Updated: 2020/09/27 18:47:50 by jabenjam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int		ft_isinset(const char *set, char c)
+t_red		*new_red(t_red *head, int red, char *filename)
 {
-	int		i;
+	t_red *new;
+	t_red *current;
+
+	new = NULL;
+	current = head;
+	if (!(new = malloc(sizeof(t_red))))
+		return (NULL);
+	new->red = red;
+	new->fd = 0;
+	new->filename = filename;
+	new->next = NULL;
+	if (!head)
+		head = new;
+	else
+	{
+		while (current->next != NULL)
+			current = current->next;
+		current->next = new;
+	}
+	printf("\033[1;32m-----------------\nNEW_RED:\nfilename=[%s]\nred=[%d]\nfd=[%d]\n-----------------\n\033[0m", new->filename, new->red, new->fd);
+	return (head);
+}
+
+void free_red(t_red *red)
+{
+	if (red)
+	{
+		if (red->filename != NULL)
+			free(red->filename);
+		free(red);
+	}
+}
+
+t_red *process_reds(t_red *reds)
+{
+	t_red *current;
+
+	current = reds;
+	if (reds)
+	{
+		while (reds->next != NULL)
+		{
+			current = reds;
+			reds = reds->next;
+			open(current->filename, current->red);
+			close(current->fd);
+			free_red(current);
+		}
+	}
+	return (reds);
+}
+
+int ft_isinset(const char *set, char c)
+{
+	int i;
 
 	i = 0;
 	while (set[i])
@@ -47,89 +101,82 @@ int which_redirection(t_all *all, char *token)
 		return (0);
 }
 
-char		*ft_dup_until_red(char *src)
+char *ft_dup_until_red(char *src)
 {
-	int		i;
-	char	*dup;
+	int i;
+	char *dup;
 
 	i = 0;
-	while (src[i])
+	dup = NULL;
+	if (src[i])
 	{
-		if (ft_isinset("<>", src[i]) == 1)
-			break ;
-		i++;
+		while (src[i])
+		{
+			if (ft_isinset("<>", src[i]) == 1)
+				break;
+			i++;
+		}
+		dup = malloc(sizeof(char) * (i + 1));
+		i = 0;
+		while (src[i] && src[i] != '<' && src[i] != '>')
+		{
+			dup[i] = src[i];
+			i++;
+		}
+		dup[i] = '\0';
 	}
-	dup = malloc(sizeof(char) * (i + 1));
-	i = 0;
-	while (src[i] && src[i] != '<' && src[i] != '>')
-	{
-		dup[i] = src[i];
-		i++;
-	}
-	dup[i] = '\0';
 	return (dup);
 }
 
-int		sticky_redirections(t_all *all, int *i, int *start)
+char *get_filename(char **token, int *i, int *start)
 {
-	char	*filename;
-	*start = 0;
-	while (all->dir[*i][*start] &&
-			(*start += (which_redirection(all, all->dir[*i] + *start) != 0)))
+	char *filename;
+
+	filename = NULL;
+	while (filename == NULL)
 	{
-		filename = ft_dup_until_red(all->dir[*i] + *start);
-		//printf("filename=[%s]\n", filename);
-		all->fd = open(filename, all->red);
-		//printf("sticky : all->fd=[%d]\n", all->fd);
-		*start += ft_strlen(filename);
-		//printf("start=[%d]\n", *start);
-		if (ft_strlen(filename) == 0 || all->dir[*i][*start + 1] == '\0')
+		if (token[*i] == NULL)
+			break ;
+		if (token[*i][*start] == '\0')
 		{
-			free(filename);
+			(*i)++;
+			*start = 0;
+		}
+		if (token[*i][*start] != '\0')
+		{
+			filename = ft_dup_until_red(token[*i] + *start);
+			*start += ft_strlen(filename);
 			break ;
 		}
-		free(filename);
-		if (all->dir[*i][*start] != '\0')
-			close(all->fd);
 	}
-	//printf("\033[0;31msticky redirs inside: all->dir[%d][%d]=[%c]\n\033[0m", *i, *start, all->dir[*i][*start]);
-	//if (all->dir[*i][*start] == '\0' && all->red)
-	return (0);
+	return (filename);
 }
 
 int handle_redirections(t_all *all)
 {
 	int i;
 	int start;
+	char *filename;
 
 	i = 0;
 	start = 0;
+	filename = NULL;
 	if (!all->dir)
 		return (-1);
 	while (all->dir[i])
 	{
-		//printf("\033[0;33mbefore check : all->dir[%d]=[%s]\n\033[0m", i, all->dir[i]);
-		if ((start = which_redirection(all, all->dir[i])) != 0)
+		start = 0;
+		while (all->dir[i][start] != '\0')
 		{
-			//printf("found redir : all->dir[%d] + %d =[%s]\n", i, start, all->dir[i] + start);
-			if (all->dir[i][start] != '\0')
-			{
-				//printf("sticky redirs : all->dir[%d][%d]=[%c]\n", i, start, all->dir[i][start]);
-				//printf("all->dir[i][start]=%d\n", all->dir[i][start]);
-				sticky_redirections(all, &i, &start);
-			}
-			if ((all->dir[i][start] == '\0' && all->dir[i + 1]) ||
-				(all->dir[i + 1] && ft_isinset("<>", all->dir[i][start])))
-			{
-				//printf("one redir : all->dir[%d] + [%d]=[%s]\n", i, start, all->dir[i] + start);
-				//printf("one redir : all->dir[%d + 1]=[%s]\n", i, all->dir[i]);
-				all->fd = open(all->dir[i + 1], all->red);
-			}
-			if (all->dir[i + 1] != 0)
-				close(all->fd);
+			start += which_redirection(all, all->dir[i] + start);
+			if (all->red == 0)
+				start++;
+			filename = get_filename(all->dir, &i, &start);
+			all->reds = new_red(all->reds, all->red, filename);
 		}
 		i++;
 	}
-	//printf("all->red=%d\nall->fd=[%d]\n", all->red, all->fd);
+	all->reds = process_reds(all->reds);
+	printf("\033[1;31m-----------------\nLAST_RED:\nfilename=[%s]\nred=[%d]\nfd=[%d]\n-----------------\n\033[0m", all->reds->filename, all->reds->red, all->reds->fd);
 	return (1);
 }
