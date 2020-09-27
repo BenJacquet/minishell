@@ -6,7 +6,7 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/08 18:26:01 by jabenjam          #+#    #+#             */
-/*   Updated: 2020/09/23 13:21:14 by jabenjam         ###   ########.fr       */
+/*   Updated: 2020/09/27 12:43:46 by jabenjam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,8 +120,8 @@ char *ft_getenv(t_all *all, char *name, int mode)
     value = NULL;
 	if (all->env)
 		current = all->env;
-    if (name == NULL)
-        return (NULL);
+//    if (name == NULL)
+//        return (NULL);
 	if (name[0] == '?')
 		return (all->ret->value);
     while (current != NULL)
@@ -134,5 +134,6 @@ char *ft_getenv(t_all *all, char *name, int mode)
         }
         current = current->next;
     }
+	value = (ft_strcmp(name, current->name) ? ft_strdup("\0") : value);
     return (value);
 }
