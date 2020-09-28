@@ -6,7 +6,7 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/15 15:23:06 by jabenjam          #+#    #+#             */
-/*   Updated: 2020/09/17 16:53:10 by jabenjam         ###   ########.fr       */
+/*   Updated: 2020/09/28 16:17:49 by jabenjam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ char *find_exec(t_all *all, DIR *dir, char *path)
 		{
 			if (ft_strcmp(all->dir[all->i - 1], sd->d_name) == 0)
 			{
-				printf("sd->d_type=%d\n", sd->d_type);
+				//printf("sd->d_type=%d\n", sd->d_type);
 				closedir(dir);
 				return (make_exec(all, path));
 			}
@@ -76,7 +76,7 @@ char *get_path(t_all *all)
 	if (all->dir && all->dir[0] && (all->dir[0][0] == '.' || all->dir[0][0] == '/'))
 		return (is_exec(all));
 	else
-		path = ft_split(ft_getenv(all, "PATH"), ':');
+		path = ft_split(ft_getenv(all, "PATH", 0), ':');
 	if (path)
 	{
 		while (path[i] != NULL)
@@ -99,36 +99,6 @@ char *get_path(t_all *all)
 	return (exec);
 }
 
-/*
-** MODE = 1 : REMPLACEMENT DE STDIN/STDOUT PAR LE FD
-** MODE = 2 : RESTAURATION DE STDIN/STDOUT
-*/
-
-int	io_manager_dup(t_all *all, int mode)
-{
-	if (mode == 1)
-	{
-		if (all->red == 2)
-		{
-			dup2(all->fd, STDIN_FILENO);
-			close(all->fd);
-		}
-		else if (all->red == 522 || all->red == 1538)
-		{
-			dup2(all->fd, STDOUT_FILENO);
-			close(all->fd);
-		}
-	}
-	else
-	{
-		if (all->red == 2)
-			dup2(0, STDIN_FILENO);
-		else if (all->red == 522 || all->red == 1538)
-			dup2(1, STDOUT_FILENO);
-	}
-	return (0);
-}
-
 int run_exec(t_all *all, char *exec, char **args, char **envp)
 {
 	int ret;
@@ -138,27 +108,18 @@ int run_exec(t_all *all, char *exec, char **args, char **envp)
 	ret = 0;
 	status = 0;
 	envp = ft_list_to_tab(all->env, 0);
-	if (all->red == 522 || all->red == 1538 || all->red == 2)
-		all->fd = open("text.txt", all->red);
-	printf("all->fd=%d\n", all->fd);
+	//printf("all->fd=%d\n", all->fd);
 	if ((child_pid = fork()) == 0)
 	{
-		io_manager_dup(all, 1);
-		if (all->red == 2 && all->fd != -1)
-			status = execve(exec, args, envp);
-		else
-			status = execve(exec, args, envp);
+		//printf("\033[1;31m-----------------\nLAST_RED:\nfilename=[%s]\nred=[%d]\nfd=[%d]\n-----------------\n\033[0m", all->reds->filename, all->reds->red, all->reds->fd);
+		status = execve(exec, args, envp);
 		if (status == -1)
 			ft_put_error(strerror(errno), exec, 1);
 	}
 	else
-	{
-		if (all->red)
-			close(all->fd);
 		waitpid(child_pid, &ret, 0);
-	}
 	all->ret->value = ft_itoa(ret / 256);
-	printf("all->ret->value=%s\n", all->ret->value);
+	//printf("all->ret->value=%s\n", all->ret->value);
 	free_tab(envp);
 	return (1);
 }
