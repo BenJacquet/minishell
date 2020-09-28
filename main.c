@@ -6,7 +6,7 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/04 14:09:45 by chgilber          #+#    #+#             */
-/*   Updated: 2020/09/21 19:03:05 by chgilber         ###   ########.fr       */
+/*   Updated: 2020/09/28 15:01:08 by jabenjam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,7 @@ void	init_all(t_all *all, char **env)
 	all->fd = 0;
 	all->fd_backup = 0;
 	all->ret->value = ft_itoa(0);
+	all->reds = NULL;
 }
 
 void	handle_sigint(int sig)
@@ -109,9 +110,8 @@ int	main(int ac, char **av, char **env)
 			all.pdir[all.data - all.countpipe] =  dolar(all);
 			index++;
 		}
-		
 	//	all.dir = ft_split(all.pdir[all.data - all.countpipe], ' ');
-		if	(all.countpipe > 0 && parse_command(&all, env) == 0)
+		if	(all.countpipe > 0 && parse_command(&all, env) == 0 && !io_manager_dup(&all, 0))
 			writenotfound(&all);
 		if (all.countpipe < 1)
 			letsgnl(&all);

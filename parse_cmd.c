@@ -6,7 +6,7 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/05 15:21:37 by jabenjam          #+#    #+#             */
-/*   Updated: 2020/09/23 12:13:46 by jabenjam         ###   ########.fr       */
+/*   Updated: 2020/09/28 14:48:36 by jabenjam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,8 @@ int	parse_command(t_all *all, char **env)
 		return (1);
 	}
 	joinquote(all);
+	handle_redirections(all);
+	io_manager_dup(all, 1);
 	if ((ft_strlen(all->pdir[all->data - all->countpipe]) > 0 &&
 				((ft_strcmp(all->dir[0], "cd") == 0) ||
 				 ft_strcmp(all->dir[0], "pwd") == 0 ||

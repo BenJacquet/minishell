@@ -6,7 +6,7 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/23 14:38:04 by jabenjam          #+#    #+#             */
-/*   Updated: 2020/09/27 18:47:50 by jabenjam         ###   ########.fr       */
+/*   Updated: 2020/09/28 14:55:25 by jabenjam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ t_red		*new_red(t_red *head, int red, char *filename)
 			current = current->next;
 		current->next = new;
 	}
-	printf("\033[1;32m-----------------\nNEW_RED:\nfilename=[%s]\nred=[%d]\nfd=[%d]\n-----------------\n\033[0m", new->filename, new->red, new->fd);
+	//printf("\033[1;32m-----------------\nNEW_RED:\nfilename=[%s]\nred=[%d]\nfd=[%d]\n-----------------\n\033[0m", new->filename, new->red, new->fd);
 	return (head);
 }
 
@@ -161,22 +161,33 @@ int handle_redirections(t_all *all)
 	i = 0;
 	start = 0;
 	filename = NULL;
+	all->reds = NULL;
 	if (!all->dir)
 		return (-1);
 	while (all->dir[i])
 	{
-		start = 0;
+		//printf("\033[1;35mbefore while:i=[%d]start=[%d]\n\033[0m", i, start);
 		while (all->dir[i][start] != '\0')
 		{
+			//printf("\033[1;31mall->reds_address=[%p]\n\033[0m", all->reds);
+			//printf("\033[1;34minside while:i=[%d]start=[%d]\n\033[0m", i, start);
 			start += which_redirection(all, all->dir[i] + start);
 			if (all->red == 0)
 				start++;
-			filename = get_filename(all->dir, &i, &start);
-			all->reds = new_red(all->reds, all->red, filename);
+			else if (all->red)
+				filename = get_filename(all->dir, &i, &start);
+			if (filename != NULL)
+				all->reds = new_red(all->reds, all->red, filename);
+			all->red = 0;
 		}
+		start = 0;
 		i++;
+		//printf("\033[1;33mafter while:i=[%d]start=[%d]\n\033[0m", i, start);
 	}
-	all->reds = process_reds(all->reds);
-	printf("\033[1;31m-----------------\nLAST_RED:\nfilename=[%s]\nred=[%d]\nfd=[%d]\n-----------------\n\033[0m", all->reds->filename, all->reds->red, all->reds->fd);
+//	printf("\033[1;32mafter big while:i=[%d]start=[%d]\n\033[0m", i, start);
+//	printf("\033[1;31mall->reds_address=[%p]\n\033[0m", all->reds);
+	if (all->reds != NULL)
+		all->reds = process_reds(all->reds);
+//	printf("\033[1;31m-----------------\nLAST_RED:\nfilename=[%s]\nred=[%d]\nfd=[%d]\n-----------------\n\033[0m", all->reds->filename, all->reds->red, all->reds->fd);
 	return (1);
 }
