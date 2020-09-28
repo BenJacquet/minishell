@@ -6,7 +6,7 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/04 14:09:45 by chgilber          #+#    #+#             */
-/*   Updated: 2020/09/28 15:01:08 by jabenjam         ###   ########.fr       */
+/*   Updated: 2020/09/28 17:26:14 by chgilber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,13 +51,13 @@ int			letsgnl(t_all *all)
 void	init_all(t_all *all, char **env)
 {
 	all->i = get_next_line(0, &all->buff);
-	all->dir = ft_split(all->buff, ' ');
 	all->env = ft_tab_to_list(env);
 	all->ret = new_elem("?=0");
 	all->countpipe = pipecount(*all, all->buff, ';') + 1;
 	all->data = all->countpipe;
 	all->pdir = (all->countpipe > 1) ?
 		ft_splitmini(all->buff, ';') : ft_split(all->buff, '\0');
+	all->dir = ft_split(all->buff, ' ');
 	all->fd = 0;
 	all->fd_backup = 0;
 	all->ret->value = ft_itoa(0);
@@ -102,6 +102,7 @@ int	main(int ac, char **av, char **env)
 	while (check(all.pdir[all.data - all.countpipe], &all) == 1 && all.i > 0)
 	{
 		//signal_manager();
+		all.countpipe = checkquote(all.buff) ? 0 : all.countpipe;
 		env = ft_list_to_tab(all.env, 0);
 		i = counttoken(all);
 		index = 0;
@@ -110,12 +111,10 @@ int	main(int ac, char **av, char **env)
 			all.pdir[all.data - all.countpipe] =  dolar(all);
 			index++;
 		}
-	//	all.dir = ft_split(all.pdir[all.data - all.countpipe], ' ');
 		if	(all.countpipe > 0 && parse_command(&all, env) == 0 && !io_manager_dup(&all, 0))
 			writenotfound(&all);
 		if (all.countpipe < 1)
 			letsgnl(&all);
 	}
 	return (freelance(&all));
-//	return (ft_atoi(all.ret->value));
 }
