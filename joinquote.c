@@ -6,7 +6,7 @@
 /*   By: chgilber <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/17 14:07:55 by chgilber          #+#    #+#             */
-/*   Updated: 2020/09/20 16:18:57 by chgilber         ###   ########.fr       */
+/*   Updated: 2020/09/28 17:18:17 by chgilber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,22 +22,27 @@ char	**newdirquote(char **dir, int count)
 int		noquote(t_all *all, char *buff, int *inc)
 {
 	int	i;
+	int fusion;
 
-	i = 0;
-//	printf("noquote - > [%s]\n", buff);
-	if (buff[i])
+	//	printf("noquote - > [%s]\n", buff + 1);
+	fusion = (*inc > 0 && (buff[0] == '\'' || buff[0] == '\"')) ? 1 : 0;
+	i = (buff[1] == ' ') ? 2 : 1;
+	while (buff[i] && buff[i] != '\'' && buff[i] != ' ' && buff[i] != '\"')
+		i++;
+	if (fusion == 0 && ((buff[1] == ' ') ? i > 2 : i > 1))
 	{
-		i = buff[0] == ' ' ? 1 : 0;
-		while (buff[i] && buff[i] != '\'' && buff[i] != ' ' && buff[i] != '\"')
-			i++;
-		if ((buff[0] == ' ') ? i > 1 : i > 0)
-		{
-			all->dir[*inc] = malloc(sizeof(char) * i + 1);
-			all->dir[*inc] = ft_strncpy(all->dir[*inc],
-					buff + ((buff[0] == ' ') ? 1 : 0), i);
-			i = (buff[i] == ' ') ? i : i - 1;
-			(*inc)++;
-		}
+		all->dir[*inc] = malloc(sizeof(char) * i + 1);
+		all->dir[*inc] = ft_strncpy(all->dir[*inc],
+				buff + ((buff[1] == ' ') ? 2 : 1), i - 1);
+		i = (buff[i] == ' ') ? i : i - 1;
+		//	printf("dirnoauote = -> [%s][%d]\n", all->dir[*inc], *inc);
+		(*inc)++;
+	}
+	else if (fusion == 1)
+	{
+		joinjoin(all, buff - 1, inc, i + 1);
+		i = (buff[i] == ' ') ? i : i - 1;
+		(*inc)++;
 	}
 	return (i);
 }
@@ -45,66 +50,62 @@ int		noquote(t_all *all, char *buff, int *inc)
 int		ifjoin(t_all *all, char *buff, int *inc, char quote)
 {
 	int		i;
-	char	*tmp;
 
-	i = 0;
+	i = 2;
 	while (buff[i] != quote)
 		i++;
-	all->dir[*inc] = malloc(sizeof(char) * i + ((*inc > 0) ? ft_strlen(all->dir[*inc - 1]) + 1  : 2));
-	if (*inc > 1 && all->dir[*inc - 1][ft_strlen(all->dir[*inc - 1]) - 1] == ' ')
-		all->dir[*inc] = ft_strncpy(all->dir[*inc], buff, i);
-	else if (*inc > 1)
+	//	printf("buffjoin = -> [%s], i{%d}\n", buff + 1, i);
+	if (*inc > 0 && buff[0] == ' ' && buff[2] != quote)
 	{
-		(*inc)--;
-		tmp = ft_strdup(all->dir[*inc]);
-//		printf("buff = -> [%s], i{%d}\n", buff, i);
-		free(all->dir[*inc]);
-		free(all->dir[*inc + 1]);
-	all->dir[*inc] = malloc(sizeof(char) * i + ft_strlen(tmp) + 1);
-		all->dir[*inc] = ft_strncpy(all->dir[*inc], tmp, ft_strlen(tmp));
-		all->dir[*inc] = ft_strncat(all->dir[*inc], buff, i);
-//		printf("dir[inc] = -> [%s],\n", all->dir[*inc]);
-		free(tmp);
+		all->dir[*inc] = malloc(sizeof(char) * i);
+		all->dir[*inc] = ft_strncpy(all->dir[*inc], buff + 2, i - 2);
 	}
+	else if (*inc > 0)
+		joinjoin(all, buff, inc, i);
 	else
-		all->dir[*inc] = ft_strncpy(all->dir[*inc], buff, i);
-	return (i + 1);
+	{
+		all->dir[*inc] = malloc(sizeof(char) * i);
+		all->dir[*inc] = ft_strncpy(all->dir[*inc], buff + 2, i - 2);
+	}
+	//	printf("dirquote = -> [%s][%d]\n", all->dir[*inc], *inc);
+	return (i);
 }
 
-int		ifquote(int i, t_all *all, int here)
+int		ifquote(int i, t_all *all, int here, int inc)
 {
-	int	inc;
-
-	inc = 0;
 	while (all->pdir[here][i])
 	{
+		
 		while (all->pdir[here][i] == ' ')
 			i++;
 		if (all->pdir[here][i] == '\'')
 		{
-			i = i + ifjoin(all, all->pdir[here] + i + 1, &inc, '\'') + 1;
+			i = i + ifjoin(all, all->pdir[here] + i - 1, &inc, '\'');
 			inc++;
 		}
 		else if (all->pdir[here][i] == '\"')
 		{
-			i = i + ifjoin(all, all->pdir[here] + i + 1, &inc, '\"') + 1;
+			i = i + ifjoin(all, all->pdir[here] + i - 1, &inc, '\"');
 			inc++;
 		}
 		else if (all->pdir[here][i])
-			i = i + noquote(all, all->pdir[here] + i, &inc) + 1;
+			i = i + noquote(all, all->pdir[here] + i - 1, &inc);
 		else
 			break ;
 	}
+	all->dir[inc] = NULL;
 	return (all->stop);
 }
 
 int		joinquote(t_all *all)
 {
 	int	i;
+	int	inc;
 	int	here;
 
 	here = all->data - all->countpipe;
 	i = 0;
+	inc = 0;
 	freedir(all->dir);
 	if ((checksquote(all->pdir[here] + i) % 2 == 0 &&
 				checksquote(all->pdir[here] + i) > 1) ||
@@ -112,7 +113,7 @@ int		joinquote(t_all *all)
 			checkdquote(all->pdir[here] + i) > 1))
 	{
 		all->dir = newdirquote(all->dir, cnt(i, all, here));
-		all->stop = ifquote(i, all, here);
+		all->stop = ifquote(i, all, here, inc);
 	}
 	else
 		all->dir = ft_split(all->pdir[all->data - all->countpipe], ' ');

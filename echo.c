@@ -6,7 +6,7 @@
 /*   By: chgilber <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/07 16:46:22 by chgilber          #+#    #+#             */
-/*   Updated: 2020/09/21 17:49:11 by chgilber         ###   ########.fr       */
+/*   Updated: 2020/09/28 15:45:53 by chgilber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,10 +97,10 @@ int	echo(t_all all)
 	int	i;
 
 	all.buff = all.pdir[all.data - all.countpipe];
-	printf("[%s]\n" , all.buff);
+//	printf("[%s]\n" , all.buff);
 	i = ft_strlen(all.dir[0]) + 1;
 	all.stop = 1;
-	if (all.dir[1])
+/*	if (all.dir[1])
 	{
 		if ((checksquote(all.buff + i) % 2 == 0 && checksquote(all.buff + i) >
 					1) || (checkdquote(all.buff + i) % 2 == 0 &&
@@ -114,7 +114,7 @@ int	echo(t_all all)
 			all.stop = printnoquote(all);
 	}
 	else
-		printnoquote(all);
+*/	all.stop = printnoquote(all);
 	if (all.stop == 1)
 		write(1, "\n", 1);
 	return (0);
