@@ -6,11 +6,49 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/23 14:38:04 by jabenjam          #+#    #+#             */
-/*   Updated: 2020/09/28 14:55:25 by jabenjam         ###   ########.fr       */
+/*   Updated: 2020/09/28 17:10:15 by jabenjam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+/*
+** MODE = 1 : REMPLACEMENT DE STDIN/STDOUT PAR LE FD
+** MODE = 0 : RESTAURATION DE STDIN/STDOUT
+*/
+
+int	io_manager_dup(t_all *all, int mode)
+{
+	if (mode == 1 && all->reds)
+	{
+		if (all->reds)
+		{
+			all->reds->fd = open(all->reds->filename, all->reds->red, 0777);
+			printf("\033[1;31m-----------------\nUSED_RED:\nfilename=[%s]\nred=[%d]\nfd=[%d]\n-----------------\n\033[0m", all->reds->filename, all->reds->red, all->reds->fd);
+		}
+		if (all->reds->red == 2)
+		{
+			all->fd = dup2(all->reds->fd, STDIN_FILENO);
+			close(all->reds->fd);
+		}
+		else if (all->reds->red == 522 || all->reds->red == 1538)
+		{
+			all->fd = dup2(all->reds->fd, STDOUT_FILENO);
+			close(all->reds->fd);
+		}
+	}
+	else if (mode == 0 && all->reds)
+	{
+		printf("red=[%d]\nfd=[%d]", all->reds->red, all->fd);
+		if (all->reds->red == 2)
+			dup2(all->fd, STDIN_FILENO);
+		else if (all->reds->red == 522 || all->reds->red == 1538)
+			dup2(all->fd, STDOUT_FILENO);
+		printf("\033[1;35mSTDIN/STDOUT RESTORED\n\033[0m");
+		free_red(all->reds);
+	}
+	return (0);
+}
 
 t_red		*new_red(t_red *head, int red, char *filename)
 {
@@ -43,7 +81,11 @@ void free_red(t_red *red)
 	{
 		if (red->filename != NULL)
 			free(red->filename);
+		red->filename = NULL;
+		red->red = 0;
+		red->next = NULL;
 		free(red);
+		red = NULL;
 	}
 }
 
@@ -161,7 +203,6 @@ int handle_redirections(t_all *all)
 	i = 0;
 	start = 0;
 	filename = NULL;
-	all->reds = NULL;
 	if (!all->dir)
 		return (-1);
 	while (all->dir[i])
