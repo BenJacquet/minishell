@@ -6,14 +6,12 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/04 14:09:45 by chgilber          #+#    #+#             */
-/*   Updated: 2020/09/28 17:26:14 by chgilber         ###   ########.fr       */
+/*   Updated: 2020/09/29 18:40:42 by chgilber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-// pensez a revoir le parsing du strcmp
-//
 void		 writenotfound(t_all *all)
 {
 	if (all->buff[0] == '\0')
@@ -22,9 +20,12 @@ void		 writenotfound(t_all *all)
 		all->countpipe--;
 		return ;
 	}
-	write(1, "minishell: ", 11);
-	write(1, all->dir[0] , ft_strlen(all->dir[0]));
-	write(1, ": command not found\n", 21);
+	if (all->dir[0])
+	{
+		write(1, "minishell: ", 11);
+		write(1, all->dir[0] , (!all->dir[0]) ? 0 :ft_strlen(all->dir[0]));
+		write(1, ": command not found\n", 21);
+	}
 	all->ret->value = ft_itoa(127);
 	all->countpipe--;
 }
@@ -101,7 +102,7 @@ int	main(int ac, char **av, char **env)
 	init_all(&all, env);
 	while (check(all.pdir[all.data - all.countpipe], &all) == 1 && all.i > 0)
 	{
-		//signal_manager();
+		signal_manager();
 		all.countpipe = checkquote(all.buff) ? 0 : all.countpipe;
 		env = ft_list_to_tab(all.env, 0);
 		i = counttoken(all);

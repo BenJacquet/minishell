@@ -6,7 +6,7 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/12 15:52:23 by chgilber          #+#    #+#             */
-/*   Updated: 2020/09/18 16:11:23 by chgilber         ###   ########.fr       */
+/*   Updated: 2020/09/29 18:21:40 by chgilber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,6 @@ int		counttoken(t_all all)
 			}
 		}
 	}
-	//printf("tok = {%d}\n", token);
 	return (token);
 }
 
@@ -68,14 +67,17 @@ char	*finddolar(t_all all, int *i, int j, char **tmp)
 	all.j = 0;
 	while (*i < ft_strlen(all.pdir[j]) && all.pdir[j][*i] != ' ')
 	{
-		if (all.pdir[j][*i] == '\'' || all.pdir[j][*i] == '\"')
+		if (all.pdir[j][*i] == '\'' || all.pdir[j][*i] == '\"'
+				|| all.pdir[j][*i] == '$')
 			break ;
 		tmp[1][all.j] = all.pdir[j][*i];
 		(*i)++;
 		all.j++;
 	}
 	tmp[1][all.j] = '\0';
-	tmp[2] = ft_getenv(&all, tmp[1]);
+	printf(" tmp 0 -> [%s]\n", tmp[0]);
+	tmp[2] = ft_getenv(&all, tmp[1], (j % 2 == 1) ? 1 : 0);
+	printf(" tmp 2 -> [%s]\n", tmp[2]);
 	dol = (all.j == 0) ? ft_strjoin(tmp[0], "$") : ft_strjoin(tmp[0], tmp[2]);
 	free(tmp[0]);
 	free(tmp[2]);
