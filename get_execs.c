@@ -6,7 +6,7 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/15 15:23:06 by jabenjam          #+#    #+#             */
-/*   Updated: 2020/09/28 16:17:49 by jabenjam         ###   ########.fr       */
+/*   Updated: 2020/10/03 15:20:27 by jabenjam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,10 +108,12 @@ int run_exec(t_all *all, char *exec, char **args, char **envp)
 	ret = 0;
 	status = 0;
 	envp = ft_list_to_tab(all->env, 0);
+/*	for (int i = 0; args[i]; i++)
+		printf("------------\nargs[%d]=[%s]\n", i, args[i]);*/
 	//printf("all->fd=%d\n", all->fd);
 	if ((child_pid = fork()) == 0)
 	{
-		//printf("\033[1;31m-----------------\nLAST_RED:\nfilename=[%s]\nred=[%d]\nfd=[%d]\n-----------------\n\033[0m", all->reds->filename, all->reds->red, all->reds->fd);
+		//printf("\033[1;31m-----------------\nLAST_RED:\nfilename=[%s]\nred=[%d]\nfd=[%d]\n-----------------\n\033[0m", all->reds->file, all->reds->red, all->reds->fd);
 		status = execve(exec, args, envp);
 		if (status == -1)
 			ft_put_error(strerror(errno), exec, 1);

@@ -6,7 +6,7 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/23 14:38:04 by jabenjam          #+#    #+#             */
-/*   Updated: 2020/09/28 17:10:15 by jabenjam         ###   ########.fr       */
+/*   Updated: 2020/10/03 18:06:21 by jabenjam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,38 +19,46 @@
 
 int	io_manager_dup(t_all *all, int mode)
 {
+/*	int	fds[2];
+	if (pipe(fds) != 0)
+		return (-1);*/
 	if (mode == 1 && all->reds)
 	{
-		if (all->reds)
-		{
-			all->reds->fd = open(all->reds->filename, all->reds->red, 0777);
-			printf("\033[1;31m-----------------\nUSED_RED:\nfilename=[%s]\nred=[%d]\nfd=[%d]\n-----------------\n\033[0m", all->reds->filename, all->reds->red, all->reds->fd);
-		}
+		all->reds->fd = open(all->reds->file, all->reds->red, 0777);
+		printf("\033[1;31m-----------------\nUSED_RED:\nfile=[%s]\nred=[%d]\nfd=[%d]\n-----------------\n\033[0m", all->reds->file, all->reds->red, all->reds->fd);
 		if (all->reds->red == 2)
 		{
-			all->fd = dup2(all->reds->fd, STDIN_FILENO);
+			all->fd = dup(STDIN_FILENO);
+			dup2(all->reds->fd, STDIN_FILENO);
 			close(all->reds->fd);
+
 		}
-		else if (all->reds->red == 522 || all->reds->red == 1538)
+		else if (all->reds->red == 521 || all->reds->red == 1537)
 		{
-			all->fd = dup2(all->reds->fd, STDOUT_FILENO);
+			all->fd = dup(STDOUT_FILENO);
+			dup2(all->reds->fd, STDOUT_FILENO);
 			close(all->reds->fd);
 		}
 	}
 	else if (mode == 0 && all->reds)
 	{
-		printf("red=[%d]\nfd=[%d]", all->reds->red, all->fd);
+		printf("\033[1;31m-----------------\nUSED_RED:\nfile=[%s]\nred=[%d]\nfd=[%d]\n-----------------\n\033[0m", all->reds->file, all->reds->red, all->reds->fd);
 		if (all->reds->red == 2)
+		{
 			dup2(all->fd, STDIN_FILENO);
-		else if (all->reds->red == 522 || all->reds->red == 1538)
+			close(all->fd);
+		}
+		else if (all->reds->red == 521 || all->reds->red == 1537)
+		{
 			dup2(all->fd, STDOUT_FILENO);
-		printf("\033[1;35mSTDIN/STDOUT RESTORED\n\033[0m");
+			close(all->fd);
+		}
 		free_red(all->reds);
 	}
 	return (0);
 }
 
-t_red		*new_red(t_red *head, int red, char *filename)
+t_red		*new_red(t_red *head, int red, char **file)
 {
 	t_red *new;
 	t_red *current;
@@ -61,7 +69,7 @@ t_red		*new_red(t_red *head, int red, char *filename)
 		return (NULL);
 	new->red = red;
 	new->fd = 0;
-	new->filename = filename;
+	new->file = ft_strdup(*file);
 	new->next = NULL;
 	if (!head)
 		head = new;
@@ -71,7 +79,9 @@ t_red		*new_red(t_red *head, int red, char *filename)
 			current = current->next;
 		current->next = new;
 	}
-	//printf("\033[1;32m-----------------\nNEW_RED:\nfilename=[%s]\nred=[%d]\nfd=[%d]\n-----------------\n\033[0m", new->filename, new->red, new->fd);
+	free(*file);
+	*file = NULL;
+	printf("\033[1;32m-----------------\nNEW_RED:\nfile=[%s]\nred=[%d]\nfd=[%d]\n-----------------\n\033[0m", new->file, new->red, new->fd);
 	return (head);
 }
 
@@ -79,9 +89,9 @@ void free_red(t_red *red)
 {
 	if (red)
 	{
-		if (red->filename != NULL)
-			free(red->filename);
-		red->filename = NULL;
+		if (red->file != NULL)
+			free(red->file);
+		red->file = NULL;
 		red->red = 0;
 		red->next = NULL;
 		free(red);
@@ -100,7 +110,7 @@ t_red *process_reds(t_red *reds)
 		{
 			current = reds;
 			reds = reds->next;
-			open(current->filename, current->red);
+			open(current->file, current->red);
 			close(current->fd);
 			free_red(current);
 		}
@@ -122,25 +132,23 @@ int ft_isinset(const char *set, char c)
 	return (0);
 }
 
-int which_redirection(t_all *all, char *token)
+int which_redirection(t_all *all, int *start)
 {
-	if (ft_strncmp(token, ">>", 2) == 0)
-	{
-		all->red = (O_CREAT | O_APPEND | O_RDWR);
-		return (2);
-	}
-	else if (ft_strncmp(token, ">", 1) == 0)
-	{
-		all->red = (O_CREAT | O_TRUNC | O_RDWR);
-		return (1);
-	}
-	else if (ft_strncmp(token, "<", 1) == 0)
-	{
+	if (ft_strncmp(all->toks->value + *start, ">>", 2) == 0)
+		all->red = (O_CREAT | O_APPEND | O_WRONLY);
+	else if (ft_strncmp(all->toks->value + *start, ">", 1) == 0)
+		all->red = (O_CREAT | O_TRUNC | O_WRONLY);
+	else if (ft_strncmp(all->toks->value + *start, "<", 1) == 0)
 		all->red = (O_RDWR);
-		return (1);
-	}
-	else
-		return (0);
+	if (all->red == 1537 || all->red == 521 || all->red == 2)
+		all->toks->end = *start;
+//	else if (all->red == 2)
+//		all->toks->end = 0;
+	if (all->red == 2 || all->red == 1537)
+		*start += 1;
+	else if (all->red == 521)
+		*start += 2;
+	return (0);
 }
 
 char *ft_dup_until_red(char *src)
@@ -170,65 +178,65 @@ char *ft_dup_until_red(char *src)
 	return (dup);
 }
 
-char *get_filename(char **token, int *i, int *start)
+char *get_filename(t_tok **toks, int *start)
 {
-	char *filename;
+	char *file;
 
-	filename = NULL;
-	while (filename == NULL)
+	file = NULL;
+	while (file == NULL)
 	{
-		if (token[*i] == NULL)
+		if (toks == NULL || (*toks)->value == NULL)
 			break ;
-		if (token[*i][*start] == '\0')
+		if ((*toks)->value[*start] == '\0' && (*toks)->next != NULL)
 		{
-			(*i)++;
+			(*toks) = (*toks)->next;
 			*start = 0;
 		}
-		if (token[*i][*start] != '\0')
+		if ((*toks)->value[*start] != '\0')
 		{
-			filename = ft_dup_until_red(token[*i] + *start);
-			*start += ft_strlen(filename);
+			printf("inside_name start=[%d]tok->value[%d]=[%c]\n", *start, *start, (*toks)->value[*start]);
+			file = ft_dup_until_red((*toks)->value + *start);
+			*start += ft_strlen(file);
 			break ;
 		}
 	}
-	return (filename);
+	return (file);
 }
 
 int handle_redirections(t_all *all)
 {
-	int i;
 	int start;
-	char *filename;
+	char *file;
+	t_tok	*head;
 
-	i = 0;
+	head = all->toks;
 	start = 0;
-	filename = NULL;
-	if (!all->dir)
+	file = NULL;
+	all->reds = NULL;
+	if (!all->toks)
 		return (-1);
-	while (all->dir[i])
+	while (all->toks)
 	{
-		//printf("\033[1;35mbefore while:i=[%d]start=[%d]\n\033[0m", i, start);
-		while (all->dir[i][start] != '\0')
+		while (all->toks->value && ft_strlen(all->toks->value + start))
 		{
-			//printf("\033[1;31mall->reds_address=[%p]\n\033[0m", all->reds);
-			//printf("\033[1;34minside while:i=[%d]start=[%d]\n\033[0m", i, start);
-			start += which_redirection(all, all->dir[i] + start);
+			which_redirection(all, &start);
 			if (all->red == 0)
 				start++;
 			else if (all->red)
-				filename = get_filename(all->dir, &i, &start);
-			if (filename != NULL)
-				all->reds = new_red(all->reds, all->red, filename);
+			{
+				printf("before-start=[%d]tok->value[%d]=[%c]\n", start, start, all->toks->value[start]);
+				file = get_filename(&all->toks, &start);
+				printf("after-start=[%d]tok->value[%d]=[%c]\n", start, start, all->toks->value[start]);
+			}
+			if (file)
+				all->reds = new_red(all->reds, all->red, &file);
 			all->red = 0;
 		}
 		start = 0;
-		i++;
-		//printf("\033[1;33mafter while:i=[%d]start=[%d]\n\033[0m", i, start);
+		all->toks = all->toks->next;
 	}
-//	printf("\033[1;32mafter big while:i=[%d]start=[%d]\n\033[0m", i, start);
-//	printf("\033[1;31mall->reds_address=[%p]\n\033[0m", all->reds);
-	if (all->reds != NULL)
-		all->reds = process_reds(all->reds);
-//	printf("\033[1;31m-----------------\nLAST_RED:\nfilename=[%s]\nred=[%d]\nfd=[%d]\n-----------------\n\033[0m", all->reds->filename, all->reds->red, all->reds->fd);
+	all->reds = process_reds(all->reds);
+	all->toks = head;
+	//printf("\033[1;31m-----------------\nLAST_RED:\nfilename=[%s]\nred=[%d]\nfd=[%d]\n-----------------\n\033[0m", all->reds->filename, all->reds->red, all->reds->fd);
 	return (1);
 }

@@ -6,7 +6,7 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/04 16:18:54 by jabenjam          #+#    #+#             */
-/*   Updated: 2020/09/28 16:40:52 by chgilber         ###   ########.fr       */
+/*   Updated: 2020/10/03 17:13:11 by jabenjam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,13 +27,23 @@
 # include "GNL/get_next_line.h"
 # include "libft/libft.h"
 
-typedef struct	s_red
+typedef	struct s_red
 {
-	int			fd;
 	int			red;
-	char		*filename;
+	int			fd;
+	char		*file;
 	void		*next;
 }				t_red;
+
+typedef struct	s_tok
+{
+	char		*value;
+	int			beg;
+	int			end;
+	int			ignore;
+	void		*previous;
+	void		*next;
+}				t_tok;
 
 typedef struct	s_env
 {
@@ -59,8 +69,8 @@ typedef struct	s_all
 	int			pipe;
 	int			countpipe;
 	int			fd;
-	int			fd_backup; // servira a stocker la valeur de stdin ou stdout selon la redireciton
 	int			red;
+	t_tok		*toks;
 	t_red		*reds;
 }				t_all;
 
@@ -138,14 +148,16 @@ int				builtins_env(t_all *all);
 int				builtins_others(t_all *all);
 int				io_manager_dup(t_all *all, int mode);
 int				handle_redirections(t_all *all);
-int				which_redirection(t_all *all, char *token);
-char			*get_filename(char **token, int *i, int *start);
+int				which_redirection(t_all *all, int *start);
+char			*get_filename(t_tok **toks, int *start);
 char			*ft_dup_until_red(char *src);
 t_red			*process_reds(t_red *reds);
 void			free_red(t_red *red);
-t_red			*new_red(t_red *head, int red, char *filename);
+t_red			*new_red(t_red *head, int red, char **file);
 int				ft_isinset(const char *set, char c);
-
-
+t_tok			*convert_tokens_lst(char **cmd);
+char			**convert_tokens_tab(t_tok *lst);
+char			*clean_token(t_tok *tok);
+t_tok			*new_token(char *token, t_tok *previous);
 
 #endif
