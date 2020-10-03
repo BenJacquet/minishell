@@ -6,7 +6,7 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/08 15:53:10 by jabenjam          #+#    #+#             */
-/*   Updated: 2020/09/05 16:56:43 by jabenjam         ###   ########.fr       */
+/*   Updated: 2020/09/29 14:21:08 by chgilber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ char	*ft_strjoin(char const *s1, char const *s2)
 
 	if (!s1 || !s2)
 		return (NULL);
-	i = strlen(s1) + strlen(s2);
+	i = ft_strlen(s1) + ft_strlen(s2);
 	j = 0;
 	if (!(new = malloc(sizeof(char) * (i + 1))))
 		return (NULL);

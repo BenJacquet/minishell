@@ -6,7 +6,7 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/05 15:21:37 by jabenjam          #+#    #+#             */
-/*   Updated: 2020/09/28 14:48:36 by jabenjam         ###   ########.fr       */
+/*   Updated: 2020/09/29 18:41:02 by chgilber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,12 +68,12 @@ int	parse_command(t_all *all, char **env)
 	joinquote(all);
 	handle_redirections(all);
 	io_manager_dup(all, 1);
-	if ((ft_strlen(all->pdir[all->data - all->countpipe]) > 0 &&
+	if (all->dir[0] && (ft_strlen(all->pdir[all->data - all->countpipe]) > 0 &&
 				((ft_strcmp(all->dir[0], "cd") == 0) ||
 				 ft_strcmp(all->dir[0], "pwd") == 0 ||
 				 ft_strcmp(all->dir[0], "echo") == 0)))
 		return (builtins_others(all));
-	else if ((ft_strlen(all->pdir[all->data - all->countpipe]) > 0 &&
+	else if (all->dir[0] && (ft_strlen(all->pdir[all->data - all->countpipe]) > 0 &&
 				((ft_strcmp(all->dir[0], "env") == 0) ||
 				 ft_strncmp(all->pdir[all->data - all->countpipe], "unset", 5) == 0 ||
 				 ft_strncmp(all->pdir[all->data - all->countpipe], "export", 6) == 0)))
