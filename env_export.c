@@ -6,7 +6,7 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/08 18:01:17 by jabenjam          #+#    #+#             */
-/*   Updated: 2020/09/23 12:21:23 by jabenjam         ###   ########.fr       */
+/*   Updated: 2020/09/23 14:37:14 by jabenjam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,6 +118,8 @@ int ft_export_core(t_all *all)
 	i = 1;
 	if (all->dir[1] == NULL || all->dir[1][0] == '\0')
 		return (ft_export_null(all->env));
+	for (int j = 0; all->pdir[j]; j++)
+		printf("all->pdir[%d]=%s\n", j, all->pdir[j]);
 	var_lst = ft_tab_to_list(&all->dir[1]);
 	while (all->dir[i])
 	{

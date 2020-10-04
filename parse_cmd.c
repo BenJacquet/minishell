@@ -6,7 +6,7 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/05 15:21:37 by jabenjam          #+#    #+#             */
-/*   Updated: 2020/09/29 18:41:02 by chgilber         ###   ########.fr       */
+/*   Updated: 2020/10/04 14:46:00 by jabenjam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,16 @@ int	parse_command(t_all *all, char **env)
 		return (1);
 	}
 	joinquote(all);
+	if (!all->dir[0])
+	{
+		all->countpipe--;
+		return (1);
+	}
+	for (int j=0;all->dir[j];j++)
+		printf("\033[1;35mall->dir[j]=[%s]\n\033[0m",all->dir[j]);
+	all->toks = convert_tokens_lst(all->dir);
 	handle_redirections(all);
+	all->dir = convert_tokens_tab(all->toks);
 	io_manager_dup(all, 1);
 	if (all->dir[0] && (ft_strlen(all->pdir[all->data - all->countpipe]) > 0 &&
 				((ft_strcmp(all->dir[0], "cd") == 0) ||

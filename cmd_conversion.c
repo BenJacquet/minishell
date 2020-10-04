@@ -6,7 +6,7 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/30 14:30:56 by jabenjam          #+#    #+#             */
-/*   Updated: 2020/10/03 16:41:25 by jabenjam         ###   ########.fr       */
+/*   Updated: 2020/10/04 13:43:46 by jabenjam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ char	**convert_tokens_tab(t_tok *lst)
 	for (;current != NULL; current = current->next)
 		printf("\033[1;31m(%p)\033[0m\nvalue=[%s]\nrange[%d-%d]\nignore=[%d]\nprevious=[%p]\nnext=[%p]\n", current,current->value,current->beg,current->end,current->ignore,current->previous,current->next);
 	for (int j=0;tab[j];j++)
-		printf("tab[j]=[%s]\n",tab[j]);
+		printf("\033[1;33mtab[j]=[%s]\n\033[0m",tab[j]);
 	return (tab);
 }
 
