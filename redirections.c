@@ -6,23 +6,19 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/23 14:38:04 by jabenjam          #+#    #+#             */
-/*   Updated: 2020/10/04 18:05:17 by jabenjam         ###   ########.fr       */
+/*   Updated: 2020/10/05 14:39:54 by jabenjam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 /*
-** MODE = 1 : REMPLACEMENT DE STDIN/STDOUT PAR LE FD
-** MODE = 0 : RESTAURATION DE STDIN/STDOUT
-*/
-
 int	io_manager_dup(t_all *all, int mode)
 {
-/*	int	fds[2];
+	int	fds[2];
 	if (pipe(fds) != 0)
-		return (-1);*/
-	if (mode == 1 && all->reds)
+		return (-1);
+	if (mode == 1 && all->reds || all->red_in)
 	{
 		all->reds->fd = open(all->reds->file, all->reds->red, all->mask);
 		printf("\033[1;31m-----------------\nUSED_RED:\nfile=[%s]\nred=[%d]\nfd=[%d]\n-----------------\n\033[0m", all->reds->file, all->reds->red, all->reds->fd);
@@ -56,6 +52,37 @@ int	io_manager_dup(t_all *all, int mode)
 		free_red(all->reds);
 	}
 	return (0);
+}*/
+
+/*
+** MODE = 1 : REMPLACEMENT DE STDIN/STDOUT PAR LE FD
+** MODE = 0 : RESTAURATION DE STDIN/STDOUT
+*/
+
+int	io_manager_dup(t_all *all, int mode)
+{
+/*	int	fds[2];
+	if (pipe(fds) != 0)
+		return (-1);*/
+	if (mode == 1)
+	{
+		printf("\033[1;31m-----------------\nUSED_RED:\nfile=[%s]\nred=[%d]\nfd=[%d]\n-----------------\n\033[0m", all->reds->file, all->reds->red, all->reds->fd);
+		all->fds_backup[0] = dup(STDIN_FILENO);
+		dup2(all->fds[0], STDIN_FILENO);
+		close(all->fds[0]);
+		all->fds_backup[1] = dup(STDOUT_FILENO);
+		dup2(all->fds[1], STDOUT_FILENO);
+		close(all->fds[1]);
+	}
+	else if (mode == 0)
+	{
+		printf("\033[1;31m-----------------\nUSED_RED:\nfile=[%s]\nred=[%d]\nfd=[%d]\n-----------------\n\033[0m", all->reds->file, all->reds->red, all->reds->fd);
+		dup2(all->fds_backup[0], STDIN_FILENO);
+		close(all->fds_backup[0]);
+		dup2(all->fds_backup[1], STDOUT_FILENO);
+		close(all->fds_backup[1]);
+	}
+	return (0);
 }
 
 t_red		*new_red(t_red *head, int red, char **file)
@@ -71,7 +98,6 @@ t_red		*new_red(t_red *head, int red, char **file)
 	new->fd = 0;
 	new->file = ft_strdup(*file);
 	new->next = NULL;
-	new->last_in = 0;
 	if (!head)
 		head = new;
 	else
@@ -90,6 +116,7 @@ void free_red(t_red *red)
 {
 	if (red)
 	{
+		printf("\033[1;31m-----------------\nFREED_RED:\nfile=[%s]\nred=[%d]\n-----------------\n\033[0m", red->file, red->red);
 		if (red->file != NULL)
 			free(red->file);
 		red->file = NULL;
@@ -100,52 +127,56 @@ void free_red(t_red *red)
 	}
 }
 
-void	find_last_in(t_red *reds)
+void	get_last(t_all *all, t_red *reds)
 {
-	t_red	*last;
+	t_red	*last_in;
+	t_red	*last_out;
 
-	last = NULL;
-	while (reds->next != NULL)
+	last_in = NULL;
+	last_out = NULL;
+	while (reds != NULL)
 	{
 		if (reds->red == 2)
-			last = reds;
+			last_in = reds;
+		else
+			last_out = reds;
 		reds = reds->next;
 	}
-	if (last)
+	if (last_in)
 	{
-		last->last_in = 1;
-		printf("\033[1;32m-----------------\nLAST_IN:\nfile=[%s]\nred=[%d]\nfd=[%d]\n-----------------\n\033[0m", last->file, last->red, last->fd);
+		all->fds[0] = open(last_in->file, last_in->red, all->mask);
+		last_in->last = 1;
+		printf("last_in->value=[%s]\nlast_in->fd=[%d]\n", last_in->file, last_in->fd);
+	}
+	if (last_out)
+	{
+		all->fds[1] = open(last_out->file, last_out->red, all->mask);
+		last_out->last = 1;
+		printf("last_out->value=[%s]\nlast_out->fd=[%d]\n", last_out->file, last_out->fd);
 	}
 }
 
-t_red *process_reds(t_red *reds, int mask)
+void	process_reds(t_all *all, int mask)
 {
 	t_red *current;
 
-	current = reds;
-	if (reds)
+	current = all->reds;
+	if (all->reds)
 	{
-		find_last_in(reds);
-		while (reds->next != NULL)
+		get_last(all, all->reds);
+		while (all->reds)
 		{
-			current = reds;
-			reds = reds->next;
-			if (reds->red != 2)
+			current = all->reds;
+			all->reds = all->reds->next;
+			if (all->reds->red != 2 && current->last == 0)
 			{
 				current->fd = open(current->file, current->red, mask);
-				printf("\033[1;32m-----------------\nPROCESSED_RED:\nfile=[%s]\nred=[%d]\nfd=[%d]\n-----------------\n\033[0m", current->file, current->red, current->fd);
 				close(current->fd);
 			}
-			if (reds->last_in == 1)
-			{
-				dup(STDIN_FILENO);
-				dup2(reds->fd, STDIN_FILENO);
-				close(reds->fd);
-			}
+			printf("\033[1;32m-----------------\nPROCESSED_RED:\nfile=[%s]\nred=[%d]\n-----------------\n\033[0m", current->file, current->red);
 			free_red(current);
 		}
 	}
-	return (reds);
 }
 
 int ft_isinset(const char *set, char c)
@@ -225,7 +256,7 @@ char *get_filename(t_tok **toks, int *start)
 			file = ft_dup_until_red((*toks)->value + *start);
 			*start += ft_strlen(file);
 			(*toks)->beg += *start;
-			///printf("inside_name start=[%d]tok->value[%d]=[%c]\n", *start, *start, (*toks)->value[*start]);
+			//printf("inside_name start=[%d]tok->value[%d]=[%c]\n", *start, *start, (*toks)->value[*start]);
 			break ;
 		}
 	}
@@ -264,7 +295,7 @@ int handle_redirections(t_all *all)
 		start = 0;
 		all->toks = all->toks->next;
 	}
-	all->reds = process_reds(all->reds, all->mask);
+	process_reds(all, all->mask);
 	all->toks = head;
 	//printf("\033[1;31m-----------------\nLAST_RED:\nfilename=[%s]\nred=[%d]\nfd=[%d]\n-----------------\n\033[0m", all->reds->filename, all->reds->red, all->reds->fd);
 	return (1);

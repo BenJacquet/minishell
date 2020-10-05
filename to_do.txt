@@ -1,23 +1,24 @@
-- export -> gerer les arguments entre quote (simple et double)
-- parsing de base -> gerer l'expansion des tokens avec ou sans " " ' ' et des le debut du parsing
 - parsing de base -> si des parentheses fermees afficher "syntax error near unexpected token" et set ? a 258
-- environnement -> adapter toutes les fonctions a l'utilisation de all
 - get_path() ou get_exec() -> verifier le sd->d_type pour chdir si c'est un dossier et executer si un executable
 - a l'ouverture d'un nouveau minishell, update SHLVL
-- echo -> si (expansion + '$LESS' = $LESS) (expansion + $LESS = trim des espaces au debut et afficher uniquement un whitespace si plus d'un dans la value)(expansion + "$LESS" = -R sans traitement)
-- echo -> print uniquement la derniere variable d'environnement
-- echo -> gerer le print de $? deux fois d'affilée
+- echo -> echo "$PATH$PATH" et "echo $LESSblablabla"
 - cd -> gerer les chemins avec des quotes
-- main-> crash quand un ; ou un ' ' des le debut
 - general -> "cat <" affiche bash: syntax error near unexpected token `newline'
-- redir -> gerer par exemple "> blabla.txt" ou ">> blabla.txt"
-- redir -> gerer uniquement le dernier fichier recu en argument 
-- redir -> tester "echo e > a > b > c > d > e"
 - redir -> tester "cat < (fichier qui existe pas)", display de l'erreur par minishell
 - redir -> tester "cat < (fichier qui existe) (fichier qui existe pas)", display de l'erreur par l'exec
 - general -> tester "cat < ."
+- Builtins et redir -> si builtin arg < fichier, faire comme si il n'y avait pas de redir
+- echo -> fix les multiples -n (echo -n -n -n -n plop)
+- exit -> return le dernier code de retour
+- unset HOME -> afficher l'erreur
+- unset PATH -> afficher erreur
 
 MEMO :
 - ">" = (O_CREAT | O_TRUNC | O_RDWR)
 - ">>" = (O_CREAT | O_APPEND | O_RDWR)
 - "<" = (O_RDWR)
+
+1 - Recuperer la redir
+2a - Si le token n'est pas fini, chopper le filename jusqu'a la prochaine redir ou la fin du token
+2b - Si le token est fini, changer de token et executer 2a
+3 - open le fichier avec all->redir

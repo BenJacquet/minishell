@@ -6,7 +6,7 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/04 16:18:54 by jabenjam          #+#    #+#             */
-/*   Updated: 2020/10/03 17:13:11 by jabenjam         ###   ########.fr       */
+/*   Updated: 2020/10/05 14:48:36 by jabenjam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ typedef	struct s_red
 {
 	int			red;
 	int			fd;
+	int			last;
 	char		*file;
 	void		*next;
 }				t_red;
@@ -68,8 +69,10 @@ typedef struct	s_all
 	int			stop;
 	int			pipe;
 	int			countpipe;
-	int			fd;
+	int			fds[2];
+	int			fds_backup[2];
 	int			red;
+	int			mask;
 	t_tok		*toks;
 	t_red		*reds;
 }				t_all;
@@ -151,7 +154,8 @@ int				handle_redirections(t_all *all);
 int				which_redirection(t_all *all, int *start);
 char			*get_filename(t_tok **toks, int *start);
 char			*ft_dup_until_red(char *src);
-t_red			*process_reds(t_red *reds);
+void			process_reds(t_all *all, int mask);
+t_red			*find_last_in(t_red *reds);
 void			free_red(t_red *red);
 t_red			*new_red(t_red *head, int red, char **file);
 int				ft_isinset(const char *set, char c);
