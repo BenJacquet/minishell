@@ -6,7 +6,7 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/04 16:18:54 by jabenjam          #+#    #+#             */
-/*   Updated: 2020/10/05 14:48:36 by jabenjam         ###   ########.fr       */
+/*   Updated: 2020/10/05 16:51:44 by chgilber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@
 # include <fcntl.h>
 # include "GNL/get_next_line.h"
 # include "libft/libft.h"
+
+int				getfcked;
 
 typedef	struct s_red
 {
@@ -73,6 +75,7 @@ typedef struct	s_all
 	int			fds_backup[2];
 	int			red;
 	int			mask;
+	int			builtin;
 	t_tok		*toks;
 	t_red		*reds;
 }				t_all;
