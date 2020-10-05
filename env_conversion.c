@@ -6,7 +6,7 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/06 14:31:34 by jabenjam          #+#    #+#             */
-/*   Updated: 2020/09/06 12:52:44 by jabenjam         ###   ########.fr       */
+/*   Updated: 2020/10/04 18:12:49 by jabenjam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,49 +18,49 @@
 */
 int ft_varlen(char *var, int mode)
 {
-    int i;
-    int j;
+	int i;
+	int j;
 
-    i = 0;
-    j = 0;
-    while (var[i] != '\0' && var[i] != '=' && var[i] != '+')
-        i++;
-    if (mode == 0)
-        return (i);
-    while (var[i + j] != '\0')
-        j++;
-    return (j);
+	i = 0;
+	j = 0;
+	while (var[i] != '\0' && var[i] != '=' && var[i] != '+')
+		i++;
+	if (mode == 0)
+		return (i);
+	while (var[i + j] != '\0')
+		j++;
+	return (j);
 }
 
 int ft_envsize(t_env *lst)
 {
-    int i;
+	int i;
 
-    if (!lst)
-        return (0);
-    i = 0;
-    while (lst != NULL)
-    {
-        lst = lst->next;
-        i++;
-    }
-    return (i);
+	if (!lst)
+		return (0);
+	i = 0;
+	while (lst != NULL)
+	{
+		lst = lst->next;
+		i++;
+	}
+	return (i);
 }
 
-int		get_op(char *var)
+int get_op(char *var)
 {
 	if (*var == '\0')
-        return (0);
-    else if (*var == '=')
-        return (1);
-    else if (ft_strncmp(var, "+=", 2) == 0)
-        return (2);
+		return (0);
+	else if (*var == '=')
+		return (1);
+	else if (ft_strncmp(var, "+=", 2) == 0)
+		return (2);
 	return (-1);
 }
 
 t_env *elem_dup(t_env *elem)
 {
-	t_env	*new;
+	t_env *new;
 
 	if (!(new = malloc(sizeof(t_env))))
 		return (NULL);
@@ -76,95 +76,95 @@ t_env *elem_dup(t_env *elem)
 
 t_env *new_elem(char *var)
 {
-    int i;
-    int j;
-    t_env *elem;
+	int i;
+	int j;
+	t_env *elem;
 
-    i = 0;
-    j = 0;
-    elem = malloc(sizeof(t_env) + 1);
-    if (!(elem->name = malloc(sizeof(char) * ft_varlen(var, 0) + 1)))
-        return (NULL);
-    while (var[i] != '\0' && var[i] != '=' && var[i] != '+')
-    {
-        elem->name[i] = var[i];
-        i++;
-    }
-    elem->name[i] = '\0';
+	i = 0;
+	j = 0;
+	if (!(elem = malloc(sizeof(t_env) + 1)) ||
+		!(elem->name = malloc(sizeof(char) * ft_varlen(var, 0) + 1)))
+		return (NULL);
+	while (var[i] != '\0' && var[i] != '=' && var[i] != '+')
+	{
+		elem->name[i] = var[i];
+		i++;
+	}
+	elem->name[i] = '\0';
 	i += (elem->op = get_op(var + i));
-    if (!(elem->value = malloc(sizeof(char) * ft_varlen(var, 1) + 1)))
-        return (NULL);
-    while (var[i] != '\0')
-        elem->value[j++] = var[i++];
-    elem->value[j] = '\0';
-    elem->next = NULL;
-    return (elem);
+	if (!(elem->value = malloc(sizeof(char) * ft_varlen(var, 1) + 1)))
+		return (NULL);
+	while (var[i] != '\0')
+		elem->value[j++] = var[i++];
+	elem->value[j] = '\0';
+	elem->next = NULL;
+	return (elem);
 }
 
 t_env *ft_tab_to_list(char **tab)
 {
-    int i;
-    t_env *head;
-    t_env *current;
+	int i;
+	t_env *head;
+	t_env *current;
 
-    i = 0;
-    head = NULL;
+	i = 0;
+	head = NULL;
 	current = NULL;
-    if (tab)
-    {
-        current = new_elem(tab[i++]);
-        head = current;
-        while (tab[i] != NULL)
-        {
-            current->next = new_elem(tab[i++]);
-            current = current->next;
-        }
-    }
-    return (head);
+	if (tab)
+	{
+		current = new_elem(tab[i++]);
+		head = current;
+		while (tab[i] != NULL)
+		{
+			current->next = new_elem(tab[i++]);
+			current = current->next;
+		}
+	}
+	return (head);
 }
 
 char *ft_data_to_string(t_env *elem, int mode)
 {
-    char *new;
-    int len;
-    int i;
-    int j;
+	char *new;
+	int len;
+	int i;
+	int j;
 
-    i = 0;
-    j = 0;
-    len = ft_strlen(elem->name) + ft_strlen(elem->value) + 1;
-    if (!(new = calloc(sizeof(char), len + 1 + 2)))
-        return (NULL);
-    while (elem->name[j] != '\0')
-        new[i++] = elem->name[j++];
-    new[i++] = (elem->op != 0 ? '=' : '\0');
-    j = 0;
+	i = 0;
+	j = 0;
+	len = ft_strlen(elem->name) + ft_strlen(elem->value) + 1;
+	if (!(new = calloc(sizeof(char), len + 1 + 2)))
+		return (NULL);
+	while (elem->name[j] != '\0')
+		new[i++] = elem->name[j++];
+	new[i++] = (elem->op != 0 ? '=' : '\0');
+	j = 0;
 	if (mode == 1 && elem->op != 0)
 		new[i++] = '\"';
-    while (elem->value[j] != '\0')
-        new[i++] = elem->value[j++];
+	while (elem->value[j] != '\0')
+		new[i++] = elem->value[j++];
 	if (mode == 1 && elem->op != 0)
 		new[i++] = '\"';
-    new[i] = '\0';
-    return (new);
+	new[i] = '\0';
+	return (new);
 }
 
 char **ft_list_to_tab(t_env *lst, int mode)
 {
-    int i;
-    char **tab;
-    t_env *current;
+	int i;
+	char **tab;
+	t_env *current;
 
-    i = 0;
-    if (!(tab = malloc(sizeof(char *) * (ft_envsize(lst) + 1))))
-        return (NULL);
-    current = lst;
-    while (current != NULL)
-    {
-		if ((mode == 0 && current->op != 0) || mode == 1)
-        	tab[i++] = ft_data_to_string(current, mode);
-        current = current->next;
-    }
-    tab[i] = NULL;
-    return (tab);
+	i = 0;
+	if (!(tab = malloc(sizeof(char *) * (ft_envsize(lst) + 1))))
+		return (NULL);
+	current = lst;
+	while (current != NULL)
+	{
+		if ((mode == 0 && current->op != 0 && current->value) || mode == 1)
+			tab[i++] = ft_data_to_string(current, mode);
+		current = current->next;
+	}
+	tab[i] = NULL;
+	return (tab);
 }

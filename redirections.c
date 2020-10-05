@@ -66,7 +66,6 @@ int	io_manager_dup(t_all *all, int mode)
 		return (-1);*/
 	if (mode == 1)
 	{
-		printf("\033[1;31m-----------------\nUSED_RED:\nfile=[%s]\nred=[%d]\nfd=[%d]\n-----------------\n\033[0m", all->reds->file, all->reds->red, all->reds->fd);
 		all->fds_backup[0] = dup(STDIN_FILENO);
 		dup2(all->fds[0], STDIN_FILENO);
 		close(all->fds[0]);
@@ -76,7 +75,6 @@ int	io_manager_dup(t_all *all, int mode)
 	}
 	else if (mode == 0)
 	{
-		printf("\033[1;31m-----------------\nUSED_RED:\nfile=[%s]\nred=[%d]\nfd=[%d]\n-----------------\n\033[0m", all->reds->file, all->reds->red, all->reds->fd);
 		dup2(all->fds_backup[0], STDIN_FILENO);
 		close(all->fds_backup[0]);
 		dup2(all->fds_backup[1], STDOUT_FILENO);
@@ -168,7 +166,7 @@ void	process_reds(t_all *all, int mask)
 		{
 			current = all->reds;
 			all->reds = all->reds->next;
-			if (all->reds->red != 2 && current->last == 0)
+			if (current->red != 2 && current->last == 0)
 			{
 				current->fd = open(current->file, current->red, mask);
 				close(current->fd);
@@ -177,6 +175,7 @@ void	process_reds(t_all *all, int mask)
 			free_red(current);
 		}
 	}
+	all->reds = NULL;
 }
 
 int ft_isinset(const char *set, char c)
