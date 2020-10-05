@@ -68,10 +68,12 @@ int	io_manager_dup(t_all *all, int mode)
 	{
 		all->fds_backup[0] = dup(STDIN_FILENO);
 		dup2(all->fds[0], STDIN_FILENO);
-		close(all->fds[0]);
+		if (all->fds[0] != 0)
+			close(all->fds[0]);
 		all->fds_backup[1] = dup(STDOUT_FILENO);
 		dup2(all->fds[1], STDOUT_FILENO);
-		close(all->fds[1]);
+		if (all->fds[1] != 1)
+			close(all->fds[1]);
 	}
 	else if (mode == 0)
 	{
