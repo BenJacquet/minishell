@@ -6,7 +6,7 @@
 /*   By: chgilber <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/17 14:07:55 by chgilber          #+#    #+#             */
-/*   Updated: 2020/09/28 17:18:17 by chgilber         ###   ########.fr       */
+/*   Updated: 2020/10/03 17:40:51 by chgilber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,10 +107,10 @@ int		joinquote(t_all *all)
 	i = 0;
 	inc = 0;
 	freedir(all->dir);
-	if ((checksquote(all->pdir[here] + i) % 2 == 0 &&
-				checksquote(all->pdir[here] + i) > 1) ||
-			(checkdquote(all->pdir[here] + i) % 2 == 0 &&
-			checkdquote(all->pdir[here] + i) > 1))
+	if ((checksquote(all->pdir[here]) % 2 == 0 &&
+				checksquote(all->pdir[here]) > 1) ||
+			(checkdquote(all->pdir[here]) % 2 == 0 &&
+			checkdquote(all->pdir[here]) > 1))
 	{
 		all->dir = newdirquote(all->dir, cnt(i, all, here));
 		all->stop = ifquote(i, all, here, inc);

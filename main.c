@@ -6,7 +6,7 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/04 14:09:45 by chgilber          #+#    #+#             */
-/*   Updated: 2020/09/29 18:40:42 by chgilber         ###   ########.fr       */
+/*   Updated: 2020/10/05 16:54:34 by chgilber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 void		 writenotfound(t_all *all)
 {
+	all->builtin = 0;
 	if (all->buff[0] == '\0')
 	{
 		all->ret->value = ft_itoa(0);
@@ -46,11 +47,18 @@ int			letsgnl(t_all *all)
 	all->pdir = NULL;
 	all->pdir = (all->countpipe > 1) ?
 		ft_splitmini(all->buff, ';') : ft_split(all->buff, '\0');
+	all->builtin = 0;
 	return (0);
 }
 
 void	init_all(t_all *all, char **env)
 {
+//	getfcked = 0;
+	all->toks = NULL;
+    all->reds = NULL;
+    all->fds[0] = STDIN_FILENO;
+    all->fds[1] = STDOUT_FILENO;
+    all->mask = (S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
 	all->i = get_next_line(0, &all->buff);
 	all->env = ft_tab_to_list(env);
 	all->ret = new_elem("?=0");
@@ -59,34 +67,42 @@ void	init_all(t_all *all, char **env)
 	all->pdir = (all->countpipe > 1) ?
 		ft_splitmini(all->buff, ';') : ft_split(all->buff, '\0');
 	all->dir = ft_split(all->buff, ' ');
-	all->fd = 0;
-	all->fd_backup = 0;
 	all->ret->value = ft_itoa(0);
 	all->reds = NULL;
 }
 
-void	handle_sigint(int sig)
+void		handle(int sig) // CTRL D
 {
 	if (sig == SIGINT)
-		printf("received SIGINT\n");
+	{
+		printf("c");
+	//	getfcked = 1;
+		write(1, "\n", 1);
+	}
+	else if (sig == SIGQUIT)
+	{
+	write(0, "\b\b  \b\b", 2);
+	write(1, "Quit: 3", 7);
+//	get_dir();
+	//	printf(" received SIGQUIT\n");
+	}
 }
 
-void	handle_sigquit(int sig)
+
+void	handle_sigeof(int sig) // CTRL C
 {
-	if (sig == SIGQUIT)
-		printf(" received SIGQUIT\n");
+
+	write(0, "\n", 1);
+	get_dir();
 }
 
-/*void	handle_sigeof(int sig)
+int		signal_manager(t_all *all)
 {
-	write(0, "0", 1);
-}*/
-
-int		signal_manager()
-{
-	signal(SIGINT, &handle_sigint);
-	signal(SIGQUIT, &handle_sigquit);
-	//signal(SIGINT, &handle_sigeof);
+	(signal(SIGINT, &handle));
+//	if (all->builtin == 2)
+	(signal(SIGQUIT, &handle));
+//	get_dir();
+//	signal(SIGINT, &handle_sigeof);
 	return (0);
 }
 
@@ -102,7 +118,9 @@ int	main(int ac, char **av, char **env)
 	init_all(&all, env);
 	while (check(all.pdir[all.data - all.countpipe], &all) == 1 && all.i > 0)
 	{
-		signal_manager();
+		signal_manager(&all);
+		if (getfcked == 1)
+			return (freelance(&all));
 		all.countpipe = checkquote(all.buff) ? 0 : all.countpipe;
 		env = ft_list_to_tab(all.env, 0);
 		i = counttoken(all);

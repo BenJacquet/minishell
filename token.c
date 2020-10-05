@@ -6,7 +6,7 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/12 15:52:23 by chgilber          #+#    #+#             */
-/*   Updated: 2020/09/29 18:21:40 by chgilber         ###   ########.fr       */
+/*   Updated: 2020/10/03 18:01:03 by chgilber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int		counttoken(t_all all)
 	i = 0;
 	if (all.pdir)
 	{
-		if (all.pdir[j])
+		if (all.pdir[j] && ft_strlen(all.pdir[j]) > 0)
 		{
 			while (all.pdir[j][i])
 			{
@@ -110,7 +110,7 @@ char	*dolar(t_all all)
 	j = all.data - all.countpipe;
 	i = 0;
 	all.pipe = 0;
-	if (all.pdir[j])
+	if (all.pdir[j] && ft_strlen(all.pdir[j]) > 0)
 	{
 		while (all.pdir[j][i])
 		{

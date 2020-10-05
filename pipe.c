@@ -6,7 +6,7 @@
 /*   By: chgilber <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/16 12:01:29 by chgilber          #+#    #+#             */
-/*   Updated: 2020/09/16 18:05:51 by chgilber         ###   ########.fr       */
+/*   Updated: 2020/10/03 18:12:45 by chgilber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ int	pipeok(t_all all, char c, int i)
 			return (-666);
 		}
 	}
+	all.pipe = (ft_strlen(all.buff) == i + 1) ? all.pipe - 1 : all.pipe;
 	return (all.pipe);
 }
 
@@ -54,6 +55,5 @@ int	pipecount(t_all all,char *str, char c)
 			all.pipe = pipeok(all, c, i);//all.pipe++;
 		i++;
 	}
-//	pipeok(all);// pas fonctionelle need return
 	return (all.pipe);
 }
