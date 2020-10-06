@@ -6,7 +6,7 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/04 17:17:15 by chgilber          #+#    #+#             */
-/*   Updated: 2020/09/23 12:23:23 by jabenjam         ###   ########.fr       */
+/*   Updated: 2020/10/06 19:04:12 by chgilber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,5 +51,7 @@ int		cd(char **dir, t_all all)
 	}
 	else
 		i = cdnoarg(i, all);
+	if (i == -1)
+		write(1, "minishell: cd: HOME not set\n" , 29);
 	return (0);
 }
