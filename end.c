@@ -6,7 +6,7 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/04 17:30:12 by chgilber          #+#    #+#             */
-/*   Updated: 2020/09/21 15:36:14 by chgilber         ###   ########.fr       */
+/*   Updated: 2020/10/06 17:52:16 by chgilber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ int		end(char *buff, t_all *all)
 ** MODE = 1 : AFFICHER VAR
 */
 
-int	ft_put_error(char *error, char *var, int mode)
+int		ft_put_error(char *error, char *var, int mode)
 {
 	write(2, "minishell:", 10);
 	if (mode == 1)

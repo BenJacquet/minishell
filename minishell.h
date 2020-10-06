@@ -6,7 +6,7 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/04 16:18:54 by jabenjam          #+#    #+#             */
-/*   Updated: 2020/10/05 16:51:44 by chgilber         ###   ########.fr       */
+/*   Updated: 2020/10/06 16:25:09 by chgilber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@
 # include "GNL/get_next_line.h"
 # include "libft/libft.h"
 
-int				getfcked;
+int				builtin;
 
 typedef	struct s_red
 {
@@ -107,9 +107,12 @@ int				join(t_all *all, char *buff, int inc, char quote);
 int				silence(t_all all);
 int				joinquote(t_all *all);
 void			joinjoin(t_all *all, char *buff, int *inc, int i);
+int				crontold(t_all *all);
 int				croco(t_all *all);
 int				parse_command(t_all *all, char **env);
 char			*ft_strncat(char *s1, char *s2, int len);
+void			init_all(t_all *all, char **env, int ac, char **av);
+int				signal_manager();
 
 /*
 ** -------------BEN------------------------------------------------------------
@@ -148,7 +151,6 @@ int				ft_check_name(char *var);
 int				expand_value(t_env *var, t_all *all);
 char			*get_new_value(t_all *all, t_env *var, int len);
 t_env			*env_exists(char *name, t_env *env);
-void			init_all(t_all *all, char **env);
 int				parse_command(t_all *all, char **env);
 int				builtins_env(t_all *all);
 int				builtins_others(t_all *all);

@@ -6,7 +6,7 @@
 /*   By: chgilber <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/16 16:29:10 by chgilber          #+#    #+#             */
-/*   Updated: 2020/08/16 18:57:57 by chgilber         ###   ########.fr       */
+/*   Updated: 2020/09/20 15:37:10 by chgilber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int				quote(char *s, int i)
 			i++;
 		i++;
 	}
-	if (s[i] == '\"' && checkquote(s) % 2 == 0)
+	if (s[i] == '\"' && checkdquote(s) % 2 == 0)
 	{
 		i++;
 		while (s[i] != '\"')
@@ -45,7 +45,7 @@ static int		ft_count_word(char *s, char *charset)
 
 	words = 0;
 	i = 0;
-	while (s[i])
+	while (s[i] != '\0')
 	{
 		i = quote(s, i);
 		if (in_charset(s[i], charset))
@@ -55,8 +55,10 @@ static int		ft_count_word(char *s, char *charset)
 				while (in_charset(s[i], charset) && s[i] != '\0')
 					i++;
 		}
-		else
+		else if (s[i] != '\0')
 			i++;
+		else
+			break ;
 	}
 	return (words);
 }

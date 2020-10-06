@@ -6,7 +6,7 @@
 #    By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/10/16 11:50:11 by chgilber          #+#    #+#              #
-#    Updated: 2020/10/03 12:41:08 by jabenjam         ###   ########.fr        #
+#    Updated: 2020/10/06 16:34:07 by chgilber         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,8 @@ SRCS =		get_dir.c end.c cd.c check.c freelance.c echo.c\
 			env_display.c ft_strjoin.c ft_strncpy.c env_unset.c\
 			GNL/get_next_line.c GNL/get_next_line_utils.c ft_splitmini.c\
 			realloc.c get_execs.c main.c token.c joinquote.c joinquotecount.c\
-			parse_cmd.c ft_strncat.c redirections.c joinjoin.c cmd_conversion.c\
+			parse_cmd.c ft_strncat.c redirections.c joinjoin.c \
+			cmd_conversion.c maininit.c
 
 SRCSLIB =	libft/ft_split.c libft/ft_strlen.c libft/ft_strncmp.c
 

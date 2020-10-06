@@ -6,7 +6,7 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/12 15:52:23 by chgilber          #+#    #+#             */
-/*   Updated: 2020/10/03 18:01:03 by chgilber         ###   ########.fr       */
+/*   Updated: 2020/10/06 17:53:33 by chgilber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,9 +75,7 @@ char	*finddolar(t_all all, int *i, int j, char **tmp)
 		all.j++;
 	}
 	tmp[1][all.j] = '\0';
-	printf(" tmp 0 -> [%s]\n", tmp[0]);
 	tmp[2] = ft_getenv(&all, tmp[1], (j % 2 == 1) ? 1 : 0);
-	printf(" tmp 2 -> [%s]\n", tmp[2]);
 	dol = (all.j == 0) ? ft_strjoin(tmp[0], "$") : ft_strjoin(tmp[0], tmp[2]);
 	free(tmp[0]);
 	free(tmp[2]);

@@ -1,38 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strdup.c                                        :+:      :+:    :+:   */
+/*   redirectioned.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: chgilber <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/10/10 11:05:49 by chgilber          #+#    #+#             */
-/*   Updated: 2020/10/06 12:06:53 by chgilber         ###   ########.fr       */
+/*   Created: 2020/09/20 14:38:32 by chgilber          #+#    #+#             */
+/*   Updated: 2020/09/20 19:02:13 by chgilber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
-#include <string.h>
 
-char	*ft_strdup(const char *s1)
+#include "minishell.h"
+
+int		croco(t_all *all)
 {
-	int		i;
-	char	*dup;
-	char	*str;
+	int	i;
+	int	here;
 
-	if (!s1)
-		return (NULL);
-	str = (char*)s1;
-	i = 0;
-	while (str[i] != '\0')
-		i++;
-	if ((dup = malloc(sizeof(char) * (i + 1))) == NULL)
-		return (NULL);
-	i = 0;
-	while (str[i] != '\0')
-	{
-		dup[i] = str[i];
-		i++;
-	}
-	dup[i] = '\0';
-	return (dup);
+	here = all->data - all->countpipe;
+	
+	all->red = (O_CREAT | O_TRUNC | O_RDWR);	// '>'
+	all->red = (O_CREAT | O_APPEND | O_RDWR);	// '>>'
+	all->red = (O_RDWR);						// '<'
+	return (0);
 }

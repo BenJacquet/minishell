@@ -6,7 +6,7 @@
 /*   By: chgilber <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/10 21:50:17 by chgilber          #+#    #+#             */
-/*   Updated: 2020/06/10 16:12:55 by chgilber         ###   ########.fr       */
+/*   Updated: 2020/08/16 16:29:32 by chgilber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ static int		ft_count_word(const char *s, char *charset)
 	i = 0;
 	while (s[i])
 	{
+
 		if (in_charset(s[i], charset))
 		{
 			words++;

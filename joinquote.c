@@ -6,7 +6,7 @@
 /*   By: chgilber <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/17 14:07:55 by chgilber          #+#    #+#             */
-/*   Updated: 2020/10/03 17:40:51 by chgilber         ###   ########.fr       */
+/*   Updated: 2020/10/06 17:54:28 by chgilber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,6 @@ int		ifquote(int i, t_all *all, int here, int inc)
 {
 	while (all->pdir[here][i])
 	{
-		
 		while (all->pdir[here][i] == ' ')
 			i++;
 		if (all->pdir[here][i] == '\'')
