@@ -6,7 +6,7 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/04 17:17:15 by chgilber          #+#    #+#             */
-/*   Updated: 2020/10/06 19:04:12 by chgilber         ###   ########.fr       */
+/*   Updated: 2020/10/07 18:39:30 by chgilber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,6 @@ int		cdnoarg(int i, t_all all)
 			a++;
 		i++;
 	}
-	//	printf("(%s)%d{%s}\n" , path,i, ft_substr(path, 0, i - 1));
-//	i = chdir(ft_substr(path, 0, i - 1));
 	i = chdir(ft_getenv(&all, "HOME", 1));
 	return (i);
 }
@@ -52,6 +50,6 @@ int		cd(char **dir, t_all all)
 	else
 		i = cdnoarg(i, all);
 	if (i == -1)
-		write(1, "minishell: cd: HOME not set\n" , 29);
+		write(1, "minishell: cd: HOME not set\n", 29);
 	return (0);
 }

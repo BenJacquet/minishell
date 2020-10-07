@@ -6,7 +6,7 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/30 14:30:56 by jabenjam          #+#    #+#             */
-/*   Updated: 2020/10/06 16:12:34 by chgilber         ###   ########.fr       */
+/*   Updated: 2020/10/07 16:04:41 by chgilber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,10 +73,10 @@ char	**convert_tokens_tab(t_tok *lst)
 	}
 	tab[i] = NULL;
 	current = lst;
-	for (;current != NULL; current = current->next)
-		printf("\033[1;31m(%p)\033[0m\nvalue=[%s]\nrange[%d-%d]\nignore=[%d]\nprevious=[%p]\nnext=[%p]\n", current,current->value,current->beg,current->end,current->ignore,current->previous,current->next);
-	for (int j=0;tab[j];j++)
-		printf("\033[1;33mtab[j]=[%s]\n\033[0m",tab[j]);
+//	for (;current != NULL; current = current->next)
+//		printf("\033[1;31m(%p)\033[0m\nvalue=[%s]\nrange[%d-%d]\nignore=[%d]\nprevious=[%p]\nnext=[%p]\n", current,current->value,current->beg,current->end,current->ignore,current->previous,current->next);
+//	for (int j=0;tab[j];j++)
+//		printf("\033[1;33mtab[j]=[%s]\n\033[0m",tab[j]);
 	return (tab);
 }
 

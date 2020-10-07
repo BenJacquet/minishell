@@ -6,7 +6,7 @@
 /*   By: chgilber <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/17 14:07:55 by chgilber          #+#    #+#             */
-/*   Updated: 2020/10/06 17:54:28 by chgilber         ###   ########.fr       */
+/*   Updated: 2020/10/07 18:34:46 by chgilber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ int		ifjoin(t_all *all, char *buff, int *inc, char quote)
 	i = 2;
 	while (buff[i] != quote)
 		i++;
+	croco(all, buff, i, *inc);
 	//	printf("buffjoin = -> [%s], i{%d}\n", buff + 1, i);
 	if (*inc > 0 && buff[0] == ' ' && buff[2] != quote)
 	{
@@ -111,6 +112,7 @@ int		joinquote(t_all *all)
 			(checkdquote(all->pdir[here]) % 2 == 0 &&
 			checkdquote(all->pdir[here]) > 1))
 	{
+		initcroco(all, here);
 		all->dir = newdirquote(all->dir, cnt(i, all, here));
 		all->stop = ifquote(i, all, here, inc);
 	}
@@ -118,3 +120,4 @@ int		joinquote(t_all *all)
 		all->dir = ft_split(all->pdir[all->data - all->countpipe], ' ');
 	return (0);
 }
+

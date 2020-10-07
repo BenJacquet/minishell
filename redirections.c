@@ -6,7 +6,7 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/23 14:38:04 by jabenjam          #+#    #+#             */
-/*   Updated: 2020/10/05 14:39:54 by jabenjam         ###   ########.fr       */
+/*   Updated: 2020/10/07 16:07:17 by chgilber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,7 +108,7 @@ t_red		*new_red(t_red *head, int red, char **file)
 	}
 	free(*file);
 	*file = NULL;
-	printf("\033[1;32m-----------------\nNEW_RED:\nfile=[%s]\nred=[%d]\nfd=[%d]\n-----------------\n\033[0m", new->file, new->red, new->fd);
+//	printf("\033[1;32m-----------------\nNEW_RED:\nfile=[%s]\nred=[%d]\nfd=[%d]\n-----------------\n\033[0m", new->file, new->red, new->fd);
 	return (head);
 }
 
@@ -116,7 +116,7 @@ void free_red(t_red *red)
 {
 	if (red)
 	{
-		printf("\033[1;31m-----------------\nFREED_RED:\nfile=[%s]\nred=[%d]\n-----------------\n\033[0m", red->file, red->red);
+//		printf("\033[1;31m-----------------\nFREED_RED:\nfile=[%s]\nred=[%d]\n-----------------\n\033[0m", red->file, red->red);
 		if (red->file != NULL)
 			free(red->file);
 		red->file = NULL;
@@ -146,13 +146,13 @@ void	get_last(t_all *all, t_red *reds)
 	{
 		all->fds[0] = open(last_in->file, last_in->red, all->mask);
 		last_in->last = 1;
-		printf("last_in->value=[%s]\nlast_in->fd=[%d]\n", last_in->file, last_in->fd);
+//		printf("last_in->value=[%s]\nlast_in->fd=[%d]\n", last_in->file, last_in->fd);
 	}
 	if (last_out)
 	{
 		all->fds[1] = open(last_out->file, last_out->red, all->mask);
 		last_out->last = 1;
-		printf("last_out->value=[%s]\nlast_out->fd=[%d]\n", last_out->file, last_out->fd);
+//		printf("last_out->value=[%s]\nlast_out->fd=[%d]\n", last_out->file, last_out->fd);
 	}
 }
 
@@ -173,7 +173,7 @@ void	process_reds(t_all *all, int mask)
 				current->fd = open(current->file, current->red, mask);
 				close(current->fd);
 			}
-			printf("\033[1;32m-----------------\nPROCESSED_RED:\nfile=[%s]\nred=[%d]\n-----------------\n\033[0m", current->file, current->red);
+//			printf("\033[1;32m-----------------\nPROCESSED_RED:\nfile=[%s]\nred=[%d]\n-----------------\n\033[0m", current->file, current->red);
 			free_red(current);
 		}
 	}

@@ -6,7 +6,7 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/04 14:09:45 by chgilber          #+#    #+#             */
-/*   Updated: 2020/10/06 17:58:38 by chgilber         ###   ########.fr       */
+/*   Updated: 2020/10/07 18:10:41 by chgilber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,12 @@ int			letsgnl(t_all *all)
 	return (0);
 }
 
+/* 
+** 
+** 
+** 
+*/
+
 int			tokentranslate(t_all *all)
 {
 	int		i;
@@ -86,7 +92,5 @@ int			main(int ac, char **av, char **env)
 		if (all.countpipe < 1)
 			letsgnl(&all);
 	}
-	//	if (all.i == 0)
-	//		write(1, "exit\n", 5);
 	return (freelance(&all));
 }

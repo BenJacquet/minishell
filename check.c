@@ -6,7 +6,7 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/05 14:40:00 by chgilber          #+#    #+#             */
-/*   Updated: 2020/10/05 19:09:51 by chgilber         ###   ########.fr       */
+/*   Updated: 2020/10/07 18:37:34 by chgilber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ int		checkonlyret(char *buff, t_all *all)
 {
 	int i;
 
+	i = all->i;
 	i = 0;
 	if (!buff)
 		return (1);
@@ -121,4 +122,3 @@ int		checkdquote(char *buff)
 	}
 	return (a);
 }
-

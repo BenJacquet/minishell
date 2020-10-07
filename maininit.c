@@ -6,7 +6,7 @@
 /*   By: chgilber <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/06 16:15:04 by chgilber          #+#    #+#             */
-/*   Updated: 2020/10/06 17:55:04 by chgilber         ###   ########.fr       */
+/*   Updated: 2020/10/07 18:10:00 by chgilber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,8 @@ void		handle(int sig)
 {
 	if (sig == SIGINT)
 	{
-		write(1, "\b\b  \b\b", 6);
+		if (builtin != 2)
+			write(1, "\b\b  \b\b", 6);
 		write(1, "\n", 1);
 		if (builtin == 0)
 			get_dir();

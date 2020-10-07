@@ -6,7 +6,7 @@
 /*   By: chgilber <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/09 13:59:43 by chgilber          #+#    #+#             */
-/*   Updated: 2020/09/29 18:12:26 by chgilber         ###   ########.fr       */
+/*   Updated: 2020/10/07 18:36:27 by chgilber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,7 @@ char	*ft_strncpy(char *dest, const char *src, int dstsize)
 			dest[a] = src[a];
 			a++;
 		}
-	//	dest[a] = '\0';
 	}
-		dest[a] = '\0';
+	dest[a] = '\0';
 	return (dest);
 }
