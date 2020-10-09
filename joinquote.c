@@ -6,7 +6,7 @@
 /*   By: chgilber <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/17 14:07:55 by chgilber          #+#    #+#             */
-/*   Updated: 2020/10/07 18:34:46 by chgilber         ###   ########.fr       */
+/*   Updated: 2020/10/09 18:55:20 by chgilber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int		noquote(t_all *all, char *buff, int *inc)
 	int fusion;
 
 	//	printf("noquote - > [%s]\n", buff + 1);
-	fusion = (*inc > 0 && (buff[0] == '\'' || buff[0] == '\"')) ? 1 : 0;
+	fusion = (*inc > 0 && (buff[0] == '\'' || buff[0] == '\"') && ( buff[1] != '<' && buff[1] != '>')) ? 1 : 0;
 	i = (buff[1] == ' ') ? 2 : 1;
 	while (buff[i] && buff[i] != '\'' && buff[i] != ' ' && buff[i] != '\"')
 		i++;
@@ -56,7 +56,7 @@ int		ifjoin(t_all *all, char *buff, int *inc, char quote)
 		i++;
 	croco(all, buff, i, *inc);
 	//	printf("buffjoin = -> [%s], i{%d}\n", buff + 1, i);
-	if (*inc > 0 && buff[0] == ' ' && buff[2] != quote)
+	if (*inc > 0 && (buff[0] == ' ' || buff[0] == '<' || buff[0] == '>') && buff[2] != quote)
 	{
 		all->dir[*inc] = malloc(sizeof(char) * i);
 		all->dir[*inc] = ft_strncpy(all->dir[*inc], buff + 2, i - 2);
@@ -115,6 +115,12 @@ int		joinquote(t_all *all)
 		initcroco(all, here);
 		all->dir = newdirquote(all->dir, cnt(i, all, here));
 		all->stop = ifquote(i, all, here, inc);
+		i = 0;
+		while (all->shouldi[i] && i < 6)
+	{
+		printf("shouldi[%d] = %d\n " , i, all->shouldi[i]);
+		i++;
+	}
 	}
 	else
 		all->dir = ft_split(all->pdir[all->data - all->countpipe], ' ');
