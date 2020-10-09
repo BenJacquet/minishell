@@ -6,7 +6,7 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/23 14:38:04 by jabenjam          #+#    #+#             */
-/*   Updated: 2020/10/09 15:42:36 by jabenjam         ###   ########.fr       */
+/*   Updated: 2020/10/09 18:44:42 by jabenjam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	reset_fds(t_all *all)
 
 int		no_command(t_all *all, int mode)
 {
-	printf ("before all->fds[0]=[%d]\nall->fds[1]=[%d]\n", all->fds[0], all->fds[1]);
+	//printf ("before all->fds[0]=[%d]\nall->fds[1]=[%d]\n", all->fds[0], all->fds[1]);
 	if (mode == 1)
 	{
 		if (all->fds[0] != 0)
@@ -28,7 +28,7 @@ int		no_command(t_all *all, int mode)
 		if (all->fds[1] != 1)
 			close(all->fds[1]);
 	}
-	printf ("after all->fds[0]=[%d]\nall->fds[1]=[%d]\n", all->fds[0], all->fds[1]);
+	//printf ("after all->fds[0]=[%d]\nall->fds[1]=[%d]\n", all->fds[0], all->fds[1]);
 	return (0);
 }
 
@@ -42,7 +42,6 @@ int	io_manager_dup(t_all *all, int mode)
 /*	int	fds[2];
 	if (pipe(fds) != 0)
 		return (-1);*/
-	printf("all->dir[0]=[%s]\n", all->dir[0]);
 	if (!all->dir[0])
 		return (no_command(all, mode));
 	if (mode == 1)
@@ -79,6 +78,7 @@ t_red		*new_red(t_red *head, int red, char **file)
 	new->red = red;
 	new->fd = 0;
 	new->file = ft_strdup(*file);
+	new->last = 0;
 	new->next = NULL;
 	if (!head)
 		head = new;
@@ -90,7 +90,7 @@ t_red		*new_red(t_red *head, int red, char **file)
 	}
 	free(*file);
 	*file = NULL;
-	printf("\033[1;32m-----------------\nNEW_RED:\nfile=[%s]\nred=[%d]\nfd=[%d]\n-----------------\n\033[0m", new->file, new->red, new->fd);
+	//printf("\033[1;32m-----------------\nNEW_RED:\nfile=[%s]\nred=[%d]\nfd=[%d]\n-----------------\n\033[0m", new->file, new->red, new->fd);
 	return (head);
 }
 
@@ -98,7 +98,7 @@ void free_red(t_red *red)
 {
 	if (red)
 	{
-		printf("\033[1;31m-----------------\nFREED_RED:\nfile=[%s]\nred=[%d]\n-----------------\n\033[0m", red->file, red->red);
+		//printf("\033[1;31m-----------------\nFREED_RED:\nfile=[%s]\nred=[%d]\n-----------------\n\033[0m", red->file, red->red);
 		if (red->file != NULL)
 			free(red->file);
 		red->file = NULL;
@@ -128,13 +128,13 @@ void	get_last(t_all *all, t_red *reds)
 	{
 		all->fds[0] = open(last_in->file, last_in->red, all->mask);
 		last_in->last = 1;
-		printf("last_in->value=[%s]\nall->fds[0]=[%d]\n", last_in->file, all->fds[0]);
+		//printf("last_in->value=[%s]\nall->fds[0]=[%d]\n", last_in->file, all->fds[0]);
 	}
 	if (last_out)
 	{
 		all->fds[1] = open(last_out->file, last_out->red, all->mask);
 		last_out->last = 1;
-		printf("last_out->value=[%s]\nall->fds[1]=[%d]\n", last_out->file, all->fds[1]);
+		//printf("last_out->value=[%s]\nall->fds[1]=[%d]\n", last_out->file, all->fds[1]);
 	}
 }
 
@@ -155,7 +155,7 @@ void	process_reds(t_all *all, int mask)
 				current->fd = open(current->file, current->red, mask);
 				close(current->fd);
 			}
-			//printf("\033[1;32m-----------------\nPROCESSED_RED:\nfile=[%s]\nred=[%d]\n-----------------\n\033[0m", current->file, current->red);
+			//printf("\033[1;32m-----------------\nPROCESSED_RED:\nfile=[%s]\nred=[%d]\nlast_in=[%d]\n-----------------\n\033[0m", current->file, current->red, current->last);
 			free_red(current);
 		}
 	}
@@ -185,7 +185,15 @@ int which_redirection(t_all *all, int *start)
 	else if (ft_strncmp(all->toks->value + *start, "<", 1) == 0)
 		all->red = (O_RDWR);
 	if (all->red == 1538 || all->red == 522 || all->red == 2)
+	{
 		all->toks->end = *start;
+		if (all->toks->next && all->toks->value[(*start + 1)] == '\0')
+		{
+			all->toks = all->toks->next;
+			all->toks->ignore = 1;
+			all->toks = all->toks->previous;
+		}
+	}
 	if (all->red == 2 || all->red == 1538)
 		*start += 1;
 	else if (all->red == 522)
@@ -236,13 +244,13 @@ char *get_filename(t_tok **toks, int *start)
 		}
 		if ((*toks)->value[*start] != '\0')
 		{
-			printf("before_start=[%d]\n", *start);
+			//printf("before_start=[%d]\n", *start);
 			file = ft_dup_until_red((*toks)->value + *start);
 			*start += ft_strlen(file);
-			printf("file=[%s]\nafter_start=[%d]\n", file, *start);
+			//printf("file=[%s]\nafter_start=[%d]\n", file, *start);
 			/*if (file)
 				(toks*)->beg = */
-			//(*toks)->beg += *start;
+			//(*toks)->beg = (*toks)->end;
 			//printf("inside_name start=[%d]tok->value[%d]=[%c]\n", *start, *start, (*toks)->value[*start]);
 			break ;
 		}
