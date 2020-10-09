@@ -6,7 +6,7 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/04 16:18:54 by jabenjam          #+#    #+#             */
-/*   Updated: 2020/10/06 16:25:09 by chgilber         ###   ########.fr       */
+/*   Updated: 2020/10/07 18:34:48 by chgilber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ typedef struct	s_all
 {
 	t_env		*env;
 	t_env		*ret;
+	int			*shouldi;
 	char		*buff;
 	char		*oldbuff;
 	char		**dir;
@@ -108,7 +109,8 @@ int				silence(t_all all);
 int				joinquote(t_all *all);
 void			joinjoin(t_all *all, char *buff, int *inc, int i);
 int				crontold(t_all *all);
-int				croco(t_all *all);
+int				croco(t_all *all, char *buff, int len, int inc);
+int				initcroco(t_all *all, int here);
 int				parse_command(t_all *all, char **env);
 char			*ft_strncat(char *s1, char *s2, int len);
 void			init_all(t_all *all, char **env, int ac, char **av);
