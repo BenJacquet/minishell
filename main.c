@@ -6,7 +6,7 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/04 14:09:45 by chgilber          #+#    #+#             */
-/*   Updated: 2020/10/09 18:45:57 by jabenjam         ###   ########.fr       */
+/*   Updated: 2020/10/10 15:45:01 by jabenjam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,13 +83,13 @@ int			main(int ac, char **av, char **env)
 	{
 		signal_manager();
 		all.countpipe = checkquote(all.buff) ? 0 : all.countpipe;
-		env = ft_list_to_tab(all.env, 0);
 		tokentranslate(&all);
 		if (all.countpipe > 0 && parse_command(&all, env) == 0)
 			writenotfound(&all);
 		/*if (all.pdir[all.data - all.countpipe] &&
 			ft_strlen(all.pdir[all.data - all.countpipe]) > 0)*/
 		io_manager_dup(&all, 0);
+		env = ft_list_to_tab(all.env, 0);
 		if (all.countpipe < 1)
 			letsgnl(&all);
 	}

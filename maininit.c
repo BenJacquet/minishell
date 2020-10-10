@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   maininit.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: chgilber <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/06 16:15:04 by chgilber          #+#    #+#             */
-/*   Updated: 2020/10/07 18:10:00 by chgilber         ###   ########.fr       */
+/*   Updated: 2020/10/10 15:41:09 by jabenjam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ void		init_all(t_all *all, char **env, int ac, char **av)
 	all->ret = new_elem("?=0");
 	all->countpipe = pipecount(*all, all->buff, ';') + 1;
 	all->data = all->countpipe;
+	all->pdir = NULL;
 	all->pdir = (all->countpipe > 1) ?
 		ft_splitmini(all->buff, ';') : ft_split(all->buff, '\0');
 	all->dir = ft_split(all->buff, ' ');

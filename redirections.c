@@ -6,7 +6,7 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/23 14:38:04 by jabenjam          #+#    #+#             */
-/*   Updated: 2020/10/09 18:44:42 by jabenjam         ###   ########.fr       */
+/*   Updated: 2020/10/10 13:39:41 by jabenjam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -155,7 +155,7 @@ void	process_reds(t_all *all, int mask)
 				current->fd = open(current->file, current->red, mask);
 				close(current->fd);
 			}
-			//printf("\033[1;32m-----------------\nPROCESSED_RED:\nfile=[%s]\nred=[%d]\nlast_in=[%d]\n-----------------\n\033[0m", current->file, current->red, current->last);
+			printf("\033[1;32m-----------------\nPROCESSED_RED:\nfile=[%s]\nred=[%d]\nlast_in=[%d]\n-----------------\n\033[0m", current->file, current->red, current->last);
 			free_red(current);
 		}
 	}
@@ -186,7 +186,9 @@ int which_redirection(t_all *all, int *start)
 		all->red = (O_RDWR);
 	if (all->red == 1538 || all->red == 522 || all->red == 2)
 	{
-		all->toks->end = *start;
+		printf("start=[%d]\n", *start);
+		all->toks->end = (all->toks->end == ft_strlen(all->toks->value) ? *start : all->toks->end);
+		printf("all->toks->end=[%d]\n", all->toks->end);
 		if (all->toks->next && all->toks->value[(*start + 1)] == '\0')
 		{
 			all->toks = all->toks->next;

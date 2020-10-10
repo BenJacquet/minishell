@@ -6,11 +6,26 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/30 14:30:56 by jabenjam          #+#    #+#             */
-/*   Updated: 2020/10/09 18:44:59 by jabenjam         ###   ########.fr       */
+/*   Updated: 2020/10/10 15:34:20 by jabenjam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	free_tokens(t_tok *toks)
+{
+	t_tok	*current;
+	
+	current = NULL;
+	while (toks)
+	{
+		current = toks;
+		if (toks->value)
+			free(toks->value);
+		toks = toks->next;
+		free(current);
+	}
+}
 
 t_tok	*new_token(char *token, t_tok *previous)
 {
@@ -55,6 +70,7 @@ char	**convert_tokens_tab(t_tok *lst)
 
 	i = 0;
 	current = lst;
+	tab = NULL;
 	while (current != NULL)
 	{
 		if (current->ignore == 0)
@@ -73,11 +89,12 @@ char	**convert_tokens_tab(t_tok *lst)
 	}
 	tab[i] = NULL;
 	current = lst;
-	/*for (;current != NULL; current = current->next)
+/*	for (;current != NULL; current = current->next)
 		printf("\033[1;31m(%p)\033[0m\nvalue=[%s]\nrange[%d-%d]\nignore=[%d]\nprevious=[%p]\nnext=[%p]\n", current,current->value,current->beg,current->end,current->ignore,current->previous,current->next);
 	printf("new->dir---------\n");
 	for (int j=0;tab[j];j++)
 		printf("\033[1;33mtab[j]=[%s]\n\033[0m",tab[j]);*/
+	free_tokens(lst);
 	return (tab);
 }
 
@@ -105,6 +122,7 @@ t_tok	*convert_tokens_lst(char **cmd)
 			current = current->next;
 		}
 	}
+	free_tab(cmd);
 	current = head;
 	return (head);
 }

@@ -6,7 +6,7 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/12 15:52:23 by chgilber          #+#    #+#             */
-/*   Updated: 2020/10/07 18:10:30 by chgilber         ###   ########.fr       */
+/*   Updated: 2020/10/09 18:45:39 by jabenjam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ int		counttoken(t_all all)
 	i = 0;
 	if (all.pdir)
 	{
+		//printf("all->pdir[j]=[%s]\n", all.pdir[j]);
 		if (all.pdir[j] && ft_strlen(all.pdir[j]) > 0)
 		{
 			while (all.pdir[j][i])

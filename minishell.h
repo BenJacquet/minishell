@@ -6,7 +6,7 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/04 16:18:54 by jabenjam          #+#    #+#             */
-/*   Updated: 2020/10/09 16:37:32 by jabenjam         ###   ########.fr       */
+/*   Updated: 2020/10/10 15:41:01 by jabenjam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ typedef struct	s_tok
 	int			beg;
 	int			end;
 	int			ignore;
+	int			skip;
 	void		*previous;
 	void		*next;
 }				t_tok;
@@ -170,5 +171,7 @@ t_tok			*convert_tokens_lst(char **cmd);
 char			**convert_tokens_tab(t_tok *lst);
 char			*clean_token(t_tok *tok);
 t_tok			*new_token(char *token, t_tok *previous);
+void			reset_fds(t_all *all);
+int				no_command(t_all *all, int mode);
 
 #endif

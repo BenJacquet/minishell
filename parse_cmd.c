@@ -6,7 +6,7 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/05 15:21:37 by jabenjam          #+#    #+#             */
-/*   Updated: 2020/10/07 18:38:36 by chgilber         ###   ########.fr       */
+/*   Updated: 2020/10/10 13:17:27 by jabenjam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,13 +63,15 @@ int		parsincomd(t_all *all, char **env)
 	int here;
 
 	here = all->data - all->countpipe;
-	if ((ft_strcmp(all->dir[0], "cd") == 0) ||
+	if (all->dir[0] && 
+			((ft_strcmp(all->dir[0], "cd") == 0) ||
 			ft_strcmp(all->dir[0], "pwd") == 0 ||
-			ft_strcmp(all->dir[0], "echo") == 0)
+			ft_strcmp(all->dir[0], "echo") == 0))
 		return (builtins_others(all));
-	else if ((ft_strcmp(all->dir[0], "env") == 0) ||
+	else if ( all->dir[0] &&
+			((ft_strcmp(all->dir[0], "env") == 0) ||
 			ft_strncmp(all->pdir[here], "unset", 5) == 0 ||
-			ft_strncmp(all->pdir[here], "export", 6) == 0)
+			ft_strncmp(all->pdir[here], "export", 6) == 0))
 		return (builtins_env(all));
 	else if ((all->exec = get_path(all)) != NULL)
 	{
@@ -83,6 +85,7 @@ int		parsincomd(t_all *all, char **env)
 
 int		parse_command(t_all *all, char **env)
 {
+	printf("pdir=%s\n", all->pdir[all->data - all->countpipe]);
 	if (all->pdir[all->data - all->countpipe] &&
 			ft_strlen(all->pdir[all->data - all->countpipe]) > 0)
 	{
@@ -92,11 +95,10 @@ int		parse_command(t_all *all, char **env)
 			all->countpipe--;
 			return (1);
 		}
-		//	printf("\033[1;35m\n\033[0m");
-		//	printf("dir[0] =  [%s]\n", all->dir[0]);
 		all->toks = convert_tokens_lst(all->dir);
 		handle_redirections(all);
 		all->dir = convert_tokens_tab(all->toks);
+		printf("AFTER CONVERT: all->dir=[%p]\nall->dir[0]=[%s]", all->dir, all->dir[0]);
 		io_manager_dup(all, 1);
 		return (parsincomd(all, env));
 	}
