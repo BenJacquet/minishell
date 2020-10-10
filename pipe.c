@@ -6,7 +6,7 @@
 /*   By: chgilber <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/16 12:01:29 by chgilber          #+#    #+#             */
-/*   Updated: 2020/10/07 18:38:25 by chgilber         ###   ########.fr       */
+/*   Updated: 2020/10/10 16:02:22 by chgilber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,12 @@ int	pipeok(t_all all, char c, int i)
 	all.pipe++;
 	if (ft_strlen(all.buff) > i + 1)
 	{
-		if (all.buff[i + 1] == c)
+		if (all.buff[i + 1] == c || i == 0)
 		{
 			write(2, "minishell: ", 11);
 			write(2, "syntax error near unexpected token '", 36);
-			write(2, &c, 1);
+			if (i != 0)
+				write(2, &c, 1);
 			write(2, &c, 1);
 			write(2, "'\n", 2);
 			return (-666);

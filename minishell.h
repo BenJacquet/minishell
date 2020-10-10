@@ -6,7 +6,7 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/04 16:18:54 by jabenjam          #+#    #+#             */
-/*   Updated: 2020/10/10 15:41:01 by jabenjam         ###   ########.fr       */
+/*   Updated: 2020/10/10 16:00:06 by chgilber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,7 @@ char			**ft_splitmini(char *s, char c);
 int				counttoken(t_all all);
 char			*dolar(t_all all);
 int				join(t_all *all, char *buff, int inc, char quote);
-int				silence(t_all all);
+int				silence(char *buff);
 int				joinquote(t_all *all);
 void			joinjoin(t_all *all, char *buff, int *inc, int i);
 int				crontold(t_all *all);

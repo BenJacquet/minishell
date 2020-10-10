@@ -6,25 +6,33 @@
 /*   By: chgilber <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/07 16:46:22 by chgilber          #+#    #+#             */
-/*   Updated: 2020/10/07 15:42:04 by chgilber         ###   ########.fr       */
+/*   Updated: 2020/10/10 16:00:14 by chgilber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	silence(t_all all)
+int	silence(char *buff)
 {
 	int i;
+	int u;
 	int len;
 
 	i = 1;
-	if (all.dir[1])
+	if (buff)
 	{
-		len = ft_strlen(all.dir[1]);
-		i =  ((len == 3 && (ft_strncmp(all.dir[1], "-n ", 3) == 0)) ||
-				(len == 2 && (ft_strncmp(all.dir[1], "-n", 2) == 0)) ||
-				(len == 4 && (ft_strncmp(all.dir[1], "'-n'", 4) == 0)) ||
-				(len == 4 && (ft_strncmp(all.dir[1], "\"-n\"", 4) == 0))) ? 0 : 1;
+		len = ft_strlen(buff);
+		i =  ((len == 3 && (ft_strncmp(buff, "-n ", 3) == 0)) ||
+				(len == 2 && (ft_strncmp(buff, "-n", 2) == 0)) ||
+				(len == 4 && (ft_strncmp(buff, "'-n'", 4) == 0)) ||
+				(len == 4 && (ft_strncmp(buff, "\"-n\"", 4) == 0))) ? 0 : 1;
+		if (len > 2 && ft_strncmp(buff, "-n", 2) == 0)
+		{
+			u = 2;
+			while (buff[u] && buff[u] == 'n')
+				u++;
+			i = (u == len) ? 0 : 1;
+		}
 	}
 	return (i);
 }
@@ -53,15 +61,19 @@ int	printnoquote(t_all all)
 	int	i;
 
 	i = 1;
-	if (all.dir[1])
-		i = silence(all) == 0 ? 2 : 1;
+	while (all.dir[i])
+	{
+		i = silence(all.dir[i]) == 0 ? i + 1 : i;
+		if (silence(all.dir[i]) != 0)
+			break ;
+	}
 	while (all.dir[i])
 	{
 		write(1, all.dir[i], ft_strlen(all.dir[i]));
-		silence(all) == 1 ? write(1, " ", 1) : 0;
+		silence(all.dir[i]) == 1 ? write(1, " ", 1) : 0;
 		i++;
 	}
-	return (silence(all));
+	return (silence(all.dir[1]));
 }
 
 int	printifquote(int i, t_all all)
