@@ -6,7 +6,7 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/04 14:09:45 by chgilber          #+#    #+#             */
-/*   Updated: 2020/10/10 15:45:01 by jabenjam         ###   ########.fr       */
+/*   Updated: 2020/10/11 17:51:43 by chgilber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,18 +33,14 @@ void		writenotfound(t_all *all)
 
 int			letsgnl(t_all *all)
 {
-	int		ok;
-
-	builtin = 0;
-	ok = checkonlyret(all->pdir[0], all);
+	g_builtin = 0;
+	g_freete = 0;
 	get_dir();
 	free(all->buff);
 	all->i = get_next_line(0, &all->buff);
 	crontold(all);
-	all->countpipe = pipecount(*all, all->buff, ';') + 1; // peut etre all sans *
+	all->countpipe = pipecount(*all, all->buff, ';') + 1;
 	all->data = all->countpipe;
-	//	freedir(all->dir);
-	//	all->dir = NULL;
 	freedir(all->pdir);
 	all->pdir = NULL;
 	all->pdir = (all->countpipe > 1) ?
@@ -81,13 +77,11 @@ int			main(int ac, char **av, char **env)
 	init_all(&all, env, ac, av);
 	while (check(all.pdir[all.data - all.countpipe], &all) == 1 && all.i > 0)
 	{
-		signal_manager();
+		signal_manager(&all);
 		all.countpipe = checkquote(all.buff) ? 0 : all.countpipe;
 		tokentranslate(&all);
 		if (all.countpipe > 0 && parse_command(&all, env) == 0)
 			writenotfound(&all);
-		/*if (all.pdir[all.data - all.countpipe] &&
-			ft_strlen(all.pdir[all.data - all.countpipe]) > 0)*/
 		io_manager_dup(&all, 0);
 		env = ft_list_to_tab(all.env, 0);
 		if (all.countpipe < 1)

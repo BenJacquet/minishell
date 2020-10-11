@@ -6,7 +6,7 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/04 16:18:54 by jabenjam          #+#    #+#             */
-/*   Updated: 2020/10/10 16:00:06 by chgilber         ###   ########.fr       */
+/*   Updated: 2020/10/11 17:02:02 by chgilber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,8 @@
 # include "GNL/get_next_line.h"
 # include "libft/libft.h"
 
-int				builtin;
+int				g_builtin;
+int				g_freete;
 
 typedef	struct s_red
 {
@@ -115,7 +116,7 @@ int				initcroco(t_all *all, int here);
 int				parse_command(t_all *all, char **env);
 char			*ft_strncat(char *s1, char *s2, int len);
 void			init_all(t_all *all, char **env, int ac, char **av);
-int				signal_manager();
+int				signal_manager(t_all *all);
 
 /*
 ** -------------BEN------------------------------------------------------------

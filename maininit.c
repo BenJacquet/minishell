@@ -6,7 +6,7 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/06 16:15:04 by chgilber          #+#    #+#             */
-/*   Updated: 2020/10/10 15:41:09 by jabenjam         ###   ########.fr       */
+/*   Updated: 2020/10/11 18:38:11 by chgilber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,25 +16,28 @@ void		handle(int sig)
 {
 	if (sig == SIGINT)
 	{
-		if (builtin != 2)
+		if (g_builtin != 2)
 			write(1, "\b\b  \b\b", 6);
 		write(1, "\n", 1);
-		if (builtin == 0)
+		if (g_builtin == 0)
 			get_dir();
+		g_freete = 1;
 	}
 	else if (sig == SIGQUIT)
 	{
-		if (builtin == 2)
+		if (g_builtin == 2)
 			write(1, "Quit: 3\n", 8);
 		else
 			write(1, "\b\b  \b\b", 6);
 	}
 }
 
-int			signal_manager(void)
+int			signal_manager(t_all *all)
 {
-	(signal(SIGINT, &handle));
 	(signal(SIGQUIT, &handle));
+	(signal(SIGINT, &handle));
+	if (g_freete == 1)
+		all->countpipe = 0;
 	return (0);
 }
 
@@ -43,10 +46,11 @@ void		init_all(t_all *all, char **env, int ac, char **av)
 	get_dir();
 	(void)ac;
 	(void)av;
-	signal_manager();
+	g_freete = 0;
+	g_builtin = 0;
+	signal_manager(all);
 	all->toks = NULL;
 	all->reds = NULL;
-	builtin = 0;
 	all->fds[0] = STDIN_FILENO;
 	all->fds[1] = STDOUT_FILENO;
 	all->mask = (S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
@@ -54,7 +58,7 @@ void		init_all(t_all *all, char **env, int ac, char **av)
 	crontold(all);
 	all->env = ft_tab_to_list(env);
 	all->ret = new_elem("?=0");
-	all->countpipe = pipecount(*all, all->buff, ';') + 1;
+	all->countpipe = (g_freete == 0) ? pipecount(*all, all->buff, ';') + 1 : 0;
 	all->data = all->countpipe;
 	all->pdir = NULL;
 	all->pdir = (all->countpipe > 1) ?

@@ -6,7 +6,7 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/05 15:21:37 by jabenjam          #+#    #+#             */
-/*   Updated: 2020/10/10 13:17:27 by jabenjam         ###   ########.fr       */
+/*   Updated: 2020/10/11 17:05:37 by chgilber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ int		parsincomd(t_all *all, char **env)
 		return (builtins_env(all));
 	else if ((all->exec = get_path(all)) != NULL)
 	{
-		builtin = 2;
+		g_builtin = 2;
 		run_exec(all, all->exec, all->dir, env);
 		all->countpipe--;
 		return (1);
@@ -85,7 +85,7 @@ int		parsincomd(t_all *all, char **env)
 
 int		parse_command(t_all *all, char **env)
 {
-	printf("pdir=%s\n", all->pdir[all->data - all->countpipe]);
+//	printf("pdir=%s\n", all->pdir[all->data - all->countpipe]);
 	if (all->pdir[all->data - all->countpipe] &&
 			ft_strlen(all->pdir[all->data - all->countpipe]) > 0)
 	{
@@ -98,7 +98,7 @@ int		parse_command(t_all *all, char **env)
 		all->toks = convert_tokens_lst(all->dir);
 		handle_redirections(all);
 		all->dir = convert_tokens_tab(all->toks);
-		printf("AFTER CONVERT: all->dir=[%p]\nall->dir[0]=[%s]", all->dir, all->dir[0]);
+//		printf("AFTER CONVERT: all->dir=[%p]\nall->dir[0]=[%s]", all->dir, all->dir[0]);
 		io_manager_dup(all, 1);
 		return (parsincomd(all, env));
 	}
