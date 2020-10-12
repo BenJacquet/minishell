@@ -6,7 +6,7 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/06 18:44:32 by chgilber          #+#    #+#             */
-/*   Updated: 2020/10/12 18:09:10 by jabenjam         ###   ########.fr       */
+/*   Updated: 2020/10/12 18:11:13 by jabenjam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,6 @@ int		freelance(t_all *all, char **env)
 		ret = ft_atoi(all->ret->value);
 		free_vars(all->ret);
 	}
-	(void)env;
 	if (all->i == 0)
 		write(1, "exit\n", 5);
 	if (all->dir)
