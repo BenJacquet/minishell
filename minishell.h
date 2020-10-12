@@ -6,7 +6,7 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/04 16:18:54 by jabenjam          #+#    #+#             */
-/*   Updated: 2020/10/12 17:57:30 by jabenjam         ###   ########.fr       */
+/*   Updated: 2020/10/12 19:29:18 by chgilber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,8 +107,8 @@ int				checksquote(char *buff);
 char			*ft_strncpy(char *dest, const char *src, int dstsize);
 int				pipecount(t_all all,char *str, char c);
 char			**ft_splitmini(char *s, char c);
-int				counttoken(t_all all);
-char			*dolar(t_all all);
+int				counttoken(t_all *all);
+void			dolar(t_all *all);
 int				join(t_all *all, char *buff, int inc, char quote);
 int				silence(char *buff);
 int				joinquote(t_all *all);
