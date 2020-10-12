@@ -6,7 +6,7 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/04 14:09:45 by chgilber          #+#    #+#             */
-/*   Updated: 2020/10/11 17:51:43 by chgilber         ###   ########.fr       */
+/*   Updated: 2020/10/12 16:57:06 by chgilber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,11 +40,16 @@ int			letsgnl(t_all *all)
 	all->i = get_next_line(0, &all->buff);
 	crontold(all);
 	all->countpipe = pipecount(*all, all->buff, ';') + 1;
-	all->data = all->countpipe;
 	freedir(all->pdir);
 	all->pdir = NULL;
-	all->pdir = (all->countpipe > 1) ?
-		ft_splitmini(all->buff, ';') : ft_split(all->buff, '\0');
+	all->pdir = ft_splitmini(all->buff, ';');
+	all->tube = (all->pdir[0] && all->countpipe > 0) ? 
+		pipecount(*all, all->pdir[0], '|') : 0;
+	all->countpipe = (all->tube >= 0) ? all->countpipe : 0;
+	all->data = all->countpipe;
+	freedir(all->xdir);
+	all->xdir = NULL;
+	all->xdir = ft_splitmini(all->pdir[0], '|');
 	all->builtin = 0;
 	return (0);
 }
@@ -77,6 +82,7 @@ int			main(int ac, char **av, char **env)
 	init_all(&all, env, ac, av);
 	while (check(all.pdir[all.data - all.countpipe], &all) == 1 && all.i > 0)
 	{
+//		printf("xdir[0] = [%s] et xdir[1] = [%s] et tube = %d\n", all.xdir[0], all.xdir[1], all.tube);
 		signal_manager(&all);
 		all.countpipe = checkquote(all.buff) ? 0 : all.countpipe;
 		tokentranslate(&all);
