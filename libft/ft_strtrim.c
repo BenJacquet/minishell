@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strtrim.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: chgilber <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/10 15:32:21 by chgilber          #+#    #+#             */
-/*   Updated: 2020/01/28 15:35:58 by chgilber         ###   ########.fr       */
+/*   Updated: 2020/10/12 16:34:19 by jabenjam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,5 +52,34 @@ char		*ft_strtrim(const char *s1, const char *set)
 	while (end >= start)
 		new[i++] = s1[start++];
 	new[i] = '\0';
+	return (new);
+}
+
+char		*ft_strtrimf(char *s1, const char *set)
+{
+	int		i;
+	int		start;
+	int		end;
+	char	*new;
+
+	i = 0;
+	if (!set || !s1)
+		return (NULL);
+	while (is_char_set(set, s1[i]) == 1 && s1[i])
+		i++;
+	start = i;
+	while (s1[i])
+		i++;
+	if (i != start)
+		while (is_char_set(set, s1[--i]) == 1)
+			;
+	end = i;
+	if (!(new = malloc(sizeof(char) * (end - start + 2))))
+		return (NULL);
+	i = 0;
+	while (end >= start)
+		new[i++] = s1[start++];
+	new[i] = '\0';
+	free(s1);
 	return (new);
 }

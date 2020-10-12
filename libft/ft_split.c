@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: chgilber <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/10 21:50:17 by chgilber          #+#    #+#             */
-/*   Updated: 2020/08/16 16:29:32 by chgilber         ###   ########.fr       */
+/*   Updated: 2020/10/11 18:42:08 by jabenjam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,35 @@ char			**ft_split(const char *s, char c)
 				i++;
 		}
 	}
+	tab[k] = NULL;
+	return (tab);
+}
+
+char			**ft_splitf(char *s, char c)
+{
+	int		i;
+	int		k;
+	char	**tab;
+	char	charset[1];
+
+	charset[0] = c;
+	if (!s || !(tab = malloc(sizeof(char *) * (ft_count_word(s, charset) + 2))))
+		return (NULL);
+	k = 0;
+	i = 0;
+	while (s[i])
+	{
+		if (in_charset(s[i], charset))
+			while (s[i] != '\0' && in_charset(s[i], charset))
+				i++;
+		else
+		{
+			tab[k++] = ft_len_word(s + i, charset);
+			while (s[i] != '\0' && !in_charset(s[i], charset))
+				i++;
+		}
+	}
+	free(s);
 	tab[k] = NULL;
 	return (tab);
 }
