@@ -6,7 +6,7 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/05 12:35:39 by jabenjam          #+#    #+#             */
-/*   Updated: 2020/09/25 12:35:59 by jabenjam         ###   ########.fr       */
+/*   Updated: 2020/10/12 15:57:09 by jabenjam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,8 +71,7 @@ void ft_unset_core(t_all *all)
 		return;
 	while (all->dir[i + 1])
 	{
-		free(all->ret->value);
-		if ((all->ret->value = ft_itoa(ft_unset_check_name(all->dir[i + 1]) == 0)))
+		if (update_return(all, ft_unset_check_name(all->dir[i + 1]) == 0))
 			all->env = ft_unset_find_name(all->dir[i + 1], all->env);
 		i++;
 	}

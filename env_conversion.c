@@ -6,7 +6,7 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/06 14:31:34 by jabenjam          #+#    #+#             */
-/*   Updated: 2020/10/10 13:17:44 by jabenjam         ###   ########.fr       */
+/*   Updated: 2020/10/12 17:55:04 by jabenjam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,7 @@ t_env *new_elem(char *var)
 	return (elem);
 }
 
-t_env *ft_tab_to_list(char **tab)
+t_env *ft_tab_to_list(char **tab, int erase)
 {
 	int i;
 	t_env *head;
@@ -120,6 +120,8 @@ t_env *ft_tab_to_list(char **tab)
 			current = current->next;
 		}
 	}
+	if (erase == 1)
+		free_tab(tab);
 	return (head);
 }
 
@@ -149,7 +151,7 @@ char *ft_data_to_string(t_env *elem, int mode)
 	return (new);
 }
 
-char **ft_list_to_tab(t_env *lst, int mode)
+char **ft_list_to_tab(t_env *lst, int mode, int erase)
 {
 	int i;
 	char **tab;
@@ -166,5 +168,7 @@ char **ft_list_to_tab(t_env *lst, int mode)
 		current = current->next;
 	}
 	tab[i] = NULL;
+	if (erase == 1)
+		free_vars(lst);
 	return (tab);
 }

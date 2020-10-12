@@ -6,7 +6,7 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/04 16:18:54 by jabenjam          #+#    #+#             */
-/*   Updated: 2020/10/11 17:02:02 by chgilber         ###   ########.fr       */
+/*   Updated: 2020/10/12 17:57:30 by jabenjam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,18 +67,21 @@ typedef struct	s_all
 	char		*oldbuff;
 	char		**dir;
 	char		**pdir;
+	char		**xdir;
 	char		*exec;
 	int			i;
 	int			j;
 	int			data;
 	int			stop;
 	int			pipe;
+	int			tube;
 	int			countpipe;
 	int			fds[2];
 	int			fds_backup[2];
 	int			red;
 	int			mask;
 	int			builtin;
+	int			env_replaced;
 	t_tok		*toks;
 	t_red		*reds;
 }				t_all;
@@ -94,7 +97,7 @@ int				cd(char **dir, t_all all);
 int				check(char *buff, t_all *all);
 int				checkonlyret(char *buff, t_all *all);
 int				checkquote(char *buff);
-int				freelance(t_all *all);
+int				freelance(t_all *all, char **env);
 int				freedir(char **dir);
 char			**newdir(char **dir, char *buff);
 int				pwd(char *buff);
@@ -131,7 +134,7 @@ char			*ft_getenv2(char *name, t_env *current, int mode);
 void			ft_putenv(t_env *env);
 int				ft_export_core(t_all *all);
 int				ft_export_null(t_env *env);
-t_env			*ft_export_edit(t_env *var, t_env *env);
+void			ft_export_edit(t_env *var, t_env *env);
 int				ft_export_check_name(char *var);
 t_env		 	*ft_export_find_name(t_env *var, t_env *env);
 void			ft_unset_core(t_all *all);
@@ -142,8 +145,8 @@ char			**tab_dup(char **tab);
 void			free_tab(char **tab);
 int				ft_tablen(char **tab);
 void			store_variable(char *var, t_env *elem);
-t_env			*ft_tab_to_list(char **tab);
-char			**ft_list_to_tab(t_env *lst, int mode);
+t_env			*ft_tab_to_list(char **tab, int erase);
+char			**ft_list_to_tab(t_env *lst, int mode, int erase);
 int				get_op(char *var);
 t_env			*elem_dup(t_env *elem);
 t_env			*new_elem(char *var);
@@ -174,5 +177,9 @@ char			*clean_token(t_tok *tok);
 t_tok			*new_token(char *token, t_tok *previous);
 void			reset_fds(t_all *all);
 int				no_command(t_all *all, int mode);
+void			free_vars(t_env	*env);
+void			free_tokens(t_tok *toks);
+int				update_return(t_all *all, int new);
+char			**update_env(t_all *all, char **old);
 
 #endif

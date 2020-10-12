@@ -6,7 +6,7 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/08 18:06:32 by jabenjam          #+#    #+#             */
-/*   Updated: 2020/09/18 16:55:28 by jabenjam         ###   ########.fr       */
+/*   Updated: 2020/10/12 16:06:02 by jabenjam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ void free_tab(char **tab)
 		while (tab[i])
 			free(tab[i++]);
 	}
+	free(tab);
 }
 
 char **tab_dup(char **tab)

@@ -6,7 +6,7 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/05 15:21:37 by jabenjam          #+#    #+#             */
-/*   Updated: 2020/10/11 17:05:37 by chgilber         ###   ########.fr       */
+/*   Updated: 2020/10/12 16:06:05 by jabenjam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,17 +19,17 @@ int		builtins_others(t_all *all)
 	pipe_bkp = all->countpipe;
 	if (ft_strcmp(all->dir[0], "cd") == 0)
 	{
-		all->ret->value = ft_itoa(cd(all->dir, *all));
+		update_return(all, cd(all->dir, *all));
 		all->countpipe--;
 	}
 	else if (ft_strcmp(all->dir[0], "pwd") == 0)
 	{
-		all->ret->value = ft_itoa(pwd(all->buff));
+		update_return(all, pwd(all->buff));
 		all->countpipe--;
 	}
 	else if (ft_strcmp(all->dir[0], "echo") == 0)
 	{
-		all->ret->value = ft_itoa(echo(*all));
+		update_return(all, echo(*all));
 		all->countpipe--;
 	}
 	return (all->countpipe != pipe_bkp ? 1 : 0);

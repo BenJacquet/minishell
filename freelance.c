@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   freelance.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: chgilber <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/06 18:44:32 by chgilber          #+#    #+#             */
-/*   Updated: 2020/10/06 16:29:56 by chgilber         ###   ########.fr       */
+/*   Updated: 2020/10/12 18:09:10 by jabenjam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,18 +34,30 @@ int		freedir(char **dir)
 	return (0);
 }
 
-int		freelance(t_all *all)
+int		freelance(t_all *all, char **env)
 {
-	int	i;
+	int ret;
 
-	i = 0;
+	ret = 0;
+	if (all->ret)
+	{
+		ret = ft_atoi(all->ret->value);
+		free_vars(all->ret);
+	}
+	(void)env;
 	if (all->i == 0)
 		write(1, "exit\n", 5);
-	if (all->dir && (all->dir != NULL))
-		freedir(all->dir);
+	if (all->dir)
+		free_tab(all->dir);
 	if (all->buff)
 		free(all->buff);
 	if (all->pdir)
-		freedir(all->pdir);
-	return (ft_atoi(all->ret->value));
+		free_tab(all->pdir);
+	if (all->env)
+		free_vars(all->env);
+	if (all->env_replaced)
+		free_tab(env);
+	if (all->xdir)
+		free_tab(all->xdir);
+	return (ret);
 }

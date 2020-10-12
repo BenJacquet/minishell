@@ -6,26 +6,11 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/30 14:30:56 by jabenjam          #+#    #+#             */
-/*   Updated: 2020/10/10 15:34:20 by jabenjam         ###   ########.fr       */
+/*   Updated: 2020/10/12 15:30:35 by jabenjam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-void	free_tokens(t_tok *toks)
-{
-	t_tok	*current;
-	
-	current = NULL;
-	while (toks)
-	{
-		current = toks;
-		if (toks->value)
-			free(toks->value);
-		toks = toks->next;
-		free(current);
-	}
-}
 
 t_tok	*new_token(char *token, t_tok *previous)
 {

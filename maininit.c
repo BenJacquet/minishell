@@ -6,7 +6,7 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/06 16:15:04 by chgilber          #+#    #+#             */
-/*   Updated: 2020/10/12 17:16:44 by chgilber         ###   ########.fr       */
+/*   Updated: 2020/10/12 18:06:25 by jabenjam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,22 +56,21 @@ void		init_allbis(t_all *all, char **env, int ac, char **av)
 	all->mask = (S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
 	all->i = get_next_line(0, &all->buff);
 	crontold(all);
-	all->env = ft_tab_to_list(env);
+	all->env = ft_tab_to_list(env, 0);
+	all->env_replaced = 0;
 	all->ret = new_elem("?=0");
-
+	all->red = 0;
 }
+
 void		init_all(t_all *all, char **env, int ac, char **av)
 {
 	init_allbis(all, env, ac, av);
 	all->countpipe = (g_freete == 0) ? pipecount(*all, all->buff, ';') + 1 : 0;
-	all->pdir = NULL;
 	all->pdir = ft_splitmini(all->buff, ';');
-	all->tube = (g_freete == 0 && all->pdir[0] && all->countpipe > 0) ? pipecount(*all, all->pdir[0], '|') : 0;
-	all->xdir = NULL;
+	all->tube = (g_freete == 0 && all->pdir[0] && all->countpipe > 0) ?
+				pipecount(*all, all->pdir[0], '|') : 0;
 	all->countpipe = (all->tube >= 0) ? all->countpipe : 0;
 	all->data = all->countpipe;
 	all->xdir = ft_splitmini(all->pdir[0], '|');
 	all->dir = ft_split(all->buff, ' ');
-	all->ret->value = ft_itoa(0);
-	all->reds = NULL;
 }

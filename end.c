@@ -6,7 +6,7 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/04 17:30:12 by chgilber          #+#    #+#             */
-/*   Updated: 2020/10/07 14:48:51 by chgilber         ###   ########.fr       */
+/*   Updated: 2020/10/12 17:38:39 by jabenjam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,18 +23,17 @@ int		end(char *buff, t_all *all)
 	{
 		while (arg[1][i] && ft_isdigit(arg[1][i]) == 0)
 			i++;
-		free(all->ret->value);
 		if (i == ft_strlen(arg[1]))
 		{
 			write(2, "minishell: exit: ", 17);
 			write(2, arg[1], ft_strlen(arg[1]));
 			write(2, ": numeric argument required", 28);
-			all->ret->value = ft_itoa(255);
+			update_return(all, 255);
 		}
 		else
-			all->ret->value = ft_strdup(arg[1]);
+			update_return(all, ft_atoi(arg[1]));
 	}
-	freedir(arg);
+	free_tab(arg);
 	return (0);
 }
 

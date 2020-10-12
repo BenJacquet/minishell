@@ -1,53 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_dir.c                                          :+:      :+:    :+:   */
+/*   update.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/08/04 16:16:26 by jabenjam          #+#    #+#             */
-/*   Updated: 2020/10/12 17:48:14 by jabenjam         ###   ########.fr       */
+/*   Created: 2020/10/12 16:50:19 by jabenjam          #+#    #+#             */
+/*   Updated: 2020/10/12 17:53:17 by jabenjam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	pwd(char *buff)
+int			update_return(t_all *all, int new)
 {
-	char	*path;
-
-	path = NULL;
-	(void)buff;
-	path = getcwd(path, 0);
-	write(1, path, strlen(path));
-	write(1, "\n", 1);
-	free(path);
+	if (all->ret)
+	{
+		free(all->ret->value);
+		all->ret->value = ft_itoa(new);
+	}
 	return (0);
 }
 
-int	get_dir(void)
+char		**update_env(t_all *all, char **old)
 {
-	char	*path;
-	int		len;
-	int		i;
-	int		a;
+	char **env;
 
-	path = NULL;
-	path = getcwd(path, 0);
-	i = 0;
-	a = 0;
-	while (path[i])
-	{
-		if (path[i] == '/')
-			a = i;
-		i++;
-	}
-	if (path[a])
-	{
-		len = strlen(path + a);
-		write(1, path + a, len);
-		write(1, " : ", 3);
-		free(path);
-	}
-	return (0);
+	env = ft_list_to_tab(all->env, 0, 0);
+	if (all->env_replaced)
+		free_tab(old);
+	all->env_replaced = 1;
+	return (env);
 }

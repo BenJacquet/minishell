@@ -6,7 +6,7 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/08 18:26:01 by jabenjam          #+#    #+#             */
-/*   Updated: 2020/09/27 19:04:58 by jabenjam         ###   ########.fr       */
+/*   Updated: 2020/10/12 16:06:14 by jabenjam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void ft_putenv(t_env *env)
 	char **new;
 
 	i = 0;
-	new = ft_list_to_tab(env, 0);
+	new = ft_list_to_tab(env, 0, 0);
 	while (new[i] != 0)
 	{
 		ft_putstr_fd(new[i++], 1);
@@ -54,43 +54,6 @@ char *remove_space(char *str)
 	free(str);
 	return (new);
 }
-/*
-t_env	*get_biggest(char *name, t_env *current, t_env *biggest)
-{
-	int len;
-
-	len = 0;
-	biggest = NULL;
-	while (current != NULL)
-	{
-		if (!ft_strncmp(name, current->name, ft_strlen(current->name)))
-		{
-			if (ft_strlen(current->name) > len)
-			{
-				biggest = current;
-				len = ft_strlen(current->name);
-			}
-		}
-		current = current->next;
-	}
-	return (biggest);
-}
-
-char *ft_getenv(t_all *all, char *name, int mode)
-{
-	char *value;
-	t_env *current;
-
-	value = NULL;
-	if (all->env)
-		current = all->env;
-	if (name == NULL || name == NULL)
-		return (NULL);
-	if (name[0] == '?')
-		return (all->ret->value);
-	value = ft_getenv2(name, current, mode);
-	return (value);
-}*/
 
 /*
 ** MODE = 0 : pas de quote donc token tel quel

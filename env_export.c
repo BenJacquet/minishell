@@ -6,17 +6,14 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/08 18:01:17 by jabenjam          #+#    #+#             */
-/*   Updated: 2020/10/07 16:05:22 by chgilber         ###   ########.fr       */
+/*   Updated: 2020/10/12 16:58:23 by jabenjam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_env *ft_export_edit(t_env *var, t_env *env)
+void	ft_export_edit(t_env *var, t_env *env)
 {
-	t_env *head;
-
-	head = env;
 	if (var)
 	{
 		if (var->op == 1)
@@ -26,8 +23,8 @@ t_env *ft_export_edit(t_env *var, t_env *env)
 		}
 		else if (var->op == 2)
 			env->value = ft_strjoinf(env->value, ft_strtrim(var->value, "\'\""));
+		env->op = 1;
 	}
-	return (head);
 }
 
 t_env *ft_export_find_name(t_env *var, t_env *env)
@@ -43,7 +40,10 @@ t_env *ft_export_find_name(t_env *var, t_env *env)
 			return (head);
 		}
 		if (!env->next)
+		{
 			env->next = elem_dup(var);
+			return (head);
+		}
 		env = env->next;
 	}
 	return (head);
@@ -90,7 +90,7 @@ int ft_export_null(t_env *env)
 
 	i = 0;
 	j = 0;
-	new = ft_list_to_tab(env, 1);
+	new = ft_list_to_tab(env, 1, 0);
 	while (new[i])
 	{
 		if (new[i + 1] && j == i)
@@ -106,7 +106,6 @@ int ft_export_null(t_env *env)
 		i++;
 	}
 	ft_puttab(new);
-	free(new);
 	return (0);
 }
 
@@ -114,13 +113,15 @@ int ft_export_core(t_all *all)
 {
 	int i;
 	t_env *var_lst;
+	t_env *head;
 
 	i = 1;
 	if (all->dir[1] == NULL || all->dir[1][0] == '\0')
 		return (ft_export_null(all->env));
 //	for (int j = 0; all->pdir[j]; j++)
 //		printf("all->pdir[%d]=%s\n", j, all->pdir[j]);
-	var_lst = ft_tab_to_list(&all->dir[1]);
+	var_lst = ft_tab_to_list(&all->dir[1], 0);
+	head = var_lst;
 	while (all->dir[i])
 	{
 		if (ft_export_check_name(all->dir[i]) >= 0)
@@ -128,6 +129,6 @@ int ft_export_core(t_all *all)
 		i++;
 		var_lst = var_lst->next;
 	}
-	//free de var_lst a ajouter;
+	free_vars(head);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/23 14:38:04 by jabenjam          #+#    #+#             */
-/*   Updated: 2020/10/10 13:39:41 by jabenjam         ###   ########.fr       */
+/*   Updated: 2020/10/12 16:26:49 by jabenjam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,9 @@
 void	reset_fds(t_all *all)
 {
 	all->fds[0] = STDIN_FILENO;
+	all->fds_backup[0] = STDIN_FILENO;
 	all->fds[1] = STDOUT_FILENO;
+	all->fds_backup[1] = STDOUT_FILENO;
 }
 
 int		no_command(t_all *all, int mode)
@@ -46,23 +48,33 @@ int	io_manager_dup(t_all *all, int mode)
 		return (no_command(all, mode));
 	if (mode == 1)
 	{
-		all->fds_backup[0] = dup(STDIN_FILENO);
-		dup2(all->fds[0], STDIN_FILENO);
 		if (all->fds[0] != 0)
+		{
+			all->fds_backup[0] = dup(STDIN_FILENO);
+			dup2(all->fds[0], STDIN_FILENO);
 			close(all->fds[0]);
-		all->fds_backup[1] = dup(STDOUT_FILENO);
-		dup2(all->fds[1], STDOUT_FILENO);
+		}
 		if (all->fds[1] != 1)
+		{
+			all->fds_backup[1] = dup(STDOUT_FILENO);
+			dup2(all->fds[1], STDOUT_FILENO);
 			close(all->fds[1]);
+		}
 	}
 	else if (mode == 0)
 	{
-		dup2(all->fds_backup[0], STDIN_FILENO);
-		close(all->fds_backup[0]);
-		dup2(all->fds_backup[1], STDOUT_FILENO);
-		close(all->fds_backup[1]);
+		if (all->fds[0] != 0)
+		{
+			dup2(all->fds_backup[0], STDIN_FILENO);
+			close(all->fds_backup[0]);
+		}
+		if (all->fds[1] != 1)
+		{
+			dup2(all->fds_backup[1], STDOUT_FILENO);
+			close(all->fds_backup[1]);
+		}
+		reset_fds(all);
 	}
-	reset_fds(all);
 	return (0);
 }
 
@@ -186,9 +198,9 @@ int which_redirection(t_all *all, int *start)
 		all->red = (O_RDWR);
 	if (all->red == 1538 || all->red == 522 || all->red == 2)
 	{
-		printf("start=[%d]\n", *start);
+		//printf("start=[%d]\n", *start);
 		all->toks->end = (all->toks->end == ft_strlen(all->toks->value) ? *start : all->toks->end);
-		printf("all->toks->end=[%d]\n", all->toks->end);
+		//printf("all->toks->end=[%d]\n", all->toks->end);
 		if (all->toks->next && all->toks->value[(*start + 1)] == '\0')
 		{
 			all->toks = all->toks->next;

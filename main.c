@@ -6,7 +6,7 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/04 14:09:45 by chgilber          #+#    #+#             */
-/*   Updated: 2020/10/12 16:57:06 by chgilber         ###   ########.fr       */
+/*   Updated: 2020/10/12 18:07:29 by jabenjam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void		writenotfound(t_all *all)
 	all->builtin = 0;
 	if (all->buff[0] == '\0')
 	{
-		all->ret->value = ft_itoa(0);
+		update_return(all, 0);
 		all->countpipe--;
 		return ;
 	}
@@ -27,7 +27,7 @@ void		writenotfound(t_all *all)
 		write(1, all->dir[0], (!all->dir[0]) ? 0 : ft_strlen(all->dir[0]));
 		write(1, ": command not found\n", 21);
 	}
-	all->ret->value = ft_itoa(127);
+	update_return(all, 127);
 	all->countpipe--;
 }
 
@@ -41,14 +41,12 @@ int			letsgnl(t_all *all)
 	crontold(all);
 	all->countpipe = pipecount(*all, all->buff, ';') + 1;
 	freedir(all->pdir);
-	all->pdir = NULL;
 	all->pdir = ft_splitmini(all->buff, ';');
 	all->tube = (all->pdir[0] && all->countpipe > 0) ? 
 		pipecount(*all, all->pdir[0], '|') : 0;
 	all->countpipe = (all->tube >= 0) ? all->countpipe : 0;
 	all->data = all->countpipe;
 	freedir(all->xdir);
-	all->xdir = NULL;
 	all->xdir = ft_splitmini(all->pdir[0], '|');
 	all->builtin = 0;
 	return (0);
@@ -89,9 +87,9 @@ int			main(int ac, char **av, char **env)
 		if (all.countpipe > 0 && parse_command(&all, env) == 0)
 			writenotfound(&all);
 		io_manager_dup(&all, 0);
-		env = ft_list_to_tab(all.env, 0);
+		env = update_env(&all, env);
 		if (all.countpipe < 1)
 			letsgnl(&all);
 	}
-	return (freelance(&all));
+	return (freelance(&all, env));
 }
