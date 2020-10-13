@@ -6,7 +6,7 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/05 14:40:00 by chgilber          #+#    #+#             */
-/*   Updated: 2020/10/12 15:55:32 by jabenjam         ###   ########.fr       */
+/*   Updated: 2020/10/13 18:19:57 by chgilber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,10 +75,8 @@ int		checkquote(char *buff)
 			i++;
 	}
 	if (a % 2 != 0 || u % 2 != 0)
-	{
-		write(1, "No multilines\n", 14);
 		return (1);
-	}
+	//	write(1, "No multilines\n", 14);
 	return (0);
 }
 
