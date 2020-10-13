@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   joinquote.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: chgilber <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/17 14:07:55 by chgilber          #+#    #+#             */
-/*   Updated: 2020/10/09 18:55:20 by chgilber         ###   ########.fr       */
+/*   Updated: 2020/10/13 15:15:54 by jabenjam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,14 +116,12 @@ int		joinquote(t_all *all)
 		all->dir = newdirquote(all->dir, cnt(i, all, here));
 		all->stop = ifquote(i, all, here, inc);
 		i = 0;
-		while (all->shouldi[i] && i < 6)
-	{
-		printf("shouldi[%d] = %d\n " , i, all->shouldi[i]);
-		i++;
-	}
 	}
 	else
+	{
 		all->dir = ft_split(all->pdir[all->data - all->countpipe], ' ');
+		crocodir(all);
+	}
 	return (0);
 }
 

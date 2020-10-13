@@ -6,15 +6,15 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/18 17:01:11 by jabenjam          #+#    #+#             */
-/*   Updated: 2020/09/08 12:31:17 by jabenjam         ###   ########.fr       */
+/*   Updated: 2020/10/13 17:43:48 by jabenjam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_env *env_exists(char *name, t_env *env)
+t_env	*env_exists(char *name, t_env *env)
 {
-	t_env *start;
+	t_env	*start;
 
 	start = env;
 	while (env)
@@ -27,12 +27,12 @@ t_env *env_exists(char *name, t_env *env)
 	return (NULL);
 }
 
-char *get_new_value(t_all *all, t_env *var, int len)
+char	*get_new_value(t_all *all, t_env *var, int len)
 {
-	char *new;
-	t_env *cor;
-	int i;
-	int j;
+	int		i;
+	int		j;
+	char	*new;
+	t_env	*cor;
 
 	i = 0;
 	j = 0;
@@ -54,15 +54,14 @@ char *get_new_value(t_all *all, t_env *var, int len)
 	return (new);
 }
 
-int expand_value(t_env *var, t_all *all)
+int		expand_value(t_env *var, t_all *all)
 {
-	int i;
-	int len;
-	t_env *cor;
+	int		i;
+	int		len;
+	t_env	*cor;
 
 	i = 0;
 	len = 0;
-	int j = 0;
 	if (var->value)
 	{
 		while (var->value[i])
@@ -78,7 +77,6 @@ int expand_value(t_env *var, t_all *all)
 				i++;
 				len++;
 			}
-			j++;
 		}
 		var->value = get_new_value(all, var, len);
 	}

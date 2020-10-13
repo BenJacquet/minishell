@@ -6,7 +6,7 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/11 12:59:13 by jabenjam          #+#    #+#             */
-/*   Updated: 2020/10/11 17:41:21 by jabenjam         ###   ########.fr       */
+/*   Updated: 2020/10/13 17:48:01 by jabenjam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	free_tokens(t_tok *toks)
 {
 	t_tok	*current;
-	
+
 	current = NULL;
 	while (toks)
 	{
@@ -27,19 +27,24 @@ void	free_tokens(t_tok *toks)
 	}
 }
 
-void	free_vars(t_env	*env)
+void	free_var(t_env *var)
+{
+	if (var->name)
+		free(var->name);
+	if (var->value)
+		free(var->value);
+	free(var);
+}
+
+void	free_vars(t_env *vars)
 {
 	t_env	*current;
-	
+
 	current = NULL;
-	while (env)
+	while (vars)
 	{
-		current = env;
-		if (env->name)
-			free(env->name);
-		if (env->value)
-			free(env->value);
-		env = env->next;
-		free(current);
+		current = vars;
+		vars = vars->next;
+		free_var(current);
 	}
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: chgilber <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/16 12:01:29 by chgilber          #+#    #+#             */
-/*   Updated: 2020/10/12 17:16:41 by chgilber         ###   ########.fr       */
+/*   Updated: 2020/10/13 16:35:37 by jabenjam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,15 +23,16 @@ int	message(t_all all, char c, int i)
 	return (-666);
 
 }
+
 int	pipeok(t_all all, char c, int i)
 {
 	all.pipe++;
 	if (ft_strlen(all.buff) > i + 1)
-		if (all.buff[i + 1] == '|' && all.buff[i + 1] == ';')
+		if (all.buff[i + 1] == '|' || all.buff[i + 1] == ';')
 			return (message(all, c, i));
 	if (i == 0)
 		return (message(all, c, i));
-	if (i + 1 == ft_strlen(all.buff) && c == '|' && i != 0)
+	if (i + 1 == ft_strlen(all.buff) && i != 0 && c == '|')
 	{
 		if (all.buff[i - 1] == c && all.buff[i] == c)
 			return (-666);

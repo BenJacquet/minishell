@@ -6,15 +6,15 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/08 18:06:32 by jabenjam          #+#    #+#             */
-/*   Updated: 2020/10/12 16:06:02 by jabenjam         ###   ########.fr       */
+/*   Updated: 2020/10/13 18:02:53 by jabenjam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void ft_puttab(char **tab)
+void	ft_puttab(char **tab)
 {
-	int i;
+	int		i;
 
 	i = 0;
 	while (tab[i] != 0)
@@ -25,9 +25,9 @@ void ft_puttab(char **tab)
 	free_tab(tab);
 }
 
-int ft_tablen(char **tab)
+int		ft_tablen(char **tab)
 {
-	int len;
+	int		len;
 
 	len = 0;
 	while (tab[len] != NULL)
@@ -35,9 +35,9 @@ int ft_tablen(char **tab)
 	return (len);
 }
 
-void free_tab(char **tab)
+void	free_tab(char **tab)
 {
-	int i;
+	int		i;
 
 	i = 0;
 	if (tab)
@@ -48,10 +48,10 @@ void free_tab(char **tab)
 	free(tab);
 }
 
-char **tab_dup(char **tab)
+char	**tab_dup(char **tab)
 {
-	int i;
-	char **new;
+	int		i;
+	char	**new;
 
 	i = 0;
 	new = NULL;

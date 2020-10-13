@@ -1,34 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   update.c                                           :+:      :+:    :+:   */
+/*   run_exec.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/10/12 16:50:19 by jabenjam          #+#    #+#             */
-/*   Updated: 2020/10/13 18:03:18 by jabenjam         ###   ########.fr       */
+/*   Created: 2020/10/13 17:46:15 by jabenjam          #+#    #+#             */
+/*   Updated: 2020/10/13 17:46:54 by jabenjam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int		update_return(t_all *all, int new)
+int		run_exec(t_all *all, char *exec, char **args, char **envp)
 {
-	if (all->ret)
+	int		ret;
+	int		status;
+	pid_t	child_pid;
+
+	ret = 0;
+	status = 0;
+	envp = ft_list_to_tab(all->env, 0, 0);
+	if ((child_pid = fork()) == 0)
 	{
-		free(all->ret->value);
-		all->ret->value = ft_itoa(new);
+		status = execve(exec, args, envp);
+		if (status == -1)
+			ft_put_error(strerror(errno), exec, 1);
 	}
-	return (0);
-}
-
-char	**update_env(t_all *all, char **old)
-{
-	char	**env;
-
-	env = ft_list_to_tab(all->env, 0, 0);
-	if (all->env_replaced)
-		free_tab(old);
-	all->env_replaced = 1;
-	return (env);
+	else
+		waitpid(child_pid, &ret, 0);
+	update_return(all, (ret / 256));
+	free_tab(envp);
+	free(exec);
+	return (1);
 }

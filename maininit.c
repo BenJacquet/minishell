@@ -6,7 +6,7 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/06 16:15:04 by chgilber          #+#    #+#             */
-/*   Updated: 2020/10/12 18:06:25 by jabenjam         ###   ########.fr       */
+/*   Updated: 2020/10/13 18:25:02 by jabenjam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,8 @@ void		init_allbis(t_all *all, char **env, int ac, char **av)
 	all->mask = (S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
 	all->i = get_next_line(0, &all->buff);
 	crontold(all);
+	if (checkquote(all->buff) == 1)
+		write(1, "No Multilines\n", 14);
 	all->env = ft_tab_to_list(env, 0);
 	all->env_replaced = 0;
 	all->ret = new_elem("?=0");

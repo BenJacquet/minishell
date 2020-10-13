@@ -6,21 +6,53 @@
 #    By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/10/16 11:50:11 by chgilber          #+#    #+#              #
-#    Updated: 2020/10/12 16:54:59 by jabenjam         ###   ########.fr        #
+#    Updated: 2020/10/13 18:07:22 by jabenjam         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = minishell
 
-SRCS =		get_dir.c end.c cd.c check.c freelance.c echo.c\
-			env_conversion.c tab.c env_export.c pipe.c expand.c\
-			env_display.c ft_strjoin.c ft_strncpy.c env_unset.c\
-			GNL/get_next_line.c GNL/get_next_line_utils.c ft_splitmini.c\
-			realloc.c get_execs.c main.c token.c joinquote.c joinquotecount.c\
-			parse_cmd.c ft_strncat.c redirections.c joinjoin.c redirectioned.c\
-			cmd_conversion.c maininit.c list.c update.c
+SRCS =		cd.c\
+			check.c\
+			cmd_conversion.c\
+			echo.c\
+			end.c\
+			env_conversion_list.c\
+			env_conversion_tab.c\
+			env_display.c\
+			env_export.c\
+			env_unset.c\
+			expand.c\
+			freelance.c\
+			ft_splitmini.c\
+			ft_strjoin.c\
+			ft_strncat.c\
+			ft_strncpy.c\
+			get_dir.c\
+			get_execs.c\
+			GNL/get_next_line_utils.c\
+			GNL/get_next_line.c\
+			io_manager.c\
+			joinjoin.c\
+			joinquote.c\
+			joinquotecount.c\
+			list.c\
+			main.c\
+			maininit.c\
+			parse_cmd.c\
+			pipe.c\
+			realloc.c\
+			redirectioned.c\
+			redirections_1.c\
+			redirections_2.c\
+			run_exec.c\
+			tab.c\
+			token.c\
+			update.c\
 
-SRCSLIB =	libft/ft_split.c libft/ft_strlen.c libft/ft_strncmp.c
+SRCSLIB =	libft/ft_split.c\
+			libft/ft_strlen.c\
+			libft/ft_strncmp.c\
 
 INCLUDES = .
 
@@ -28,7 +60,7 @@ LIBFT = libft/libft.a
 
 CC = gcc
 
-CFLAGS = -Wall -Werror -Wextra #-g3 -fsanitize=address
+CFLAGS = -Wall -Werror -Wextra -g3 -fsanitize=address
 
 # Text format
 _DEF = $'\033[0m

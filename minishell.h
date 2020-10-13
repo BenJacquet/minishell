@@ -6,7 +6,7 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/04 16:18:54 by jabenjam          #+#    #+#             */
-/*   Updated: 2020/10/12 19:29:18 by chgilber         ###   ########.fr       */
+/*   Updated: 2020/10/13 18:22:58 by jabenjam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ typedef struct	s_tok
 	int			beg;
 	int			end;
 	int			ignore;
+	int			whole;
 	int			skip;
 	void		*previous;
 	void		*next;
@@ -126,6 +127,7 @@ int				signal_manager(t_all *all);
 */
 
 char			*get_path(t_all *all);
+char			*find_dir(t_all *all, char **path, DIR **dir);
 char			*find_exec(t_all *all, DIR *dir, char *path);
 char			*make_exec(t_all *all, char *path);
 int				run_exec(t_all *all, char *exec, char **args, char **envp);
@@ -144,6 +146,8 @@ void			ft_puttab(char **tab);
 char			**tab_dup(char **tab);
 void			free_tab(char **tab);
 int				ft_tablen(char **tab);
+int				ft_varlen(char *var, int mode);
+int				ft_tokslen(t_tok *toks);
 void			store_variable(char *var, t_env *elem);
 t_env			*ft_tab_to_list(char **tab, int erase);
 char			**ft_list_to_tab(t_env *lst, int mode, int erase);
@@ -152,7 +156,6 @@ t_env			*elem_dup(t_env *elem);
 t_env			*new_elem(char *var);
 char			*ft_strjoin(char const *s1, char const *s2);
 char			*ft_strjoinf(char *s1, char *s2);
-int				ft_varlen(char *var, int mode);
 int				ft_put_error(char *error, char *var, int mode);
 int				ft_check_name(char *var);
 int				expand_value(t_env *var, t_all *all);
@@ -161,7 +164,8 @@ t_env			*env_exists(char *name, t_env *env);
 int				parse_command(t_all *all, char **env);
 int				builtins_env(t_all *all);
 int				builtins_others(t_all *all);
-int				io_manager_dup(t_all *all, int mode);
+int				io_manager_dup_in(t_all *all);
+int				io_manager_dup_out(t_all *all);
 int				handle_redirections(t_all *all);
 int				which_redirection(t_all *all, int *start);
 char			*get_filename(t_tok **toks, int *start);
@@ -171,15 +175,17 @@ t_red			*find_last_in(t_red *reds);
 void			free_red(t_red *red);
 t_red			*new_red(t_red *head, int red, char **file);
 int				ft_isinset(const char *set, char c);
-t_tok			*convert_tokens_lst(char **cmd);
+t_tok			*convert_tokens_lst(char **cmd, int *shouldi);
 char			**convert_tokens_tab(t_tok *lst);
 char			*clean_token(t_tok *tok);
-t_tok			*new_token(char *token, t_tok *previous);
+t_tok			*new_token(char *token, t_tok *previous, int whole);
 void			reset_fds(t_all *all);
 int				no_command(t_all *all, int mode);
-void			free_vars(t_env	*env);
+void			free_var(t_env *var);
+void			free_vars(t_env	*vars);
 void			free_tokens(t_tok *toks);
 int				update_return(t_all *all, int new);
 char			**update_env(t_all *all, char **old);
+int				crocodir(t_all *all);
 
 #endif

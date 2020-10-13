@@ -6,7 +6,7 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/04 14:09:45 by chgilber          #+#    #+#             */
-/*   Updated: 2020/10/12 18:07:29 by jabenjam         ###   ########.fr       */
+/*   Updated: 2020/10/13 18:24:39 by jabenjam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,15 +34,17 @@ void		writenotfound(t_all *all)
 int			letsgnl(t_all *all)
 {
 	g_builtin = 0;
-	g_freete = 0;
 	get_dir();
 	free(all->buff);
 	all->i = get_next_line(0, &all->buff);
 	crontold(all);
+	if (checkquote(all->buff) == 1)
+		write(1, "No Multilines\n", 14);
+	g_freete = 0;
 	all->countpipe = pipecount(*all, all->buff, ';') + 1;
 	freedir(all->pdir);
 	all->pdir = ft_splitmini(all->buff, ';');
-	all->tube = (all->pdir[0] && all->countpipe > 0) ? 
+	all->tube = (all->pdir[0] && all->countpipe > 0) ?
 		pipecount(*all, all->pdir[0], '|') : 0;
 	all->countpipe = (all->tube >= 0) ? all->countpipe : 0;
 	all->data = all->countpipe;
@@ -52,22 +54,16 @@ int			letsgnl(t_all *all)
 	return (0);
 }
 
-/* 
-** 
-** 
-** 
-*/
-
 int			tokentranslate(t_all *all)
 {
 	int		i;
 	int		index;
 
-	i = counttoken(*all);
+	i = counttoken(all);
 	index = 0;
-	while (index <= i)
+	while (index < i)
 	{
-		all->pdir[all->data - all->countpipe] = dolar(*all);
+		dolar(all);
 		index++;
 	}
 	return (1);
@@ -82,11 +78,12 @@ int			main(int ac, char **av, char **env)
 	{
 //		printf("xdir[0] = [%s] et xdir[1] = [%s] et tube = %d\n", all.xdir[0], all.xdir[1], all.tube);
 		signal_manager(&all);
+		g_freete = 0;
 		all.countpipe = checkquote(all.buff) ? 0 : all.countpipe;
 		tokentranslate(&all);
 		if (all.countpipe > 0 && parse_command(&all, env) == 0)
 			writenotfound(&all);
-		io_manager_dup(&all, 0);
+		io_manager_dup_out(&all);
 		env = update_env(&all, env);
 		if (all.countpipe < 1)
 			letsgnl(&all);

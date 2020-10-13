@@ -6,16 +6,16 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/05 12:35:39 by jabenjam          #+#    #+#             */
-/*   Updated: 2020/10/12 15:57:09 by jabenjam         ###   ########.fr       */
+/*   Updated: 2020/10/13 17:43:01 by jabenjam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_env *ft_unset_find_name(char *var, t_env *current)
+t_env	*ft_unset_find_name(char *var, t_env *current)
 {
-	t_env *backup;
-	t_env *head;
+	t_env	*backup;
+	t_env	*head;
 
 	head = current;
 	backup = current;
@@ -23,9 +23,7 @@ t_env *ft_unset_find_name(char *var, t_env *current)
 	{
 		if (current->next)
 			backup = current->next;
-		free(current->name);
-		free(current->value);
-		free(current);
+		free_var(current);
 		return (backup);
 	}
 	while (current)
@@ -34,23 +32,22 @@ t_env *ft_unset_find_name(char *var, t_env *current)
 		if (ft_strcmp(var, backup->name) == 0)
 		{
 			current->next = backup->next;
-			free(backup->name);
-			free(backup->value);
-			free(backup);
+			free_var(backup);
 		}
 		current = current->next;
 	}
 	return (head);
 }
 
-int ft_unset_check_name(char *var)
+int		ft_unset_check_name(char *var)
 {
-	int i;
+	int		i;
 
 	i = 0;
 	if (var[i] != '\0')
 	{
-		if (ft_isdigit(var[i]) || var[i] == '=' || (!ft_isalnum(var[i]) && var[i] != '_'))
+		if (ft_isdigit(var[i]) || var[i] == '=' ||
+			(!ft_isalnum(var[i]) && var[i] != '_'))
 			return (ft_put_error("not a valid identifier\n", var, 1));
 		while (ft_isalnum(var[i]) || var[i] == '_')
 			i++;
@@ -62,18 +59,18 @@ int ft_unset_check_name(char *var)
 	return (1);
 }
 
-void ft_unset_core(t_all *all)
+void	ft_unset_core(t_all *all)
 {
-	int i;
+	int		i;
 
 	i = 0;
 	if (!all->dir[1])
-		return;
+		return ;
 	while (all->dir[i + 1])
 	{
 		if (update_return(all, ft_unset_check_name(all->dir[i + 1]) == 0))
 			all->env = ft_unset_find_name(all->dir[i + 1], all->env);
 		i++;
 	}
-	return;
+	return ;
 }

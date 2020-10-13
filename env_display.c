@@ -6,16 +6,16 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/08 18:26:01 by jabenjam          #+#    #+#             */
-/*   Updated: 2020/10/12 16:06:14 by jabenjam         ###   ########.fr       */
+/*   Updated: 2020/10/13 17:32:47 by jabenjam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void ft_putenv(t_env *env)
+void	ft_putenv(t_env *env)
 {
-	int i;
-	char **new;
+	int		i;
+	char	**new;
 
 	i = 0;
 	new = ft_list_to_tab(env, 0, 0);
@@ -27,11 +27,11 @@ void ft_putenv(t_env *env)
 	free_tab(new);
 }
 
-char *remove_space(char *str)
+char	*remove_space(char *str)
 {
-	int i;
-	int j;
-	char *new;
+	int		i;
+	int		j;
+	char	*new;
 
 	i = 0;
 	j = 0;
@@ -60,7 +60,7 @@ char *remove_space(char *str)
 ** MODE = 1 : double quote donc token trim
 */
 
-char *ft_getenv2(char *name, t_env *current, int mode)
+char	*ft_getenv2(char *name, t_env *current, int mode)
 {
 	if (!(ft_strcmp(name, current->name)))
 	{
@@ -72,31 +72,29 @@ char *ft_getenv2(char *name, t_env *current, int mode)
 	return (NULL);
 }
 
-char *ft_getenv(t_all *all, char *name, int mode)
+char	*ft_getenv(t_all *all, char *name, int mode)
 {
-    int i;
-    int j;
-    char *value;
-	t_env *current;
+	int		i;
+	int		j;
+	char	*value;
+	t_env	*current;
 
-    i = 0;
-    value = NULL;
+	i = 0;
+	value = NULL;
 	if (all->env)
 		current = all->env;
-//    if (name == NULL)
-//        return (NULL);
 	if (name[0] == '?')
 		return (all->ret->value);
-    while (current != NULL)
-    {
-        j = 0;
-        if (!(ft_strcmp(name, current->name)))
-        {
-            value = ft_getenv2(name, current, mode);
-            break;
-        }
-        current = current->next;
-    }
+	while (current != NULL)
+	{
+		j = 0;
+		if (!(ft_strcmp(name, current->name)))
+		{
+			value = ft_getenv2(name, current, mode);
+			break ;
+		}
+		current = current->next;
+	}
 	value = (current == NULL ? ft_strdup("\0") : value);
-    return (value);
+	return (value);
 }
