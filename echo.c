@@ -6,7 +6,7 @@
 /*   By: chgilber <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/07 16:46:22 by chgilber          #+#    #+#             */
-/*   Updated: 2020/10/16 12:58:47 by chgilber         ###   ########.fr       */
+/*   Updated: 2020/10/16 17:41:17 by chgilber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,8 +59,6 @@ int	printnoquote(t_all all)
 
 int	echo(t_all all)
 {
-	int	i;
-
 	all.stop = 1;
 	all.stop = printnoquote(all);
 	if (all.stop == 1)

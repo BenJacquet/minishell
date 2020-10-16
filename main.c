@@ -6,7 +6,7 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/04 14:09:45 by chgilber          #+#    #+#             */
-/*   Updated: 2020/10/16 12:57:50 by chgilber         ###   ########.fr       */
+/*   Updated: 2020/10/16 18:01:40 by chgilber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,27 @@ int			tokentranslate(t_all *all)
 	}
 	return (1);
 }
+int			pipeornotpipe(t_all *all, char **env)
+{
+	int here;
+
+	here = all->data - all->countpipe;
+	all->tube = (g_freete == 0 && all->pdir[here] && all->countpipe > 0) ?
+				pipecount(*all, all->pdir[here], '|') : 0;
+	if (all->tube > 0)
+		multidir(all);
+	else if (all->countpipe > 0)
+	{
+		all->countpipe = checkquote(all->buff) ? 0 : all->countpipe;
+		tokentranslate(all);
+		if (all->countpipe > 0 && parse_command(all, env) == 0)
+			writenotfound(all);
+		g_builtin = 0;
+	}
+	io_manager_dup_out(all);
+	env = update_env(all, env);
+	return (0);
+}
 
 int			main(int ac, char **av, char **env)
 {
@@ -89,21 +110,13 @@ int			main(int ac, char **av, char **env)
 	init_all(&all, env, ac, av);
 	while (check(all.pdir[all.data - all.countpipe], &all) == 1 && all.i > 0)
 	{
+		printf("data = %d , count = %d , tube = %d, [%s]\n", all.data, all.countpipe, all.tube, all.pdir[all.data - all.countpipe]);
 		//		printf("xdir[0] = [%s] et xdir[1] = [%s] et tube = %d\n", all.xdir[0], all.xdir[1], all.tube);
 		signal_manager(&all);
 		g_freete = 0;
+		pipeornotpipe(&all, env);
 		//	if (g_freete == 1)
 		//		letsgnl(&all);
-		if (all.countpipe > 0)
-		{
-			all.countpipe = checkquote(all.buff) ? 0 : all.countpipe;
-			tokentranslate(&all);
-			if (all.countpipe > 0 && parse_command(&all, env) == 0)
-				writenotfound(&all);
-			g_builtin = 0;
-		}
-		io_manager_dup_out(&all);
-		env = update_env(&all, env);
 		if (all.countpipe < 1)
 			letsgnl(&all);
 	}

@@ -6,7 +6,7 @@
 /*   By: chgilber <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/15 16:21:09 by chgilber          #+#    #+#             */
-/*   Updated: 2020/10/16 15:54:19 by chgilber         ###   ########.fr       */
+/*   Updated: 2020/10/16 17:25:52 by chgilber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,7 @@ int		multidir(t_all *all)
 		joinquotev2(all);
 		all->here++;
 	}
+	all->countpipe--;
 	return (0);
 }
 

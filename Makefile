@@ -6,7 +6,7 @@
 #    By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/10/16 11:50:11 by chgilber          #+#    #+#              #
-#    Updated: 2020/10/15 16:20:11 by chgilber         ###   ########.fr        #
+#    Updated: 2020/10/16 17:42:09 by chgilber         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,6 +35,7 @@ SRCS =		cd.c\
 			io_manager.c\
 			joinjoin.c\
 			joinquote.c\
+			joinquotev2.c\
 			joinquotecount.c\
 			list.c\
 			main.c\

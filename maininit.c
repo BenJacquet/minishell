@@ -6,7 +6,7 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/06 16:15:04 by chgilber          #+#    #+#             */
-/*   Updated: 2020/10/16 15:54:41 by chgilber         ###   ########.fr       */
+/*   Updated: 2020/10/16 18:01:42 by chgilber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,5 @@ void		init_all(t_all *all, char **env, int ac, char **av)
 	all->countpipe = (all->tube >= 0) ? all->countpipe : 0;
 	all->data = all->countpipe;
 	all->xdir = ft_splitmini(all->pdir[0], '|');
-	all->dir = malloc(sizeof(char**) * (all->tube + 1));
 	all->dir = ft_split(all->buff, ' ');
 }

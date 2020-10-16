@@ -6,7 +6,7 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/04 16:18:54 by jabenjam          #+#    #+#             */
-/*   Updated: 2020/10/16 12:57:39 by chgilber         ###   ########.fr       */
+/*   Updated: 2020/10/16 17:22:52 by chgilber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,6 +128,7 @@ char			*ft_strncat(char *s1, char *s2, int len);
 void			init_all(t_all *all, char **env, int ac, char **av);
 int				signal_manager(t_all *all);
 int				letsgnl(t_all *all);
+int				multidir(t_all *all);
 
 /*
 ** -------------BEN------------------------------------------------------------
