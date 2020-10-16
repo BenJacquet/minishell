@@ -6,7 +6,7 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/06 16:15:04 by chgilber          #+#    #+#             */
-/*   Updated: 2020/10/13 18:25:02 by jabenjam         ###   ########.fr       */
+/*   Updated: 2020/10/16 15:54:41 by chgilber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,10 +34,11 @@ void		handle(int sig)
 
 int			signal_manager(t_all *all)
 {
+	all->i = all->i;
 	(signal(SIGQUIT, &handle));
 	(signal(SIGINT, &handle));
-	if (g_freete == 1)
-		all->countpipe = 0;
+//	if (g_freete == 1)
+//		all->countpipe = -666; // pour eviter le commande not found
 	return (0);
 }
 
@@ -48,6 +49,7 @@ void		init_allbis(t_all *all, char **env, int ac, char **av)
 	(void)av;
 	g_freete = 0;
 	g_builtin = 0;
+	all->here = 0;
 	signal_manager(all);
 	all->toks = NULL;
 	all->reds = NULL;
@@ -74,5 +76,6 @@ void		init_all(t_all *all, char **env, int ac, char **av)
 	all->countpipe = (all->tube >= 0) ? all->countpipe : 0;
 	all->data = all->countpipe;
 	all->xdir = ft_splitmini(all->pdir[0], '|');
+	all->dir = malloc(sizeof(char**) * (all->tube + 1));
 	all->dir = ft_split(all->buff, ' ');
 }

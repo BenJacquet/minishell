@@ -6,7 +6,7 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/04 14:09:45 by chgilber          #+#    #+#             */
-/*   Updated: 2020/10/13 18:24:39 by jabenjam         ###   ########.fr       */
+/*   Updated: 2020/10/16 12:57:50 by chgilber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 void		writenotfound(t_all *all)
 {
-	all->builtin = 0;
 	if (all->buff[0] == '\0')
 	{
 		update_return(all, 0);
@@ -33,14 +32,21 @@ void		writenotfound(t_all *all)
 
 int			letsgnl(t_all *all)
 {
-	g_builtin = 0;
+	g_freete = 0;
 	get_dir();
 	free(all->buff);
+	signal_manager(all);
 	all->i = get_next_line(0, &all->buff);
+	signal_manager(all);
+//	printf("countpipe = [%d]\n", all->countpipe);
 	crontold(all);
 	if (checkquote(all->buff) == 1)
 		write(1, "No Multilines\n", 14);
-	g_freete = 0;
+	g_builtin = 0;
+//	write(1, "-", 1);
+//	write(1, all->buff, ft_strlen(all->buff));
+//	write(1, "-", 1);
+//	all->countpipe = (g_freete == 0) ? pipecount(*all, all->buff, ';') + 1 : 0 ;
 	all->countpipe = pipecount(*all, all->buff, ';') + 1;
 	freedir(all->pdir);
 	all->pdir = ft_splitmini(all->buff, ';');
@@ -50,7 +56,6 @@ int			letsgnl(t_all *all)
 	all->data = all->countpipe;
 	freedir(all->xdir);
 	all->xdir = ft_splitmini(all->pdir[0], '|');
-	all->builtin = 0;
 	return (0);
 }
 
@@ -60,10 +65,18 @@ int			tokentranslate(t_all *all)
 	int		index;
 
 	i = counttoken(all);
+	all->dol = malloc(sizeof(int) * (i + 1));
+	all->igno = 0;
+	index = 0;
+	while (index < i)
+		all->dol[index++] = -1;
+	all->dol[index] = -666;
 	index = 0;
 	while (index < i)
 	{
 		dolar(all);
+		if (all->dol[all->igno - 1] > 0)
+			printf("dol[%d]=%d , all.pdir[j][dol[igno]] = [%c]\n", all->igno - 1, all->dol[all->igno - 1], all->pdir[all->data - all->countpipe][all->dol[all->igno - 1]]); // penser a ne pas check les - 666
 		index++;
 	}
 	return (1);
@@ -76,13 +89,19 @@ int			main(int ac, char **av, char **env)
 	init_all(&all, env, ac, av);
 	while (check(all.pdir[all.data - all.countpipe], &all) == 1 && all.i > 0)
 	{
-//		printf("xdir[0] = [%s] et xdir[1] = [%s] et tube = %d\n", all.xdir[0], all.xdir[1], all.tube);
+		//		printf("xdir[0] = [%s] et xdir[1] = [%s] et tube = %d\n", all.xdir[0], all.xdir[1], all.tube);
 		signal_manager(&all);
 		g_freete = 0;
-		all.countpipe = checkquote(all.buff) ? 0 : all.countpipe;
-		tokentranslate(&all);
-		if (all.countpipe > 0 && parse_command(&all, env) == 0)
-			writenotfound(&all);
+		//	if (g_freete == 1)
+		//		letsgnl(&all);
+		if (all.countpipe > 0)
+		{
+			all.countpipe = checkquote(all.buff) ? 0 : all.countpipe;
+			tokentranslate(&all);
+			if (all.countpipe > 0 && parse_command(&all, env) == 0)
+				writenotfound(&all);
+			g_builtin = 0;
+		}
 		io_manager_dup_out(&all);
 		env = update_env(&all, env);
 		if (all.countpipe < 1)

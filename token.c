@@ -6,7 +6,7 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/12 15:52:23 by chgilber          #+#    #+#             */
-/*   Updated: 2020/10/12 20:10:55 by chgilber         ###   ########.fr       */
+/*   Updated: 2020/10/16 15:55:05 by chgilber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,15 +76,20 @@ char	*finddolar(t_all *all, int *i, int j, char **tmp)
 	}
 	tmp[1][all->j] = '\0';
 	tmp[2] = ft_getenv(all, tmp[1], (j % 2 == 1) ? 1 : 0);
+	all->dol[all->igno] = (tmp[2][0] == '\0') ? -666 : all->dol[all->igno];
 	dol = (all->j == 0) ? ft_strjoin(tmp[0], "$") : ft_strjoin(tmp[0], tmp[2]);
-	free(tmp[0]);
-	free(tmp[2]);
 	return (dol);
 }
 
 int		nicedolbro(t_all *all, int i, int j, char **tmp)
 {
+	all->dol[all->igno] = i;
 	tmp[3] = finddolar(all, &i, j, tmp);
+	if (all->dol[all->igno] > 0)
+		printf("dol[%d]=%d , all.pdir[j][dol[igno]] = [%c]\n", all->igno, all->dol[all->igno], all->pdir[j][all->dol[all->igno]]); 
+	all->igno++;
+	free(tmp[0]);
+	free(tmp[2]);
 	all->j = 0;
 	while (i <= ft_strlen(all->pdir[j]) && all->pdir[j][i])
 	{

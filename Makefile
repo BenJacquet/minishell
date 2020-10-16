@@ -6,7 +6,7 @@
 #    By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/10/16 11:50:11 by chgilber          #+#    #+#              #
-#    Updated: 2020/10/13 18:07:22 by jabenjam         ###   ########.fr        #
+#    Updated: 2020/10/15 16:20:11 by chgilber         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -40,6 +40,7 @@ SRCS =		cd.c\
 			main.c\
 			maininit.c\
 			parse_cmd.c\
+			pipepars.c\
 			pipe.c\
 			realloc.c\
 			redirectioned.c\

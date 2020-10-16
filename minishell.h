@@ -6,7 +6,7 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/04 16:18:54 by jabenjam          #+#    #+#             */
-/*   Updated: 2020/10/13 18:22:58 by jabenjam         ###   ########.fr       */
+/*   Updated: 2020/10/16 12:57:39 by chgilber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@
 
 int				g_builtin;
 int				g_freete;
+int				g_gnl;
 
 typedef	struct s_red
 {
@@ -70,6 +71,9 @@ typedef struct	s_all
 	char		**pdir;
 	char		**xdir;
 	char		*exec;
+	int			here;
+	int			*dol;
+	int			igno;
 	int			i;
 	int			j;
 	int			data;
@@ -81,7 +85,6 @@ typedef struct	s_all
 	int			fds_backup[2];
 	int			red;
 	int			mask;
-	int			builtin;
 	int			env_replaced;
 	t_tok		*toks;
 	t_red		*reds;
@@ -112,6 +115,9 @@ int				counttoken(t_all *all);
 void			dolar(t_all *all);
 int				join(t_all *all, char *buff, int inc, char quote);
 int				silence(char *buff);
+int				ifjoin(t_all *all, char *buff, int *inc, char quote);
+int				noquote(t_all *all, char *buff, int *inc);
+char			**newdirquote(char **dir, int count);
 int				joinquote(t_all *all);
 void			joinjoin(t_all *all, char *buff, int *inc, int i);
 int				crontold(t_all *all);
@@ -121,6 +127,7 @@ int				parse_command(t_all *all, char **env);
 char			*ft_strncat(char *s1, char *s2, int len);
 void			init_all(t_all *all, char **env, int ac, char **av);
 int				signal_manager(t_all *all);
+int				letsgnl(t_all *all);
 
 /*
 ** -------------BEN------------------------------------------------------------
