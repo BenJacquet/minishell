@@ -6,7 +6,7 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/04 14:09:45 by chgilber          #+#    #+#             */
-/*   Updated: 2020/10/16 18:01:40 by chgilber         ###   ########.fr       */
+/*   Updated: 2020/10/17 20:01:11 by jabenjam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,15 +38,10 @@ int			letsgnl(t_all *all)
 	signal_manager(all);
 	all->i = get_next_line(0, &all->buff);
 	signal_manager(all);
-//	printf("countpipe = [%d]\n", all->countpipe);
 	crontold(all);
 	if (checkquote(all->buff) == 1)
 		write(1, "No Multilines\n", 14);
 	g_builtin = 0;
-//	write(1, "-", 1);
-//	write(1, all->buff, ft_strlen(all->buff));
-//	write(1, "-", 1);
-//	all->countpipe = (g_freete == 0) ? pipecount(*all, all->buff, ';') + 1 : 0 ;
 	all->countpipe = pipecount(*all, all->buff, ';') + 1;
 	freedir(all->pdir);
 	all->pdir = ft_splitmini(all->buff, ';');
@@ -81,7 +76,8 @@ int			tokentranslate(t_all *all)
 	}
 	return (1);
 }
-int			pipeornotpipe(t_all *all, char **env)
+
+int			pipeornotpipe(t_all *all, char ***env)
 {
 	int here;
 
@@ -94,12 +90,11 @@ int			pipeornotpipe(t_all *all, char **env)
 	{
 		all->countpipe = checkquote(all->buff) ? 0 : all->countpipe;
 		tokentranslate(all);
-		if (all->countpipe > 0 && parse_command(all, env) == 0)
-			writenotfound(all);
+		if (all->countpipe > 0 && parse_command(all, *env) == 0)
+			all->countpipe--;
+		*env = update_env(all, *env);
 		g_builtin = 0;
 	}
-	io_manager_dup_out(all);
-	env = update_env(all, env);
 	return (0);
 }
 
@@ -114,7 +109,7 @@ int			main(int ac, char **av, char **env)
 		//		printf("xdir[0] = [%s] et xdir[1] = [%s] et tube = %d\n", all.xdir[0], all.xdir[1], all.tube);
 		signal_manager(&all);
 		g_freete = 0;
-		pipeornotpipe(&all, env);
+		pipeornotpipe(&all, &env);
 		//	if (g_freete == 1)
 		//		letsgnl(&all);
 		if (all.countpipe < 1)

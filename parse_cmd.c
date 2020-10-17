@@ -6,7 +6,7 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/05 15:21:37 by jabenjam          #+#    #+#             */
-/*   Updated: 2020/10/13 17:56:24 by jabenjam         ###   ########.fr       */
+/*   Updated: 2020/10/17 20:03:26 by jabenjam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,16 @@ int		builtins_env(t_all *all)
 	return (all->countpipe != pipe_bkp ? 1 : 0);
 }
 
-int		parsincomd(t_all *all, char **env)
+int		is_binary(t_all *all)
+{
+	if (all->tube)
+		run_exec_forked(all, all->exec, all->dir);
+	else
+		run_exec(all, all->exec, all->dir);
+	return (0);
+}
+
+int		parse_command2(t_all *all)
 {
 	int here;
 
@@ -70,16 +79,52 @@ int		parsincomd(t_all *all, char **env)
 		return (builtins_others(all));
 	else if (all->dir[0] &&
 			((ft_strcmp(all->dir[0], "env") == 0) ||
-			ft_strncmp(all->pdir[here], "unset", 5) == 0 ||
-			ft_strncmp(all->pdir[here], "export", 6) == 0))
+			ft_strcmp(all->dir[0], "unset") == 0 ||
+			ft_strcmp(all->dir[0], "export") == 0))
 		return (builtins_env(all));
 	else if ((all->exec = get_path(all)) != NULL)
 	{
 		g_builtin = 2;
-		run_exec(all, all->exec, all->dir, env);
+		is_binary(all);
 		all->countpipe--;
 		return (1);
 	}
+	return (0);
+}
+
+int		fork_command(t_all *all, char **env)
+{
+	int		pid;
+	int		ret;
+
+	pid = 0;
+	all->toks = convert_tokens_lst(all->dir, all->shouldi);
+	handle_redirections(all);
+	all->dir = convert_tokens_tab(all->toks);
+	io_manager_dup_replace(all);
+	if ((pid = fork()) == 0)
+	{
+		if (!parse_command2(all))
+			writenotfound(all);
+		io_manager_dup_restore(all);
+		freelance(all, env);
+		exit (1);
+	}
+	else
+		waitpid(pid, &ret, 0);
+	io_manager_dup_restore(all);
+	return (0);
+}
+
+int		run_command(t_all *all)
+{
+	all->toks = convert_tokens_lst(all->dir, all->shouldi);
+	handle_redirections(all);
+	all->dir = convert_tokens_tab(all->toks);
+	io_manager_dup_replace(all);
+	if (!parse_command2(all))
+		writenotfound(all);
+	io_manager_dup_restore(all);
 	return (0);
 }
 
@@ -94,11 +139,10 @@ int		parse_command(t_all *all, char **env)
 			all->countpipe--;
 			return (1);
 		}
-		all->toks = convert_tokens_lst(all->dir, all->shouldi);
-		handle_redirections(all);
-		all->dir = convert_tokens_tab(all->toks);
-		io_manager_dup_in(all);
-		return (parsincomd(all, env));
+		if (all->tube)
+			return (fork_command(all, env));
+		else
+			return (run_command(all));
 	}
 	else
 	{

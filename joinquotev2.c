@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   joinquotev2.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: chgilber <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/15 16:21:09 by chgilber          #+#    #+#             */
-/*   Updated: 2020/10/16 17:25:52 by chgilber         ###   ########.fr       */
+/*   Updated: 2020/10/17 19:24:30 by jabenjam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ int		joinquotev2(t_all *all)
 	here = all->data - all->countpipe;
 	i = 0;
 	inc = 0;
-	free(all->dir);
+	free_tab(all->dir);
 	if ((checksquote(all->xdir[here]) % 2 == 0 &&
 				checksquote(all->xdir[here]) > 1) ||
 			(checkdquote(all->xdir[here]) % 2 == 0 &&

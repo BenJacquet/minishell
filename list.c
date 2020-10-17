@@ -6,7 +6,7 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/11 12:59:13 by jabenjam          #+#    #+#             */
-/*   Updated: 2020/10/13 17:48:01 by jabenjam         ###   ########.fr       */
+/*   Updated: 2020/10/17 19:24:03 by jabenjam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,8 @@ void	free_tokens(t_tok *toks)
 	while (toks)
 	{
 		current = toks;
-		if (toks->value)
-			free(toks->value);
 		toks = toks->next;
+		free(current->value);
 		free(current);
 	}
 }

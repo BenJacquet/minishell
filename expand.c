@@ -6,12 +6,12 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/18 17:01:11 by jabenjam          #+#    #+#             */
-/*   Updated: 2020/10/13 17:43:48 by jabenjam         ###   ########.fr       */
+/*   Updated: 2020/10/15 15:22:52 by jabenjam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
+/*
 t_env	*env_exists(char *name, t_env *env)
 {
 	t_env	*start;
@@ -82,3 +82,4 @@ int		expand_value(t_env *var, t_all *all)
 	}
 	return (0);
 }
+*/

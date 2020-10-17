@@ -6,7 +6,7 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/04 16:18:54 by jabenjam          #+#    #+#             */
-/*   Updated: 2020/10/16 17:22:52 by chgilber         ###   ########.fr       */
+/*   Updated: 2020/10/17 19:54:55 by jabenjam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,6 @@ typedef struct	s_tok
 	int			end;
 	int			ignore;
 	int			whole;
-	int			skip;
 	void		*previous;
 	void		*next;
 }				t_tok;
@@ -83,6 +82,7 @@ typedef struct	s_all
 	int			countpipe;
 	int			fds[2];
 	int			fds_backup[2];
+	int			p_fds[2];
 	int			red;
 	int			mask;
 	int			env_replaced;
@@ -124,11 +124,14 @@ int				crontold(t_all *all);
 int				croco(t_all *all, char *buff, int len, int inc);
 int				initcroco(t_all *all, int here);
 int				parse_command(t_all *all, char **env);
+int				parse_command2(t_all *all);
 char			*ft_strncat(char *s1, char *s2, int len);
 void			init_all(t_all *all, char **env, int ac, char **av);
 int				signal_manager(t_all *all);
 int				letsgnl(t_all *all);
 int				multidir(t_all *all);
+int				pipeornotpipe(t_all *all, char ***env);
+void			writenotfound(t_all *all);
 
 /*
 ** -------------BEN------------------------------------------------------------
@@ -138,7 +141,11 @@ char			*get_path(t_all *all);
 char			*find_dir(t_all *all, char **path, DIR **dir);
 char			*find_exec(t_all *all, DIR *dir, char *path);
 char			*make_exec(t_all *all, char *path);
-int				run_exec(t_all *all, char *exec, char **args, char **envp);
+int				run_command(t_all *all);
+int				fork_command(t_all *all, char **env);
+int				is_binary(t_all *all);
+int				run_exec(t_all *all, char *exec, char **args);
+int				run_exec_forked(t_all *all, char *exec, char **args);
 char			*ft_getenv(t_all *all, char *name, int mode);
 char			*ft_getenv2(char *name, t_env *current, int mode);
 void			ft_putenv(t_env *env);
@@ -169,11 +176,10 @@ int				ft_check_name(char *var);
 int				expand_value(t_env *var, t_all *all);
 char			*get_new_value(t_all *all, t_env *var, int len);
 t_env			*env_exists(char *name, t_env *env);
-int				parse_command(t_all *all, char **env);
 int				builtins_env(t_all *all);
 int				builtins_others(t_all *all);
-int				io_manager_dup_in(t_all *all);
-int				io_manager_dup_out(t_all *all);
+int				io_manager_dup_replace(t_all *all);
+int				io_manager_dup_restore(t_all *all);
 int				handle_redirections(t_all *all);
 int				which_redirection(t_all *all, int *start);
 char			*get_filename(t_tok **toks, int *start);
