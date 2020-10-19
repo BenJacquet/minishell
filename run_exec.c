@@ -6,7 +6,7 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/13 17:46:15 by jabenjam          #+#    #+#             */
-/*   Updated: 2020/10/17 18:51:46 by jabenjam         ###   ########.fr       */
+/*   Updated: 2020/10/19 12:52:22 by jabenjam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,6 @@ int		run_exec_forked(t_all *all, char *exec, char **args)
 	status = execve(exec, args, envp);
 	if (status == -1)
 		ft_put_error(strerror(errno), exec, 1);
-	update_return(all, (ret / 256));
 	free_tab(envp);
 	free(exec);
 	return (1);

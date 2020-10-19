@@ -6,7 +6,7 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/08 18:01:17 by jabenjam          #+#    #+#             */
-/*   Updated: 2020/10/13 17:34:23 by jabenjam         ###   ########.fr       */
+/*   Updated: 2020/10/19 14:47:57 by jabenjam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,6 +125,8 @@ int		ft_export_core(t_all *all)
 	{
 		if (ft_export_check_name(all->dir[i]) >= 0)
 			all->env = ft_export_find_name(var_lst, all->env);
+		else
+			update_return(all, 1);
 		i++;
 		var_lst = var_lst->next;
 	}

@@ -6,7 +6,7 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/05 15:21:37 by jabenjam          #+#    #+#             */
-/*   Updated: 2020/10/17 20:03:26 by jabenjam         ###   ########.fr       */
+/*   Updated: 2020/10/19 16:25:10 by jabenjam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,11 +107,13 @@ int		fork_command(t_all *all, char **env)
 		if (!parse_command2(all))
 			writenotfound(all);
 		io_manager_dup_restore(all);
-		freelance(all, env);
-		exit (1);
+		exit(freelance(all, env));
 	}
 	else
+	{
 		waitpid(pid, &ret, 0);
+		update_return(all, ret / 256);
+	}
 	io_manager_dup_restore(all);
 	return (0);
 }
@@ -139,10 +141,10 @@ int		parse_command(t_all *all, char **env)
 			all->countpipe--;
 			return (1);
 		}
-		if (all->tube)
-			return (fork_command(all, env));
-		else
-			return (run_command(all));
+//		if (all->tube)
+		return (fork_command(all, env));
+//		else
+//			return (run_command(all));
 	}
 	else
 	{
