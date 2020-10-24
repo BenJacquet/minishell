@@ -6,7 +6,7 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/13 17:49:52 by jabenjam          #+#    #+#             */
-/*   Updated: 2020/10/19 16:09:37 by jabenjam         ###   ########.fr       */
+/*   Updated: 2020/10/24 17:35:59 by jabenjam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int		no_command(t_all *all, int mode)
 	return (0);
 }
 
-int		io_manager_dup_replace(t_all *all)
+int		io_manager_dup_replace(t_all *all, int fd[all->tube][2])
 {
 	if (!all->dir[0])
 		return (no_command(all, 1));
@@ -48,6 +48,8 @@ int		io_manager_dup_replace(t_all *all)
 		dup2(all->fds[1], STDOUT_FILENO);
 		close(all->fds[1]);
 	}
+/*	if (all->tube)
+		pipes_child(all, fd);*/
 	return (0);
 }
 
@@ -65,6 +67,5 @@ int		io_manager_dup_restore(t_all *all)
 		dup2(all->fds_backup[1], STDOUT_FILENO);
 		close(all->fds_backup[1]);
 	}
-	reset_fds(all);
 	return (0);
 }

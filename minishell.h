@@ -6,7 +6,7 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/04 16:18:54 by jabenjam          #+#    #+#             */
-/*   Updated: 2020/10/19 16:25:15 by jabenjam         ###   ########.fr       */
+/*   Updated: 2020/10/22 15:56:22 by jabenjam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,8 @@ typedef struct	s_all
 	int			countpipe;
 	int			fds[2];
 	int			fds_backup[2];
-	int			p_fds[2];
+	int			*around;  // POUR LES PIPES, 0 SI LECTURE, 1 SI ECRITURE, 2 SI LES DEUX, POUR SAVOIR QUEL BOUT DU PIPE CLOSE
+	int			cmd;
 	int			red;
 	int			mask;
 	int			env_replaced;
@@ -123,7 +124,7 @@ void			joinjoin(t_all *all, char *buff, int *inc, int i);
 int				crontold(t_all *all);
 int				croco(t_all *all, char *buff, int len, int inc);
 int				initcroco(t_all *all, int here);
-int				parse_command(t_all *all, char **env);
+int				parse_command(t_all *all, char **env, int fd_p[all->tube][2]);
 int				parse_command2(t_all *all);
 char			*ft_strncat(char *s1, char *s2, int len);
 void			init_all(t_all *all, char **env, int ac, char **av);
@@ -142,7 +143,7 @@ char			*find_dir(t_all *all, char **path, DIR **dir);
 char			*find_exec(t_all *all, DIR *dir, char *path);
 char			*make_exec(t_all *all, char *path);
 int				run_command(t_all *all);
-int				fork_command(t_all *all, char **env);
+int				fork_command(t_all *all, char **env, int fd[all->tube][2]);
 int				is_binary(t_all *all);
 int				run_exec(t_all *all, char *exec, char **args);
 int				run_exec_forked(t_all *all, char *exec, char **args);
@@ -178,8 +179,12 @@ char			*get_new_value(t_all *all, t_env *var, int len);
 t_env			*env_exists(char *name, t_env *env);
 int				builtins_env(t_all *all);
 int				builtins_others(t_all *all);
-int				io_manager_dup_replace(t_all *all);
+int				io_manager_dup_replace(t_all *all, int fd[all->tube][2]);
 int				io_manager_dup_restore(t_all *all);
+void			pipes_child(t_all *all, int fd[all->tube][2]);
+void			pipes_parent(t_all *all, int fd[all->tube][2]);
+void			open_pipes(t_all *all, int fd[all->tube][2]);
+void			close_pipes(t_all *all, int fd[all->tube][2]);
 int				handle_redirections(t_all *all);
 int				which_redirection(t_all *all, int *start);
 char			*get_filename(t_tok **toks, int *start);

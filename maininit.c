@@ -6,7 +6,7 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/06 16:15:04 by chgilber          #+#    #+#             */
-/*   Updated: 2020/10/19 16:12:09 by jabenjam         ###   ########.fr       */
+/*   Updated: 2020/10/22 15:13:19 by jabenjam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,7 @@ void		init_allbis(t_all *all, char **env, int ac, char **av)
 	all->env_replaced = 0;
 	all->ret = new_elem("?=0");
 	all->red = 0;
+	all->cmd = 0;
 }
 
 void		init_all(t_all *all, char **env, int ac, char **av)

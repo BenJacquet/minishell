@@ -6,7 +6,7 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/04 14:09:45 by chgilber          #+#    #+#             */
-/*   Updated: 2020/10/19 16:25:17 by jabenjam         ###   ########.fr       */
+/*   Updated: 2020/10/24 17:36:27 by jabenjam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,9 @@ void		writenotfound(t_all *all)
 	}
 	if (all->dir[0])
 	{
-		write(1, "minishell: ", 11);
-		write(1, all->dir[0], (!all->dir[0]) ? 0 : ft_strlen(all->dir[0]));
-		write(1, ": command not found\n", 21);
+		write(2, "minishell: ", 11);
+		write(2, all->dir[0], (!all->dir[0]) ? 0 : ft_strlen(all->dir[0]));
+		write(2, ": command not found\n", 21);
 	}
 	update_return(all, 127);
 	all->countpipe--;
@@ -79,18 +79,17 @@ int			tokentranslate(t_all *all)
 
 int			pipeornotpipe(t_all *all, char ***env)
 {
-	int here;
+	int fd[all->tube][2];
 
-	here = all->data - all->countpipe;
-	all->tube = (g_freete == 0 && all->pdir[here] && all->countpipe > 0) ?
-				pipecount(*all, all->pdir[here], '|') : 0;
+	if (all->tube)
+		open_pipes(all, fd);
 	if (all->tube > 0)
 		multidir(all);
 	else if (all->countpipe > 0)
 	{
 		all->countpipe = checkquote(all->buff) ? 0 : all->countpipe;
 		tokentranslate(all);
-		if (all->countpipe > 0 && parse_command(all, *env) == 0)
+		if (all->countpipe > 0 && parse_command(all, *env, fd) == 0)
 			all->countpipe--;
 		*env = update_env(all, *env);
 		g_builtin = 0;
@@ -101,6 +100,7 @@ int			pipeornotpipe(t_all *all, char ***env)
 int			main(int ac, char **av, char **env)
 {
 	t_all	all;
+	int		here;
 
 	init_all(&all, env, ac, av);
 	while (check(all.pdir[all.data - all.countpipe], &all) == 1 && all.i > 0)
@@ -109,6 +109,9 @@ int			main(int ac, char **av, char **env)
 		//		printf("xdir[0] = [%s] et xdir[1] = [%s] et tube = %d\n", all.xdir[0], all.xdir[1], all.tube);
 		signal_manager(&all);
 		g_freete = 0;
+		here = all.data - all.countpipe;
+		all.tube = (g_freete == 0 && all.pdir[here] && all.countpipe > 0) ?
+				pipecount(all, all.pdir[here], '|') : 0;
 		pipeornotpipe(&all, &env);
 		//	if (g_freete == 1)
 		//		letsgnl(&all);

@@ -6,7 +6,7 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/05 15:21:37 by jabenjam          #+#    #+#             */
-/*   Updated: 2020/10/19 16:25:10 by jabenjam         ###   ########.fr       */
+/*   Updated: 2020/10/24 17:35:43 by jabenjam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ int		parse_command2(t_all *all)
 	return (0);
 }
 
-int		fork_command(t_all *all, char **env)
+int		fork_command(t_all *all, char **env, int fd[all->tube][2])
 {
 	int		pid;
 	int		ret;
@@ -101,9 +101,9 @@ int		fork_command(t_all *all, char **env)
 	all->toks = convert_tokens_lst(all->dir, all->shouldi);
 	handle_redirections(all);
 	all->dir = convert_tokens_tab(all->toks);
-	io_manager_dup_replace(all);
 	if ((pid = fork()) == 0)
 	{
+		io_manager_dup_replace(all, fd);
 		if (!parse_command2(all))
 			writenotfound(all);
 		io_manager_dup_restore(all);
@@ -113,24 +113,12 @@ int		fork_command(t_all *all, char **env)
 	{
 		waitpid(pid, &ret, 0);
 		update_return(all, ret / 256);
+		///pipes_parent(all, fd);
 	}
-	io_manager_dup_restore(all);
 	return (0);
 }
 
-int		run_command(t_all *all)
-{
-	all->toks = convert_tokens_lst(all->dir, all->shouldi);
-	handle_redirections(all);
-	all->dir = convert_tokens_tab(all->toks);
-	io_manager_dup_replace(all);
-	if (!parse_command2(all))
-		writenotfound(all);
-	io_manager_dup_restore(all);
-	return (0);
-}
-
-int		parse_command(t_all *all, char **env)
+int		parse_command(t_all *all, char **env, int fd[all->tube][2])
 {
 	if (all->pdir[all->data - all->countpipe] &&
 			ft_strlen(all->pdir[all->data - all->countpipe]) > 0)
@@ -141,10 +129,7 @@ int		parse_command(t_all *all, char **env)
 			all->countpipe--;
 			return (1);
 		}
-//		if (all->tube)
-		return (fork_command(all, env));
-//		else
-//			return (run_command(all));
+		return (fork_command(all, env, fd));
 	}
 	else
 	{
