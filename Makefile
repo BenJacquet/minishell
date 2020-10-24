@@ -6,7 +6,7 @@
 #    By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/10/16 11:50:11 by chgilber          #+#    #+#              #
-#    Updated: 2020/10/16 17:42:09 by chgilber         ###   ########.fr        #
+#    Updated: 2020/10/22 15:57:04 by jabenjam         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -42,7 +42,7 @@ SRCS =		cd.c\
 			maininit.c\
 			parse_cmd.c\
 			pipepars.c\
-			pipe.c\
+			pipes.c\
 			realloc.c\
 			redirectioned.c\
 			redirections_1.c\
@@ -96,6 +96,9 @@ OBJS = $(SRCS:.c=.o)
 OBJS_LIB = $(SRCSLIB:.c=.o)
 
 all : $(NAME)
+
+balek : $(eval CFLAGS=-fsanitize=address) $(NAME)
+
 bonus : $(NAME_BONUS)
 
 -include $(DPDCS)
