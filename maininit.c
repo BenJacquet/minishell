@@ -6,7 +6,7 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/06 16:15:04 by chgilber          #+#    #+#             */
-/*   Updated: 2020/10/22 15:13:19 by jabenjam         ###   ########.fr       */
+/*   Updated: 2020/10/24 19:55:05 by chgilber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,10 +72,12 @@ void		init_all(t_all *all, char **env, int ac, char **av)
 	init_allbis(all, env, ac, av);
 	all->countpipe = (g_freete == 0) ? pipecount(*all, all->buff, ';') + 1 : 0;
 	all->pdir = ft_splitmini(all->buff, ';');
+	crocofail(all, all->pdir, ';');
 	all->tube = (g_freete == 0 && all->pdir[0] && all->countpipe > 0) ?
 				pipecount(*all, all->pdir[0], '|') : 0;
 	all->countpipe = (all->tube >= 0) ? all->countpipe : 0;
 	all->data = all->countpipe;
 	all->xdir = ft_splitmini(all->pdir[0], '|');
+	(all->tube > 0 && all->countpipe > 1) ? crocofail(all, all->pdir, '|') : 0;
 	all->dir = ft_split(all->buff, ' ');
 }

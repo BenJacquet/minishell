@@ -6,7 +6,7 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/04 14:09:45 by chgilber          #+#    #+#             */
-/*   Updated: 2020/10/24 17:36:27 by jabenjam         ###   ########.fr       */
+/*   Updated: 2020/10/24 19:54:26 by chgilber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,12 +45,14 @@ int			letsgnl(t_all *all)
 	all->countpipe = pipecount(*all, all->buff, ';') + 1;
 	freedir(all->pdir);
 	all->pdir = ft_splitmini(all->buff, ';');
+	crocofail(all, all->pdir, ';');
 	all->tube = (all->pdir[0] && all->countpipe > 0) ?
 		pipecount(*all, all->pdir[0], '|') : 0;
 	all->countpipe = (all->tube >= 0) ? all->countpipe : 0;
 	all->data = all->countpipe;
 	freedir(all->xdir);
 	all->xdir = ft_splitmini(all->pdir[0], '|');
+	(all->tube > 0 && all->countpipe > 1) ? crocofail(all, all->pdir, '|') : 0;
 	return (0);
 }
 

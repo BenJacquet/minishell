@@ -6,11 +6,53 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/20 14:38:32 by chgilber          #+#    #+#             */
-/*   Updated: 2020/10/16 16:34:25 by jabenjam         ###   ########.fr       */
+/*   Updated: 2020/10/24 19:53:45 by chgilber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int		messagecroco(char **pdir, char c, int i, int j)
+{
+	if (pdir[i][j] == '>' || pdir[i][j] == '<')
+	{
+		write(2, "minishell: syntax error near unexpected token '", 48);
+		if (pdir[i + 1])
+		{
+			write(2, &c, 1);
+			write(2, "'\n", 2);
+		}
+		else
+			write(2, "newline'\n", 10);
+		return (1);
+	}
+	return (0);
+}
+
+void	crocofail(t_all *all, char **pdir, char c)
+{
+	int i;
+	int j;
+
+	j = 0;
+	i = 0;
+	if (pdir[0])
+	{
+		while (pdir[i])
+		{
+			j = ft_strlen(pdir[i]) - 1;
+			printf("pdir[%d][%d] = [%c]\n", i, j, pdir[i][j]);
+			while (pdir[i][j] == ' ')
+				j--;
+			if (messagecroco(pdir, c, i, j) == 1)
+			{
+				all->countpipe = 0;
+				break ;
+			}
+			i++;
+		}
+	}
+}
 
 int		croco(t_all *all, char *buff, int len, int inc)
 {
