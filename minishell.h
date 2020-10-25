@@ -6,7 +6,7 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/04 16:18:54 by jabenjam          #+#    #+#             */
-/*   Updated: 2020/10/22 15:56:22 by jabenjam         ###   ########.fr       */
+/*   Updated: 2020/10/24 17:41:57 by chgilber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,6 +123,7 @@ int				joinquote(t_all *all);
 void			joinjoin(t_all *all, char *buff, int *inc, int i);
 int				crontold(t_all *all);
 int				croco(t_all *all, char *buff, int len, int inc);
+void			crocofail(t_all *all, char **pdir, char c);
 int				initcroco(t_all *all, int here);
 int				parse_command(t_all *all, char **env, int fd_p[all->tube][2]);
 int				parse_command2(t_all *all);
