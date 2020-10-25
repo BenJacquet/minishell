@@ -6,7 +6,7 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/26 19:48:18 by chgilber          #+#    #+#             */
-/*   Updated: 2020/08/08 13:46:52 by jabenjam         ###   ########.fr       */
+/*   Updated: 2020/10/14 17:54:28 by chgilber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 # include <unistd.h>
 
 # define MAX 1024
-# define BUFFER_SIZE 1024
+# define BUFFER_SIZE 64
 
 int				get_next_line(int fd, char **line);
 int				ft_strlen(const char *str);

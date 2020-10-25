@@ -6,7 +6,7 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/30 14:30:56 by jabenjam          #+#    #+#             */
-/*   Updated: 2020/10/25 15:49:02 by jabenjam         ###   ########.fr       */
+/*   Updated: 2020/10/25 18:07:47 by chgilber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,8 +108,6 @@ t_tok	*convert_tokens_lst(char **cmd, int *whole)
 			i++;
 		}
 	}
-	for (int j = 0; cmd[j]; j++)
-		printf("initial_tab[%d]=[%s]\n", j, cmd[j]);
 	free_tab(cmd);
 	current = head;
 	return (head);

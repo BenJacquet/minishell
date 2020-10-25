@@ -6,11 +6,11 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/28 15:14:14 by jabenjam          #+#    #+#             */
-/*   Updated: 2020/08/06 15:08:25 by jabenjam         ###   ########.fr       */
+/*   Updated: 2020/10/25 18:24:31 by chgilber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int ft_strcmp(char *s1, char *s2)
+int	ft_strcmp(char *s1, char *s2)
 {
 	int i;
 

@@ -6,7 +6,7 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/10 21:50:17 by chgilber          #+#    #+#             */
-/*   Updated: 2020/10/11 18:42:08 by jabenjam         ###   ########.fr       */
+/*   Updated: 2020/10/25 18:24:51 by chgilber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ static int		ft_count_word(const char *s, char *charset)
 	i = 0;
 	while (s[i])
 	{
-
 		if (in_charset(s[i], charset))
 		{
 			words++;

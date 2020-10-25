@@ -6,7 +6,7 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/13 17:46:15 by jabenjam          #+#    #+#             */
-/*   Updated: 2020/10/22 15:38:21 by jabenjam         ###   ########.fr       */
+/*   Updated: 2020/10/25 18:19:57 by chgilber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,4 +51,15 @@ int		run_exec_forked(t_all *all, char *exec, char **args)
 	free_tab(envp);
 	free(exec);
 	return (1);
+}
+
+int		action(t_all *all, char ***env, int fd[all->tube][2])
+{
+	if (all->countsmc > 0)
+	{
+		parse_command(all, *env, fd);
+		*env = update_env(all, *env);
+		g_builtin = 0;
+	}
+	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/12 15:52:23 by chgilber          #+#    #+#             */
-/*   Updated: 2020/10/16 15:55:05 by chgilber         ###   ########.fr       */
+/*   Updated: 2020/10/25 18:09:28 by chgilber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	skipsquot(t_all *all, int *j, int *i)
 {
 	int	index;
 
-	index = all->data - all->countpipe;
+	index = all->data - all->countsmc;
 	if (all->pdir[index][*i] == '\"')
 		(*j)++;
 	if (all->pdir[index][*i] == '\'' && checksquote(all->pdir[index]) % 2 == 0
@@ -36,7 +36,7 @@ int		counttoken(t_all *all)
 
 	token = 0;
 	all->j = 0;
-	j = all->data - all->countpipe;
+	j = all->data - all->countsmc;
 	i = 0;
 	if (all->pdir)
 	{
@@ -85,8 +85,6 @@ int		nicedolbro(t_all *all, int i, int j, char **tmp)
 {
 	all->dol[all->igno] = i;
 	tmp[3] = finddolar(all, &i, j, tmp);
-	if (all->dol[all->igno] > 0)
-		printf("dol[%d]=%d , all.pdir[j][dol[igno]] = [%c]\n", all->igno, all->dol[all->igno], all->pdir[j][all->dol[all->igno]]); 
 	all->igno++;
 	free(tmp[0]);
 	free(tmp[2]);
@@ -110,7 +108,7 @@ void	dolar(t_all *all)
 	char	*tmp[4];
 
 	tmp[3] = NULL;
-	j = all->data - all->countpipe;
+	j = all->data - all->countsmc;
 	i = 0;
 	all->pipe = 0;
 	if (all->pdir[j] && ft_strlen(all->pdir[j]) > 0)

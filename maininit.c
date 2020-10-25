@@ -6,7 +6,7 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/06 16:15:04 by chgilber          #+#    #+#             */
-/*   Updated: 2020/10/25 15:29:12 by jabenjam         ###   ########.fr       */
+/*   Updated: 2020/10/25 18:10:07 by chgilber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,6 @@ int			signal_manager(t_all *all)
 	all->i = all->i;
 	(signal(SIGQUIT, &handle));
 	(signal(SIGINT, &handle));
-//	if (g_freete == 1)
-//		all->countpipe = -666; // pour eviter le commande not found
 	return (0);
 }
 
@@ -69,14 +67,14 @@ void		init_allbis(t_all *all, char **env, int ac, char **av)
 void		init_all(t_all *all, char **env, int ac, char **av)
 {
 	init_allbis(all, env, ac, av);
-	all->countpipe = (g_freete == 0) ? pipecount(*all, all->buff, ';') + 1 : 0;
+	all->countsmc = (g_freete == 0) ? pipecount(*all, all->buff, ';') + 1 : 0;
 	all->pdir = ft_splitmini(all->buff, ';');
 	crocofail(all, all->pdir, ';');
-	all->tube = (g_freete == 0 && all->pdir[0] && all->countpipe > 0) ?
+	all->tube = (g_freete == 0 && all->pdir[0] && all->countsmc > 0) ?
 				pipecount(*all, all->pdir[0], '|') : 0;
-	all->countpipe = (all->tube >= 0) ? all->countpipe : 0;
-	all->data = all->countpipe;
+	all->countsmc = (all->tube >= 0) ? all->countsmc : 0;
+	all->data = all->countsmc;
 	all->xdir = ft_splitmini(all->pdir[0], '|');
-	(all->tube > 0 && all->countpipe > 1) ? crocofail(all, all->pdir, '|') : 0;
+	(all->tube > 0 && all->countsmc > 1) ? crocofail(all, all->pdir, '|') : 0;
 	all->dir = ft_split(all->buff, ' ');
 }

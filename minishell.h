@@ -6,7 +6,7 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/04 16:18:54 by jabenjam          #+#    #+#             */
-/*   Updated: 2020/10/25 16:06:18 by jabenjam         ###   ########.fr       */
+/*   Updated: 2020/10/25 18:23:28 by chgilber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int				g_builtin;
 int				g_freete;
 int				g_gnl;
 
-typedef	struct s_red
+typedef	struct	s_red
 {
 	int			red;
 	int			fd;
@@ -79,10 +79,10 @@ typedef struct	s_all
 	int			stop;
 	int			pipe;
 	int			tube;
-	int			countpipe;
+	int			countsmc;
 	int			fds[2];
 	int			fds_backup[2];
-	int			around;  // POUR LES PIPES, 0 SI LECTURE, 1 SI ECRITURE, 2 SI LES DEUX, POUR SAVOIR QUEL BOUT DU PIPE CLOSE
+	int			around;
 	int			red;
 	int			mask;
 	int			env_replaced;
@@ -109,7 +109,7 @@ int				echo(t_all all);
 int				checkdquote(char *buff);
 int				checksquote(char *buff);
 char			*ft_strncpy(char *dest, const char *src, int dstsize);
-int				pipecount(t_all all,char *str, char c);
+int				pipecount(t_all all, char *str, char c);
 char			**ft_splitmini(char *s, char c);
 int				counttoken(t_all *all);
 void			dolar(t_all *all);
@@ -130,8 +130,8 @@ char			*ft_strncat(char *s1, char *s2, int len);
 void			init_all(t_all *all, char **env, int ac, char **av);
 int				signal_manager(t_all *all);
 int				letsgnl(t_all *all);
-int				multidir(t_all *all, char ***env);
-int				pipeornotpipe(t_all *all, char ***env);
+int				multidir(t_all *all, char ***env, int fd[all->tube][2]);
+int				action(t_all *all, char ***env, int fd[all->tube][2]);
 void			writenotfound(t_all *all);
 int				tokentranslate(t_all *all);
 
@@ -155,7 +155,7 @@ int				ft_export_core(t_all *all);
 int				ft_export_null(t_env *env);
 void			ft_export_edit(t_env *var, t_env *env);
 int				ft_export_check_name(char *var);
-t_env		 	*ft_export_find_name(t_env *var, t_env *env);
+t_env			*ft_export_find_name(t_env *var, t_env *env);
 void			ft_unset_core(t_all *all);
 int				ft_unset_check_name(char *var);
 t_env			*ft_unset_find_name(char *var, t_env *current);
@@ -178,8 +178,7 @@ int				ft_check_name(char *var);
 int				expand_value(t_env *var, t_all *all);
 char			*get_new_value(t_all *all, t_env *var, int len);
 t_env			*env_exists(char *name, t_env *env);
-int				builtins_env(t_all *all);
-int				builtins_others(t_all *all);
+int				builtins(t_all *all);
 int				io_manager_dup_replace(t_all *all, int fd[all->tube][2]);
 int				io_manager_dup_restore(t_all *all);
 void			pipes_child(t_all *all, int fd[all->tube][2]);

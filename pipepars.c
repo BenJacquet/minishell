@@ -6,22 +6,22 @@
 /*   By: chgilber <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/15 16:20:44 by chgilber          #+#    #+#             */
-/*   Updated: 2020/10/15 16:20:55 by chgilber         ###   ########.fr       */
+/*   Updated: 2020/10/25 18:12:24 by chgilber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
 int	message(t_all all, char c, int i)
 {
 	write(2, "minishell: ", 11);
 	write(2, "syntax error near unexpected token '", 36);
-	if ((ft_strlen(all.buff) > i + 1 && all.buff[i + 1] == c ) || i == 0)
+	if ((ft_strlen(all.buff) > i + 1 && all.buff[i + 1] == c) || i == 0)
 		write(2, &all.buff[i], 1);
-	if ((ft_strlen(all.buff) > i + 1 && all.buff[i + 1] == c ))
+	if ((ft_strlen(all.buff) > i + 1 && all.buff[i + 1] == c))
 		write(2, &all.buff[i + 1], 1);
 	write(2, "'\n", 2);
 	return (-666);
-
 }
 
 int	pipeok(t_all all, char c, int i)

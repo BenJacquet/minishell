@@ -6,7 +6,7 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/20 14:38:32 by chgilber          #+#    #+#             */
-/*   Updated: 2020/10/24 19:53:45 by chgilber         ###   ########.fr       */
+/*   Updated: 2020/10/25 18:09:52 by chgilber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,12 +41,11 @@ void	crocofail(t_all *all, char **pdir, char c)
 		while (pdir[i])
 		{
 			j = ft_strlen(pdir[i]) - 1;
-			printf("pdir[%d][%d] = [%c]\n", i, j, pdir[i][j]);
 			while (pdir[i][j] == ' ')
 				j--;
 			if (messagecroco(pdir, c, i, j) == 1)
 			{
-				all->countpipe = 0;
+				all->countsmc = 0;
 				break ;
 			}
 			i++;

@@ -6,7 +6,7 @@
 /*   By: chgilber <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/07 16:46:22 by chgilber          #+#    #+#             */
-/*   Updated: 2020/10/16 17:41:17 by chgilber         ###   ########.fr       */
+/*   Updated: 2020/10/25 18:07:10 by chgilber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	silence(char *buff)
 	if (buff)
 	{
 		len = ft_strlen(buff);
-		i =  ((len == 3 && (ft_strncmp(buff, "-n ", 3) == 0)) ||
+		i = ((len == 3 && (ft_strncmp(buff, "-n ", 3) == 0)) ||
 				(len == 2 && (ft_strncmp(buff, "-n", 2) == 0)) ||
 				(len == 4 && (ft_strncmp(buff, "'-n'", 4) == 0)) ||
 				(len == 4 && (ft_strncmp(buff, "\"-n\"", 4) == 0))) ? 0 : 1;
@@ -51,7 +51,7 @@ int	printnoquote(t_all all)
 	while (all.dir[i])
 	{
 		write(1, all.dir[i], ft_strlen(all.dir[i]));
-		silence(all.dir[i]) == 1 ? write(1, " ", 1) : 0;
+		(i != ft_tablen(all.dir) - 1) ? write(1, " ", 1) : 0;
 		i++;
 	}
 	return (silence(all.dir[1]));

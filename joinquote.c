@@ -6,7 +6,7 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/17 14:07:55 by chgilber          #+#    #+#             */
-/*   Updated: 2020/10/17 19:24:38 by jabenjam         ###   ########.fr       */
+/*   Updated: 2020/10/25 18:21:16 by chgilber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,8 @@ int		noquote(t_all *all, char *buff, int *inc)
 	int	i;
 	int fusion;
 
-	//	printf("noquote - > [%s]\n", buff + 1);
-	fusion = (*inc > 0 && (buff[0] == '\'' || buff[0] == '\"') && ( buff[1] != '<' && buff[1] != '>')) ? 1 : 0;
+	fusion = (*inc > 0 && (buff[0] == '\'' || buff[0] == '\"')
+			&& (buff[1] != '<' && buff[1] != '>')) ? 1 : 0;
 	i = (buff[1] == ' ') ? 2 : 1;
 	while (buff[i] && buff[i] != '\'' && buff[i] != ' ' && buff[i] != '\"')
 		i++;
@@ -35,7 +35,6 @@ int		noquote(t_all *all, char *buff, int *inc)
 		all->dir[*inc] = ft_strncpy(all->dir[*inc],
 				buff + ((buff[1] == ' ') ? 2 : 1), i - 1);
 		i = (buff[i] == ' ') ? i : i - 1;
-		//	printf("dirnoauote = -> [%s][%d]\n", all->dir[*inc], *inc);
 		(*inc)++;
 	}
 	else if (fusion == 1)
@@ -55,8 +54,8 @@ int		ifjoin(t_all *all, char *buff, int *inc, char quote)
 	while (buff[i] != quote)
 		i++;
 	croco(all, buff, i, *inc);
-	//	printf("buffjoin = -> [%s], i{%d}\n", buff + 1, i);
-	if (*inc > 0 && (buff[0] == ' ' || buff[0] == '<' || buff[0] == '>') && buff[2] != quote)
+	if (*inc > 0 && (buff[0] == ' ' || buff[0] == '<' || buff[0] == '>')
+			&& buff[2] != quote)
 	{
 		all->dir[*inc] = malloc(sizeof(char) * i);
 		all->dir[*inc] = ft_strncpy(all->dir[*inc], buff + 2, i - 2);
@@ -68,7 +67,6 @@ int		ifjoin(t_all *all, char *buff, int *inc, char quote)
 		all->dir[*inc] = malloc(sizeof(char) * i);
 		all->dir[*inc] = ft_strncpy(all->dir[*inc], buff + 2, i - 2);
 	}
-	//	printf("dirquote = -> [%s][%d]\n", all->dir[*inc], *inc);
 	return (i);
 }
 
@@ -103,7 +101,7 @@ int		joinquote(t_all *all)
 	int	inc;
 	int	here;
 
-	here = all->data - all->countpipe;
+	here = all->data - all->countsmc;
 	i = 0;
 	inc = 0;
 	freedir(all->dir);
@@ -119,9 +117,8 @@ int		joinquote(t_all *all)
 	}
 	else
 	{
-		all->dir = ft_split(all->pdir[all->data - all->countpipe], ' ');
+		all->dir = ft_split(all->pdir[all->data - all->countsmc], ' ');
 		crocodir(all);
 	}
 	return (0);
 }
-
