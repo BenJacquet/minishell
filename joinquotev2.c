@@ -6,7 +6,7 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/15 16:21:09 by chgilber          #+#    #+#             */
-/*   Updated: 2020/10/17 19:24:30 by jabenjam         ###   ########.fr       */
+/*   Updated: 2020/10/25 16:10:54 by jabenjam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,15 +65,29 @@ int		joinquotev2(t_all *all)
 	return (0);
 }
 
-int		multidir(t_all *all)
+int		multidir(t_all *all, char ***env)
 {
 	all->here = 0;
 	while (all->here <= all->tube)
 	{
 		joinquotev2(all);
+		for (int i = 0; all->dir[i]; i++)
+			printf("all->dir[%d]=[%s]\n", i,all->dir[i]);
+		if (all->here == 0)
+			all->around = 1;
+		else if (all->here == all->tube)
+			all->around = 0;
+		else
+			all->around = 2;
+		all->countpipe = checkquote(all->buff) ? 0 : all->countpipe;
+		tokentranslate(all);
+		pipeornotpipe(all, env);
+		all->countpipe++;
 		all->here++;
 	}
+	printf("countpipe=[%d]\n", all->countpipe);
 	all->countpipe--;
+	all->tube = 0;
 	return (0);
 }
 

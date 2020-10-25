@@ -6,7 +6,7 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/04 16:18:54 by jabenjam          #+#    #+#             */
-/*   Updated: 2020/10/24 17:41:57 by chgilber         ###   ########.fr       */
+/*   Updated: 2020/10/25 16:06:18 by jabenjam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,8 +82,7 @@ typedef struct	s_all
 	int			countpipe;
 	int			fds[2];
 	int			fds_backup[2];
-	int			*around;  // POUR LES PIPES, 0 SI LECTURE, 1 SI ECRITURE, 2 SI LES DEUX, POUR SAVOIR QUEL BOUT DU PIPE CLOSE
-	int			cmd;
+	int			around;  // POUR LES PIPES, 0 SI LECTURE, 1 SI ECRITURE, 2 SI LES DEUX, POUR SAVOIR QUEL BOUT DU PIPE CLOSE
 	int			red;
 	int			mask;
 	int			env_replaced;
@@ -131,9 +130,10 @@ char			*ft_strncat(char *s1, char *s2, int len);
 void			init_all(t_all *all, char **env, int ac, char **av);
 int				signal_manager(t_all *all);
 int				letsgnl(t_all *all);
-int				multidir(t_all *all);
+int				multidir(t_all *all, char ***env);
 int				pipeornotpipe(t_all *all, char ***env);
 void			writenotfound(t_all *all);
+int				tokentranslate(t_all *all);
 
 /*
 ** -------------BEN------------------------------------------------------------

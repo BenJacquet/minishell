@@ -6,7 +6,7 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/05 15:21:37 by jabenjam          #+#    #+#             */
-/*   Updated: 2020/10/24 17:35:43 by jabenjam         ###   ########.fr       */
+/*   Updated: 2020/10/25 15:52:54 by jabenjam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,8 @@ int		fork_command(t_all *all, char **env, int fd[all->tube][2])
 
 	pid = 0;
 	all->toks = convert_tokens_lst(all->dir, all->shouldi);
-	handle_redirections(all);
+	if (all->countpipe)
+		handle_redirections(all);
 	all->dir = convert_tokens_tab(all->toks);
 	if ((pid = fork()) == 0)
 	{
@@ -113,7 +114,9 @@ int		fork_command(t_all *all, char **env, int fd[all->tube][2])
 	{
 		waitpid(pid, &ret, 0);
 		update_return(all, ret / 256);
-		///pipes_parent(all, fd);
+		reset_fds(all);
+		if (all->tube)
+			pipes_parent(all, fd);
 	}
 	return (0);
 }
@@ -123,7 +126,8 @@ int		parse_command(t_all *all, char **env, int fd[all->tube][2])
 	if (all->pdir[all->data - all->countpipe] &&
 			ft_strlen(all->pdir[all->data - all->countpipe]) > 0)
 	{
-		joinquote(all);
+		if (!all->tube)
+			joinquote(all);
 		if (!all->dir[0] || ft_strlen(all->dir[0]) == 0)
 		{
 			all->countpipe--;

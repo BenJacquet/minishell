@@ -6,7 +6,7 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/15 15:31:57 by jabenjam          #+#    #+#             */
-/*   Updated: 2020/10/21 18:02:02 by jabenjam         ###   ########.fr       */
+/*   Updated: 2020/10/22 17:12:39 by jabenjam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	restore_fds(int in, int out)
 	close(out);
 }
 
-void	manage_pipes_2(int fd[3][2], int around, int num)
+void	manage_pipes_2(int fd[2][2], int around, int num)
 {
 	if (around == 0)
 	{
@@ -67,8 +67,8 @@ int		main(int ac, char **av, char **env)
 	(void)ac;
 	(void)av;
 	char **cmd1 = ft_split("/bin/ls",' ');
-	char **cmd2 = ft_split("/bin/cat",' ');
-	char **cmd3 = ft_split("/usr/bin/grep main",' ');
+	char **cmd2 = ft_split("/bin/cat /sgoinfre/goinfre/Perso/jabenjam/file1",' ');
+	char **cmd3 = ft_split("/usr/bin/wc",' ');
 	char ***cmds;
 
 	cmds = malloc(sizeof(char**) * 4);

@@ -6,7 +6,7 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/04 14:09:45 by chgilber          #+#    #+#             */
-/*   Updated: 2020/10/24 19:54:26 by chgilber         ###   ########.fr       */
+/*   Updated: 2020/10/25 16:19:24 by jabenjam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,12 +85,10 @@ int			pipeornotpipe(t_all *all, char ***env)
 
 	if (all->tube)
 		open_pipes(all, fd);
-	if (all->tube > 0)
-		multidir(all);
-	else if (all->countpipe > 0)
+	if (all->countpipe > 0)
 	{
-		all->countpipe = checkquote(all->buff) ? 0 : all->countpipe;
-		tokentranslate(all);
+		/*all->countpipe = checkquote(all->buff) ? 0 : all->countpipe;
+		tokentranslate(all);*/
 		if (all->countpipe > 0 && parse_command(all, *env, fd) == 0)
 			all->countpipe--;
 		*env = update_env(all, *env);
@@ -114,7 +112,10 @@ int			main(int ac, char **av, char **env)
 		here = all.data - all.countpipe;
 		all.tube = (g_freete == 0 && all.pdir[here] && all.countpipe > 0) ?
 				pipecount(all, all.pdir[here], '|') : 0;
-		pipeornotpipe(&all, &env);
+		if (all.tube > 0)
+			multidir(&all, &env);
+		else
+			pipeornotpipe(&all, &env);
 		//	if (g_freete == 1)
 		//		letsgnl(&all);
 		if (all.countpipe < 1)
