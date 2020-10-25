@@ -6,7 +6,7 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/15 16:21:09 by chgilber          #+#    #+#             */
-/*   Updated: 2020/10/25 18:16:40 by chgilber         ###   ########.fr       */
+/*   Updated: 2020/10/25 18:47:10 by chgilber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,7 @@ int		multidir(t_all *all, char ***env, int fd[all->tube][2])
 		tokentranslate(all);
 		action(all, env, fd);
 		all->here++;
+		*env = update_env(all, *env);
 	}
 	all->countsmc--;
 	all->tube = 0;

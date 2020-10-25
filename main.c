@@ -6,7 +6,7 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/04 14:09:45 by chgilber          #+#    #+#             */
-/*   Updated: 2020/10/25 18:19:37 by chgilber         ###   ########.fr       */
+/*   Updated: 2020/10/25 18:45:11 by chgilber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,9 @@ int			gestionpipe(t_all *all, char ***env)
 		multidir(all, env, fd);
 	else
 	{
+		all->countsmc = checkquote(all->buff) ? 0 : all->countsmc;
+		tokentranslate(all);
+		*env = update_env(all, *env);
 		action(all, env, fd);
 		all->countsmc--;
 	}
