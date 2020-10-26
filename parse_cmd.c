@@ -6,7 +6,7 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/05 15:21:37 by jabenjam          #+#    #+#             */
-/*   Updated: 2020/10/25 18:18:07 by chgilber         ###   ########.fr       */
+/*   Updated: 2020/10/26 19:24:29 by jabenjam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int		builtins(t_all *all)
 {
 	if (ft_strcmp(all->dir[0], "cd") == 0)
-		update_return(all, cd(all->dir, *all));
+		update_return(all, cd(all->dir, all));
 	else if (ft_strcmp(all->dir[0], "pwd") == 0)
 		update_return(all, pwd(all->buff));
 	else if (ft_strcmp(all->dir[0], "echo") == 0)
@@ -31,10 +31,7 @@ int		builtins(t_all *all)
 
 int		is_binary(t_all *all)
 {
-	if (all->tube)
-		run_exec_forked(all, all->exec, all->dir);
-	else
-		run_exec(all, all->exec, all->dir);
+	run_exec(all, all->exec, all->dir);
 	return (0);
 }
 
@@ -46,10 +43,8 @@ int		parse_command2(t_all *all)
 	if (all->dir[0] &&
 			((ft_strcmp(all->dir[0], "cd") == 0) ||
 			ft_strcmp(all->dir[0], "pwd") == 0 ||
-			ft_strcmp(all->dir[0], "echo") == 0))
-		return (builtins(all));
-	else if (all->dir[0] &&
-			((ft_strcmp(all->dir[0], "env") == 0) ||
+			ft_strcmp(all->dir[0], "echo") == 0 ||
+			ft_strcmp(all->dir[0], "env") == 0 ||
 			ft_strcmp(all->dir[0], "unset") == 0 ||
 			ft_strcmp(all->dir[0], "export") == 0))
 		return (builtins(all));
@@ -74,7 +69,7 @@ int		fork_command(t_all *all, char **env, int fd[all->tube][2])
 	all->dir = convert_tokens_tab(all->toks);
 	if ((pid = fork()) == 0)
 	{
-		io_manager_dup_replace(all, fd);
+		io_manager_dup_replace(all, fd, 1);
 		if (!parse_command2(all))
 			writenotfound(all);
 		io_manager_dup_restore(all);
@@ -84,9 +79,48 @@ int		fork_command(t_all *all, char **env, int fd[all->tube][2])
 	{
 		waitpid(pid, &ret, 0);
 		update_return(all, ret / 256);
-		reset_fds(all);
 		if (all->tube)
 			pipes_parent(all, fd);
+		reset_fds(all);
+	}
+	return (0);
+}
+
+int		run_command(t_all *all, char **env, int fd[all->tube][2])
+{
+	all->toks = convert_tokens_lst(all->dir, all->shouldi);
+	if (all->countsmc)
+		handle_redirections(all);
+	all->dir = convert_tokens_tab(all->toks);
+	io_manager_dup_replace(all, fd, 0);
+	if (!parse_command2(all))
+		writenotfound(all);
+	io_manager_dup_restore(all);
+	if (all->tube)
+		pipes_parent(all, fd);
+	reset_fds(all);
+	return (0);
+}
+
+int		fork_or_not(t_all *all, char **env, int fd[all->tube][2])
+{
+	if (ft_strcmp(all->dir[0], "unset") == 0 ||
+		(ft_strcmp(all->dir[0], "export") == 0 && ft_tablen(all->dir) > 1)||
+		ft_strcmp(all->dir[0], "cd") == 0)
+	{
+		write(2, "RUN_COMMAND\n", 12);
+		//dup2(STDERR_FILENO, STDOUT_FILENO);
+		//printf("all->dir[0]=[%s]\n", all->dir[0]);
+		//dup2(STDOUT_FILENO, STDOUT_FILENO);
+		return (run_command(all, env, fd));
+	}
+	else
+	{
+		write(2, "FORK_COMMAND\n", 13);
+		//dup2(STDERR_FILENO, STDOUT_FILENO);
+		//printf("all->dir[0]=[%s]\n", all->dir[0]);
+		//dup2(STDOUT_FILENO, STDOUT_FILENO);
+		return (fork_command(all, env, fd));
 	}
 	return (0);
 }
@@ -100,7 +134,7 @@ int		parse_command(t_all *all, char **env, int fd[all->tube][2])
 			joinquote(all);
 		if (!all->dir[0] || ft_strlen(all->dir[0]) == 0)
 			return (1);
-		return (fork_command(all, env, fd));
+		return (fork_or_not(all, env, fd));
 	}
 	else
 		return (1);

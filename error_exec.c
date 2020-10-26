@@ -1,38 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cd.c                                               :+:      :+:    :+:   */
+/*   error_exec.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/08/04 17:17:15 by chgilber          #+#    #+#             */
-/*   Updated: 2020/10/26 20:00:33 by jabenjam         ###   ########.fr       */
+/*   Created: 2020/10/26 15:11:16 by jabenjam          #+#    #+#             */
+/*   Updated: 2020/10/26 16:13:13 by jabenjam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int		cd(char **dir, t_all *all)
+int		error_exec(t_all *all)
 {
-	int		i;
-
-	i = 0;
-	update_pwd(all, 1);
-	if (dir[1])
+	printf("all->countsmc=[%d]\n", all->countsmc);
+	if (ft_strcmp(all->dir[0], ".") == 0)
 	{
-		i = chdir((dir[1]));
-		if (i == -1)
-		{
-			write(1, "minishell: cd: ", 15);
-			write(1, dir[1], ft_strlen(dir[1]));
-			write(1, ": No such file or directory\n", 28);
-			return (1);
-		}
+		ft_put_error(
+			"filename argument required\n.: usage: .filename [arguments]",
+			all->dir[0], 1);
+		return (-1);
 	}
-	else
-		i = chdir(ft_getenv(all, "HOME", 1));
-	update_pwd(all, 0);
-	if (i == -1)
-		write(1, "minishell: cd: HOME not set\n", 29);
+	else if (ft_strcmp(all->dir[0], "./") == 0)
+	{
+		ft_put_error("is a directory", all->dir[0], 1);
+		return (-1);
+	}
 	return (0);
 }

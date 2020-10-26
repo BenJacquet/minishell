@@ -6,7 +6,7 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/15 16:21:09 by chgilber          #+#    #+#             */
-/*   Updated: 2020/10/26 18:24:12 by chgilber         ###   ########.fr       */
+/*   Updated: 2020/10/26 18:45:02 by jabenjam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,28 +61,5 @@ int		joinquotev2(t_all *all)
 		all->dir = ft_split(all->xdir[all->here], ' ');
 		crocodir(all);
 	}
-	return (0);
-}
-
-int		multidir(t_all *all, char ***env, int fd[all->tube][2])
-{
-	all->here = 0;
-	while (all->here <= all->tube)
-	{
-		joinquotev2(all);
-		if (all->here == 0)
-			all->around = 1;
-		else if (all->here == all->tube)
-			all->around = 0;
-		else
-			all->around = 2;
-		all->countsmc = checkquote(all->buff) ? 0 : all->countsmc;
-		tokentranslate(all);
-		action(all, env, fd);
-		all->here++;
-		*env = update_env(all, *env);
-	}
-	all->countsmc--;
-	all->tube = 0;
 	return (0);
 }

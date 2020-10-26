@@ -6,7 +6,7 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/15 15:23:06 by jabenjam          #+#    #+#             */
-/*   Updated: 2020/10/13 17:47:08 by jabenjam         ###   ########.fr       */
+/*   Updated: 2020/10/26 19:33:08 by jabenjam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,14 @@ char	*is_exec(t_all *all)
 {
 	if (all->dir)
 	{
-		if (ft_strncmp(all->dir[0], ".", 1) == 0)
-			return (all->dir[0]);
+		if (ft_strncmp(all->dir[0], ".", 1) == 0 ||
+			ft_strncmp(all->dir[0], "/", 1) == 0)
+		{
+			if (error_exec(all) == -1)
+				return (NULL);
+			else
+				return (all->dir[0]);
+		}
 		else
 			return (NULL);
 	}
@@ -92,10 +98,10 @@ char	*get_path(t_all *all)
 	dir = NULL;
 	if (!all->dir || !all->dir[0])
 		return (NULL);
-	if (all->dir && all->dir[0] && all->dir[0][0] == '.')
+	if (all->dir && all->dir[0] && (all->dir[0][0] == '.' ||
+									all->dir[0][0] == '/'))
 		return (is_exec(all));
-	else
-		path = ft_splitf(ft_getenv(all, "PATH", 0), ':');
+	path = ft_splitf(ft_getenv(all, "PATH", 0), ':');
 	exec = find_dir(all, path, dir);
 	free(dir);
 	free_tab(path);

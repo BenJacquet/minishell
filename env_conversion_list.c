@@ -6,7 +6,7 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/13 17:30:33 by jabenjam          #+#    #+#             */
-/*   Updated: 2020/10/13 17:36:55 by jabenjam         ###   ########.fr       */
+/*   Updated: 2020/10/26 18:58:31 by jabenjam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,8 @@ t_env	*ft_tab_to_list(char **tab, int erase)
 	current = NULL;
 	if (tab)
 	{
-		current = new_elem(tab[i++]);
+		if (tab[i] != NULL)
+			current = new_elem(tab[i++]);
 		head = current;
 		while (tab[i] != NULL)
 		{

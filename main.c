@@ -6,7 +6,7 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/04 14:09:45 by chgilber          #+#    #+#             */
-/*   Updated: 2020/10/25 18:45:11 by chgilber         ###   ########.fr       */
+/*   Updated: 2020/10/26 18:47:51 by jabenjam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,8 @@ int			gestionpipe(t_all *all, char ***env)
 	int fd[all->tube][2];
 
 	free_tab(all->xdir);
+	all->countsmc = checkquote(all->buff) ? 0 : all->countsmc;
+	tokentranslate(all);
 	all->xdir = ft_splitmini(all->pdir[all->data - all->countsmc], '|');
 	if (all->tube)
 		open_pipes(all, fd);
@@ -89,10 +91,8 @@ int			gestionpipe(t_all *all, char ***env)
 		multidir(all, env, fd);
 	else
 	{
-		all->countsmc = checkquote(all->buff) ? 0 : all->countsmc;
-		tokentranslate(all);
-		*env = update_env(all, *env);
 		action(all, env, fd);
+		*env = update_env(all, *env);
 		all->countsmc--;
 	}
 	return (0);

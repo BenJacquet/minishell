@@ -6,7 +6,7 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/04 16:18:54 by jabenjam          #+#    #+#             */
-/*   Updated: 2020/10/25 18:23:28 by chgilber         ###   ########.fr       */
+/*   Updated: 2020/10/26 20:01:38 by jabenjam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ typedef struct	s_all
 int				cnt(int i, t_all *all, int here);
 int				get_dir();
 int				end(char *buff, t_all *all);
-int				cd(char **dir, t_all all);
+int				cd(char **dir, t_all *all);
 int				check(char *buff, t_all *all);
 int				checkonlyret(char *buff, t_all *all);
 int				checkquote(char *buff);
@@ -134,6 +134,8 @@ int				multidir(t_all *all, char ***env, int fd[all->tube][2]);
 int				action(t_all *all, char ***env, int fd[all->tube][2]);
 void			writenotfound(t_all *all);
 int				tokentranslate(t_all *all);
+int				joinquotev2(t_all *all);
+
 
 /*
 ** -------------BEN------------------------------------------------------------
@@ -143,11 +145,10 @@ char			*get_path(t_all *all);
 char			*find_dir(t_all *all, char **path, DIR **dir);
 char			*find_exec(t_all *all, DIR *dir, char *path);
 char			*make_exec(t_all *all, char *path);
-int				run_command(t_all *all);
+int				run_command(t_all *all, char **env, int fd[all->tube][2]);
 int				fork_command(t_all *all, char **env, int fd[all->tube][2]);
 int				is_binary(t_all *all);
 int				run_exec(t_all *all, char *exec, char **args);
-int				run_exec_forked(t_all *all, char *exec, char **args);
 char			*ft_getenv(t_all *all, char *name, int mode);
 char			*ft_getenv2(char *name, t_env *current, int mode);
 void			ft_putenv(t_env *env);
@@ -179,7 +180,7 @@ int				expand_value(t_env *var, t_all *all);
 char			*get_new_value(t_all *all, t_env *var, int len);
 t_env			*env_exists(char *name, t_env *env);
 int				builtins(t_all *all);
-int				io_manager_dup_replace(t_all *all, int fd[all->tube][2]);
+int				io_manager_dup_replace(t_all *all, int fd[all->tube][2], int fork);
 int				io_manager_dup_restore(t_all *all);
 void			pipes_child(t_all *all, int fd[all->tube][2]);
 void			pipes_parent(t_all *all, int fd[all->tube][2]);
@@ -205,6 +206,10 @@ void			free_vars(t_env	*vars);
 void			free_tokens(t_tok *toks);
 int				update_return(t_all *all, int new);
 char			**update_env(t_all *all, char **old);
+int				update_pwd(t_all *all, int old);
 int				crocodir(t_all *all);
+int				env_command(t_all *all, char **env, int fd[all->tube][2]);
+int				error_exec(t_all *all);
+int				fork_or_not(t_all *all, char **env, int fd[all->tube][2]);
 
 #endif
