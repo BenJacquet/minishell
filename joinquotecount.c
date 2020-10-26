@@ -6,7 +6,7 @@
 /*   By: chgilber <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/18 11:52:32 by chgilber          #+#    #+#             */
-/*   Updated: 2020/10/25 17:14:38 by chgilber         ###   ########.fr       */
+/*   Updated: 2020/10/26 18:24:36 by chgilber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,6 @@ int		ifjoincount(char *buff, char quote)
 	int	i;
 
 	i = 0;
-//	printf("count -> [%s]\n", buff);
 	while (buff[i] != quote)
 		i++;
 	return (i + 1);

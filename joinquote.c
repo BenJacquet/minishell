@@ -6,7 +6,7 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/17 14:07:55 by chgilber          #+#    #+#             */
-/*   Updated: 2020/10/25 18:21:16 by chgilber         ###   ########.fr       */
+/*   Updated: 2020/10/26 18:39:36 by chgilber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ int		ifjoin(t_all *all, char *buff, int *inc, char quote)
 		all->dir[*inc] = malloc(sizeof(char) * i);
 		all->dir[*inc] = ft_strncpy(all->dir[*inc], buff + 2, i - 2);
 	}
-	else if (*inc > 0)
+	else if (*inc > 0 && i != 2)
 		joinjoin(all, buff, inc, i);
 	else
 	{

@@ -6,7 +6,7 @@
 /*   By: chgilber <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/16 16:29:10 by chgilber          #+#    #+#             */
-/*   Updated: 2020/10/12 15:57:30 by chgilber         ###   ########.fr       */
+/*   Updated: 2020/10/26 16:42:50 by chgilber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,16 +24,18 @@ int				quote(char *s, int i)
 	if (s[i] == '\'' && checksquote(s) % 2 == 0)
 	{
 		i++;
-		while (s[i] != '\'')
+		while (s[i] != '\'' && s[i])
 			i++;
-		i++;
+		if (s[i] != '\0')
+			i++;
 	}
 	if (s[i] == '\"' && checkdquote(s) % 2 == 0)
 	{
 		i++;
-		while (s[i] != '\"')
+		while (s[i] != '\"' && s[i])
 			i++;
-		i++;
+		if (s[i] != '\0')
+			i++;
 	}
 	return (i);
 }
