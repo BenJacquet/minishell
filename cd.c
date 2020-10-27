@@ -6,7 +6,7 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/04 17:17:15 by chgilber          #+#    #+#             */
-/*   Updated: 2020/10/26 20:00:33 by jabenjam         ###   ########.fr       */
+/*   Updated: 2020/10/27 16:26:14 by jabenjam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int		cd(char **dir, t_all *all)
 	int		i;
 
 	i = 0;
-	update_pwd(all, 1);
+	update_pwd(all, 1, 0);
 	if (dir[1])
 	{
 		i = chdir((dir[1]));
@@ -31,7 +31,7 @@ int		cd(char **dir, t_all *all)
 	}
 	else
 		i = chdir(ft_getenv(all, "HOME", 1));
-	update_pwd(all, 0);
+	update_pwd(all, 0, 0);
 	if (i == -1)
 		write(1, "minishell: cd: HOME not set\n", 29);
 	return (0);

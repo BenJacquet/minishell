@@ -6,7 +6,7 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/08 18:26:01 by jabenjam          #+#    #+#             */
-/*   Updated: 2020/10/26 18:57:26 by jabenjam         ###   ########.fr       */
+/*   Updated: 2020/10/27 15:06:25 by jabenjam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ char	*ft_getenv(t_all *all, char *name, int mode)
 	if (all->env)
 		current = all->env;
 	else
-		return (NULL);
+		return (ft_strdup("\0"));
 	if (name[0] == '?')
 		return (ft_strdup(all->ret->value));
 	while (current != NULL)

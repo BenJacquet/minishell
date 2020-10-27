@@ -6,7 +6,7 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/05 15:21:37 by jabenjam          #+#    #+#             */
-/*   Updated: 2020/10/26 19:24:29 by jabenjam         ###   ########.fr       */
+/*   Updated: 2020/10/27 19:20:31 by jabenjam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int		builtins(t_all *all)
 
 int		is_binary(t_all *all)
 {
-	run_exec(all, all->exec, all->dir);
+	run_exec(all);
 	return (0);
 }
 
@@ -109,17 +109,11 @@ int		fork_or_not(t_all *all, char **env, int fd[all->tube][2])
 		ft_strcmp(all->dir[0], "cd") == 0)
 	{
 		write(2, "RUN_COMMAND\n", 12);
-		//dup2(STDERR_FILENO, STDOUT_FILENO);
-		//printf("all->dir[0]=[%s]\n", all->dir[0]);
-		//dup2(STDOUT_FILENO, STDOUT_FILENO);
 		return (run_command(all, env, fd));
 	}
 	else
 	{
 		write(2, "FORK_COMMAND\n", 13);
-		//dup2(STDERR_FILENO, STDOUT_FILENO);
-		//printf("all->dir[0]=[%s]\n", all->dir[0]);
-		//dup2(STDOUT_FILENO, STDOUT_FILENO);
 		return (fork_command(all, env, fd));
 	}
 	return (0);

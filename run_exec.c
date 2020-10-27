@@ -6,13 +6,13 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/13 17:46:15 by jabenjam          #+#    #+#             */
-/*   Updated: 2020/10/26 19:38:10 by jabenjam         ###   ########.fr       */
+/*   Updated: 2020/10/27 19:39:24 by jabenjam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int		run_exec(t_all *all, char *exec, char **args)
+int		run_exec(t_all *all)
 {
 	int		ret;
 	int		status;
@@ -21,9 +21,10 @@ int		run_exec(t_all *all, char *exec, char **args)
 	ret = 0;
 	status = 0;
 	envp = ft_list_to_tab(all->env, 0, 0);
-	status = execve(exec, args, envp);
+	update_shlvl(all);
+	status = execve(all->exec, all->dir, envp);
 	if (status == -1)
-		ft_put_error(strerror(errno), exec, 1);
+		ft_put_error(strerror(errno), all->exec, 1);
 	free_tab(envp);
 	return (1);
 }

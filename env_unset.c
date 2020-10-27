@@ -6,7 +6,7 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/05 12:35:39 by jabenjam          #+#    #+#             */
-/*   Updated: 2020/10/19 13:01:30 by jabenjam         ###   ########.fr       */
+/*   Updated: 2020/10/27 16:14:42 by jabenjam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,11 +48,16 @@ int		ft_unset_check_name(char *var)
 	{
 		if (ft_isdigit(var[i]) || var[i] == '=' ||
 			(!ft_isalnum(var[i]) && var[i] != '_'))
-			return (ft_put_error("not a valid identifier\n", var, 1));
+		{
+			
+			return (ft_put_error("not a valid identifier", var, 1));
+		}
 		while (ft_isalnum(var[i]) || var[i] == '_')
 			i++;
 		if (var[i] != '\0')
-			return (ft_put_error("not a valid identifier\n", var, 1));
+		{
+			return (ft_put_error("not a valid identifier", var, 1));
+		}
 		else
 			return (0);
 	}
@@ -68,8 +73,11 @@ void	ft_unset_core(t_all *all)
 		return ;
 	while (all->dir[i + 1])
 	{
-		if (update_return(all, ft_unset_check_name(all->dir[i + 1]) == 0))
+		if (ft_unset_check_name(all->dir[i + 1]) == 0)
+		{
 			all->env = ft_unset_find_name(all->dir[i + 1], all->env);
+			update_return(all, 0);
+		}
 		else
 			update_return(all, 1);
 		i++;

@@ -6,7 +6,7 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/08 18:01:17 by jabenjam          #+#    #+#             */
-/*   Updated: 2020/10/26 19:12:23 by jabenjam         ###   ########.fr       */
+/*   Updated: 2020/10/27 16:38:53 by jabenjam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	ft_export_edit(t_env *var, t_env *env)
 	}
 }
 
-t_env	*ft_export_find_name(t_env *var, t_env *env)
+t_env	*ft_export_find_name(t_env *var, t_env *env, int new)
 {
 	t_env	*head;
 
@@ -40,7 +40,7 @@ t_env	*ft_export_find_name(t_env *var, t_env *env)
 			ft_export_edit(var, env);
 			return (head);
 		}
-		if (!env->next)
+		if (!env->next && new == 1)
 		{
 			env->next = elem_dup(var);
 			return (head);
@@ -67,7 +67,7 @@ int		ft_export_check_name(char *var)
 		if (var[i] != '\0')
 		{
 			if (ft_isdigit(var[i]) || var[i] == '=')
-				return (ft_put_error("not a valid identifier\n", var, 1));
+				return (ft_put_error("not a valid identifier", var, 1));
 			while (ft_isalnum(var[i]) || var[i] == '_')
 				i++;
 			if (var[i] == '\0')
@@ -76,7 +76,7 @@ int		ft_export_check_name(char *var)
 				return (1);
 			else if (ft_strncmp(&var[i], "+=", 2) == 0)
 				return (2);
-			return (ft_put_error("not a valid identifier\n", var, 1));
+			return (ft_put_error("not a valid identifier", var, 1));
 		}
 	}
 	return (1);
@@ -124,7 +124,7 @@ int		ft_export_core(t_all *all)
 	while (all->dir[i])
 	{
 		if (ft_export_check_name(all->dir[i]) >= 0)
-			all->env = ft_export_find_name(var_lst, all->env);
+			all->env = ft_export_find_name(var_lst, all->env, 1);
 		else
 			update_return(all, 1);
 		i++;
