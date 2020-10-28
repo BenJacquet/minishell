@@ -6,34 +6,16 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/04 14:09:45 by chgilber          #+#    #+#             */
-/*   Updated: 2020/10/26 18:47:51 by jabenjam         ###   ########.fr       */
+/*   Updated: 2020/10/28 18:53:35 by jabenjam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void		writenotfound(t_all *all)
-{
-	if (all->buff[0] == '\0')
-	{
-		update_return(all, 0);
-		all->countsmc--;
-		return ;
-	}
-	if (all->dir[0])
-	{
-		write(2, "minishell: ", 11);
-		write(2, all->dir[0], (!all->dir[0]) ? 0 : ft_strlen(all->dir[0]));
-		write(2, ": command not found\n", 21);
-	}
-	update_return(all, 127);
-	all->countsmc--;
-}
-
 int			letsgnl(t_all *all)
 {
 	g_freete = 0;
-	get_dir();
+	get_dir(all);
 	free(all->buff);
 	signal_manager(all);
 	all->i = get_next_line(0, &all->buff);

@@ -6,7 +6,7 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/06 16:15:04 by chgilber          #+#    #+#             */
-/*   Updated: 2020/10/27 15:51:33 by jabenjam         ###   ########.fr       */
+/*   Updated: 2020/10/28 18:57:11 by jabenjam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void		handle(int sig)
 			write(1, "\b\b  \b\b", 6);
 		write(1, "\n", 1);
 		if (g_builtin == 0)
-			get_dir();
+			get_dir_sig();
 		g_freete = 1;
 	}
 	else if (sig == SIGQUIT)
@@ -42,7 +42,7 @@ int			signal_manager(t_all *all)
 
 void		init_allbis(t_all *all, char **env, int ac, char **av)
 {
-	get_dir();
+	get_dir(all);
 	(void)ac;
 	(void)av;
 	g_freete = 0;
@@ -60,8 +60,10 @@ void		init_allbis(t_all *all, char **env, int ac, char **av)
 		write(1, "No Multilines\n", 14);
 	if ((all->env = ft_tab_to_list(env, 0)) == NULL)
 		new_env(all);
+	else
+		update_shlvl(all);
 	all->env_replaced = 0;
-	all->ret = new_elem("?=0");
+	all->ret = new_elem("?=0", 0);
 	all->red = 0;
 }
 
@@ -78,4 +80,6 @@ void		init_all(t_all *all, char **env, int ac, char **av)
 	all->xdir = ft_splitmini(all->pdir[0], '|');
 	(all->tube > 0 && all->countsmc > 1) ? crocofail(all, all->pdir, '|') : 0;
 	all->dir = ft_split(all->buff, ' ');
+	all->wd_backup = NULL;
+	all->wd_backup = getcwd(all->wd_backup, 0);
 }

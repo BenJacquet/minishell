@@ -6,11 +6,63 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/13 17:46:15 by jabenjam          #+#    #+#             */
-/*   Updated: 2020/10/27 19:39:24 by jabenjam         ###   ########.fr       */
+/*   Updated: 2020/10/28 18:31:58 by jabenjam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+
+/*
+**	MODE 0 : Si le dernier char est un '/'
+**	MODE 1 : Si la string contient un '/'
+*/
+
+int		slash(char	*str, int mode)
+{
+	int		i;
+
+	i = (mode == 0 ? ft_strlen(str) : 0);
+	if (i > 0 && mode == 0)
+	{
+		if (str[i - 1] == '/' || str[i - 1] == '.')
+			return (1);
+	}
+	else if (mode == 1)
+	{
+		while (str[i])
+		{
+			if (str[i] == '/')
+				return (1);
+			i++;
+		}
+	}
+	return (0);
+}
+
+int		get_error(t_all *all)
+{
+	if (ft_strcmp(all->dir[0], ".") == 0)
+	{
+		ft_put_error(
+		"filename argument required\n.: usage: . filename [arguments]",
+		all->dir[0], 1);
+		return (2);
+	}
+	if (errno == 13 && slash(all->dir[0], 0))
+	{
+		errno = 21;
+		return (-126);
+	}
+	else if (errno == 2 || errno == 13)
+	{
+		if (slash(all->dir[0], 1))
+			return (-127);
+		ft_put_error("command not found", all->dir[0], 1);
+		return (127);
+	}
+	return (-1);
+}
 
 int		run_exec(t_all *all)
 {
@@ -21,10 +73,14 @@ int		run_exec(t_all *all)
 	ret = 0;
 	status = 0;
 	envp = ft_list_to_tab(all->env, 0, 0);
-	update_shlvl(all);
 	status = execve(all->exec, all->dir, envp);
 	if (status == -1)
-		ft_put_error(strerror(errno), all->exec, 1);
+	{
+		ret = get_error(all);
+		if (ret < 0)
+			ft_put_error(strerror(errno), all->dir[0], 1);
+		update_return(all, ft_abs(ret));
+	}
 	free_tab(envp);
 	return (1);
 }

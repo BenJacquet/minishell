@@ -6,7 +6,7 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/16 16:27:13 by chgilber          #+#    #+#             */
-/*   Updated: 2020/10/12 16:34:44 by jabenjam         ###   ########.fr       */
+/*   Updated: 2020/10/28 18:17:09 by jabenjam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ typedef struct		s_list
 	void			*content;
 	struct s_list	*next;
 }					t_list;
+int					ft_abs(int nbr);
 int					ft_atoi(const char *str);
 void				ft_bzero(void *s, size_t n);
 void				*ft_calloc(size_t count, size_t size);

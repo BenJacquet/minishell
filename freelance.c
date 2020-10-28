@@ -6,7 +6,7 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/06 18:44:32 by chgilber          #+#    #+#             */
-/*   Updated: 2020/10/27 17:45:08 by jabenjam         ###   ########.fr       */
+/*   Updated: 2020/10/28 18:56:31 by jabenjam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,5 +58,7 @@ int		freelance(t_all *all, char **env)
 		free_tab(env);
 	if (all->xdir)
 		free_tab(all->xdir);
+	if (all->wd_backup)
+		free(all->wd_backup);
 	return (ret);
 }

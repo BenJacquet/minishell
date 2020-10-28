@@ -6,7 +6,7 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/04 16:18:54 by jabenjam          #+#    #+#             */
-/*   Updated: 2020/10/27 19:30:48 by jabenjam         ###   ########.fr       */
+/*   Updated: 2020/10/28 18:56:02 by jabenjam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ typedef struct	s_all
 	t_env		*ret;
 	int			*shouldi;
 	char		*buff;
+	char		*wd_backup;
 	char		*oldbuff;
 	char		**dir;
 	char		**pdir;
@@ -95,7 +96,8 @@ typedef struct	s_all
 */
 
 int				cnt(int i, t_all *all, int here);
-int				get_dir();
+int				get_dir(t_all *all);
+int				get_dir_sig(void);
 int				end(char *buff, t_all *all);
 int				cd(char **dir, t_all *all);
 int				check(char *buff, t_all *all);
@@ -132,10 +134,8 @@ int				signal_manager(t_all *all);
 int				letsgnl(t_all *all);
 int				multidir(t_all *all, char ***env, int fd[all->tube][2]);
 int				action(t_all *all, char ***env, int fd[all->tube][2]);
-void			writenotfound(t_all *all);
 int				tokentranslate(t_all *all);
 int				joinquotev2(t_all *all);
-
 
 /*
 ** -------------BEN------------------------------------------------------------
@@ -171,7 +171,7 @@ t_env			*ft_tab_to_list(char **tab, int erase);
 char			**ft_list_to_tab(t_env *lst, int mode, int erase);
 int				get_op(char *var);
 t_env			*elem_dup(t_env *elem);
-t_env			*new_elem(char *var);
+t_env			*new_elem(char *var, int free_);
 char			*ft_strjoin(char const *s1, char const *s2);
 char			*ft_strjoinf(char *s1, char *s2);
 int				ft_put_error(char *error, char *var, int mode);
@@ -213,5 +213,7 @@ int				env_command(t_all *all, char **env, int fd[all->tube][2]);
 int				error_exec(t_all *all);
 int				fork_or_not(t_all *all, char **env, int fd[all->tube][2]);
 void			new_env(t_all *all);
+int				get_error(t_all *all);
+int				slash(char	*str, int mode);
 
 #endif

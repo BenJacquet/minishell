@@ -6,7 +6,7 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/05 15:21:37 by jabenjam          #+#    #+#             */
-/*   Updated: 2020/10/27 19:20:31 by jabenjam         ###   ########.fr       */
+/*   Updated: 2020/10/28 18:33:35 by jabenjam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,8 +70,7 @@ int		fork_command(t_all *all, char **env, int fd[all->tube][2])
 	if ((pid = fork()) == 0)
 	{
 		io_manager_dup_replace(all, fd, 1);
-		if (!parse_command2(all))
-			writenotfound(all);
+		parse_command2(all);
 		io_manager_dup_restore(all);
 		exit(freelance(all, env));
 	}
@@ -93,8 +92,7 @@ int		run_command(t_all *all, char **env, int fd[all->tube][2])
 		handle_redirections(all);
 	all->dir = convert_tokens_tab(all->toks);
 	io_manager_dup_replace(all, fd, 0);
-	if (!parse_command2(all))
-		writenotfound(all);
+	parse_command2(all);
 	io_manager_dup_restore(all);
 	if (all->tube)
 		pipes_parent(all, fd);

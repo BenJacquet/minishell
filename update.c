@@ -6,7 +6,7 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/12 16:50:19 by jabenjam          #+#    #+#             */
-/*   Updated: 2020/10/27 20:05:58 by jabenjam         ###   ########.fr       */
+/*   Updated: 2020/10/28 16:32:42 by jabenjam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,12 +43,12 @@ int		update_pwd(t_all *all, int old, int new)
 	if (old == 1)
 	{
 		path = ft_getenv(all, "PWD", 0);
-		pwd = new_elem(ft_strjoin("OLDPWD=", path));
+		pwd = new_elem(ft_strjoin("OLDPWD=", path), 1);
 	}
 	else
 	{
 		path = getcwd(path, 0);
-		pwd = new_elem(ft_strjoin("PWD=", path));
+		pwd = new_elem(ft_strjoin("PWD=", path), 1);
 	}
 		ft_export_find_name(pwd, all->env, new);
 	free(path);
@@ -60,11 +60,11 @@ void		new_env(t_all *all)
 {
 	t_env	*var;
 
-	var = new_elem("_=/usr/bin/env");
-	all->env = new_elem("SHLVL=1");
+	var = new_elem("_=/usr/bin/env", 0);
+	all->env = new_elem("SHLVL=1", 0);
 	ft_export_find_name(var, all->env, 1);
 	free_var(var);
-	var = new_elem("OLDPWD");
+	var = new_elem("OLDPWD", 0);
 	ft_export_find_name(var, all->env, 1);
 	free_var(var);
 	update_pwd(all, 0, 1);
@@ -72,25 +72,16 @@ void		new_env(t_all *all)
 
 void		update_shlvl(t_all *all)
 {
-	char	*name;
 	char	*value;
-	int		len;
+	t_env	*var;
+	int		i;
 
-	len = ft_strlen(all->exec) - 1;
-	name = NULL;
 	value = ft_getenv(all, "SHLVL", 0);
-	while (len > 0 && all->exec[len] != '/')
-	{
-		len--;
-		name = &all->exec[len + 1];
-	}
-/*	if (ft_strcmp(name, "bash") == 0 || ft_strcmp(name, "minishell") == 0 ||
-		ft_strcmp(name, "sh") == 0 || ft_strcmp(name, "zsh") == 0)
-	{
-		if (value[0])
-			
-		else
-			
-	}*/
+	i = ft_atoi(value);
 	free(value);
+	value = ft_itoa(i + 1);
+	var = new_elem(ft_strjoin("SHLVL=", value), 1);
+	ft_export_find_name(var, all->env, 1);
+	free(value);
+	free(var);
 }
