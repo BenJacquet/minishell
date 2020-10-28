@@ -6,7 +6,7 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/20 14:38:32 by chgilber          #+#    #+#             */
-/*   Updated: 2020/10/25 18:09:52 by chgilber         ###   ########.fr       */
+/*   Updated: 2020/10/28 19:57:00 by chgilber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ int		croco(t_all *all, char *buff, int len, int inc)
 	int	i;
 
 	i = 2;
+	all->kotey[inc] = 2;
 	while (buff[i] && i < len)
 	{
 		if (buff[i] == '<' || buff[i] == '>')
@@ -78,12 +79,15 @@ int		initcroco(t_all *all, int here)
 	i = 0;
 	len = cnt(i, all, here);
 	all->shouldi = malloc(sizeof(int *) * (len + 1));
+	all->kotey = malloc(sizeof(int *) * (len + 1));
 	while (i < len)
 	{
 		all->shouldi[i] = 1;
+		all->kotey[i] = 1;
 		i++;
 	}
 	all->shouldi[i] = 0;
+	all->kotey[i] = 0;
 	return (0);
 }
 

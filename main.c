@@ -6,7 +6,7 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/04 14:09:45 by chgilber          #+#    #+#             */
-/*   Updated: 2020/10/28 18:53:35 by jabenjam         ###   ########.fr       */
+/*   Updated: 2020/10/28 20:00:03 by chgilber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,9 @@ int			letsgnl(t_all *all)
 	g_freete = 0;
 	get_dir(all);
 	free(all->buff);
-	signal_manager(all);
+	signal_manager();
 	all->i = get_next_line(0, &all->buff);
-	signal_manager(all);
+	signal_manager();
 	crontold(all);
 	if (checkquote(all->buff) == 1)
 		write(1, "No Multilines\n", 14);
@@ -38,22 +38,15 @@ int			letsgnl(t_all *all)
 	return (0);
 }
 
-int			tokentranslate(t_all *all)
+int			tokentranslate(t_all *all, char **dir)
 {
-	int		i;
 	int		index;
 
-	i = counttoken(all);
-	all->dol = malloc(sizeof(int) * (i + 1));
-	all->igno = 0;
+	all->dolnbr = counttoken(all, dir);
 	index = 0;
-	while (index < i)
-		all->dol[index++] = -1;
-	all->dol[index] = -666;
-	index = 0;
-	while (index < i)
+	while (index < all->dolnbr)
 	{
-		dolar(all);
+		dolar(all, &*dir);
 		index++;
 	}
 	return (1);
@@ -65,7 +58,6 @@ int			gestionpipe(t_all *all, char ***env)
 
 	free_tab(all->xdir);
 	all->countsmc = checkquote(all->buff) ? 0 : all->countsmc;
-	tokentranslate(all);
 	all->xdir = ft_splitmini(all->pdir[all->data - all->countsmc], '|');
 	if (all->tube)
 		open_pipes(all, fd);
@@ -88,7 +80,7 @@ int			main(int ac, char **av, char **env)
 	init_all(&all, env, ac, av);
 	while (check(all.pdir[all.data - all.countsmc], &all) == 1 && all.i > 0)
 	{
-		signal_manager(&all);
+		signal_manager();
 		g_freete = 0;
 		here = all.data - all.countsmc;
 		all.tube = (g_freete == 0 && all.pdir[here] && all.countsmc > 0) ?

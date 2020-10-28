@@ -6,7 +6,7 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/04 16:18:54 by jabenjam          #+#    #+#             */
-/*   Updated: 2020/10/28 18:56:02 by jabenjam         ###   ########.fr       */
+/*   Updated: 2020/10/28 19:40:54 by chgilber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@
 
 int				g_builtin;
 int				g_freete;
-int				g_gnl;
 
 typedef	struct	s_red
 {
@@ -64,6 +63,8 @@ typedef struct	s_all
 	t_env		*env;
 	t_env		*ret;
 	int			*shouldi;
+	int			*kotey;
+	int			dolnbr;
 	char		*buff;
 	char		*wd_backup;
 	char		*oldbuff;
@@ -71,9 +72,9 @@ typedef struct	s_all
 	char		**pdir;
 	char		**xdir;
 	char		*exec;
+	int			pid;
+	int			retpid;
 	int			here;
-	int			*dol;
-	int			igno;
 	int			i;
 	int			j;
 	int			data;
@@ -113,8 +114,8 @@ int				checksquote(char *buff);
 char			*ft_strncpy(char *dest, const char *src, int dstsize);
 int				pipecount(t_all all, char *str, char c);
 char			**ft_splitmini(char *s, char c);
-int				counttoken(t_all *all);
-void			dolar(t_all *all);
+int				counttoken(t_all *all, char **dir);
+void			dolar(t_all *all, char **dir);
 int				join(t_all *all, char *buff, int inc, char quote);
 int				silence(char *buff);
 int				ifjoin(t_all *all, char *buff, int *inc, char quote);
@@ -130,11 +131,11 @@ int				parse_command(t_all *all, char **env, int fd_p[all->tube][2]);
 int				parse_command2(t_all *all);
 char			*ft_strncat(char *s1, char *s2, int len);
 void			init_all(t_all *all, char **env, int ac, char **av);
-int				signal_manager(t_all *all);
+int				signal_manager();
 int				letsgnl(t_all *all);
 int				multidir(t_all *all, char ***env, int fd[all->tube][2]);
 int				action(t_all *all, char ***env, int fd[all->tube][2]);
-int				tokentranslate(t_all *all);
+int				tokentranslate(t_all *all, char **dir);
 int				joinquotev2(t_all *all);
 
 /*

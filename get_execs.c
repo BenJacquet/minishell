@@ -6,7 +6,7 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/15 15:23:06 by jabenjam          #+#    #+#             */
-/*   Updated: 2020/10/27 19:14:12 by jabenjam         ###   ########.fr       */
+/*   Updated: 2020/10/28 19:45:18 by chgilber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,24 +20,6 @@ char	*make_exec(t_all *all, char *path)
 	exec = ft_strjoinf(exec, "/");
 	exec = ft_strjoinf(exec, all->dir[all->i - 1]);
 	return (exec);
-}
-
-char	*is_exec(t_all *all)
-{
-	if (all->dir)
-	{
-		if (ft_strncmp(all->dir[0], ".", 1) == 0 ||
-			ft_strncmp(all->dir[0], "/", 1) == 0)
-		{
-			if (error_exec(all) == -1)
-				return (NULL);
-			else
-				return (all->dir[0]);
-		}
-		else
-			return (NULL);
-	}
-	return (NULL);
 }
 
 char	*find_exec(t_all *all, DIR *dir, char *path)

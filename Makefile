@@ -6,7 +6,7 @@
 #    By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/10/16 11:50:11 by chgilber          #+#    #+#              #
-#    Updated: 2020/10/26 15:22:08 by jabenjam         ###   ########.fr        #
+#    Updated: 2020/10/28 19:55:35 by chgilber         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,6 @@ SRCS =		cd.c\
 			env_display.c\
 			env_export.c\
 			env_unset.c\
-			error_exec.c\
 			freelance.c\
 			ft_splitmini.c\
 			ft_strjoin.c\
@@ -51,10 +50,12 @@ SRCS =		cd.c\
 			tab.c\
 			token.c\
 			update.c\
+			fork.c
 
 SRCSLIB =	libft/ft_split.c\
 			libft/ft_strlen.c\
 			libft/ft_strncmp.c\
+			libft/ft_abs.c
 
 INCLUDES = .
 

@@ -6,7 +6,7 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/06 16:15:04 by chgilber          #+#    #+#             */
-/*   Updated: 2020/10/28 18:57:11 by jabenjam         ###   ########.fr       */
+/*   Updated: 2020/10/28 19:40:50 by chgilber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,9 +32,8 @@ void		handle(int sig)
 	}
 }
 
-int			signal_manager(t_all *all)
+int			signal_manager()
 {
-	all->i = all->i;
 	(signal(SIGQUIT, &handle));
 	(signal(SIGINT, &handle));
 	return (0);
@@ -48,7 +47,7 @@ void		init_allbis(t_all *all, char **env, int ac, char **av)
 	g_freete = 0;
 	g_builtin = 0;
 	all->here = 0;
-	signal_manager(all);
+	signal_manager();
 	all->toks = NULL;
 	all->reds = NULL;
 	all->fds[0] = STDIN_FILENO;

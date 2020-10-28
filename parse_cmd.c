@@ -6,7 +6,7 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/05 15:21:37 by jabenjam          #+#    #+#             */
-/*   Updated: 2020/10/28 18:33:35 by jabenjam         ###   ########.fr       */
+/*   Updated: 2020/10/28 19:26:07 by chgilber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,34 +57,6 @@ int		parse_command2(t_all *all)
 	return (0);
 }
 
-int		fork_command(t_all *all, char **env, int fd[all->tube][2])
-{
-	int		pid;
-	int		ret;
-
-	pid = 0;
-	all->toks = convert_tokens_lst(all->dir, all->shouldi);
-	if (all->countsmc)
-		handle_redirections(all);
-	all->dir = convert_tokens_tab(all->toks);
-	if ((pid = fork()) == 0)
-	{
-		io_manager_dup_replace(all, fd, 1);
-		parse_command2(all);
-		io_manager_dup_restore(all);
-		exit(freelance(all, env));
-	}
-	else
-	{
-		waitpid(pid, &ret, 0);
-		update_return(all, ret / 256);
-		if (all->tube)
-			pipes_parent(all, fd);
-		reset_fds(all);
-	}
-	return (0);
-}
-
 int		run_command(t_all *all, char **env, int fd[all->tube][2])
 {
 	all->toks = convert_tokens_lst(all->dir, all->shouldi);
@@ -100,23 +72,6 @@ int		run_command(t_all *all, char **env, int fd[all->tube][2])
 	return (0);
 }
 
-int		fork_or_not(t_all *all, char **env, int fd[all->tube][2])
-{
-	if (ft_strcmp(all->dir[0], "unset") == 0 ||
-		(ft_strcmp(all->dir[0], "export") == 0 && ft_tablen(all->dir) > 1)||
-		ft_strcmp(all->dir[0], "cd") == 0)
-	{
-		write(2, "RUN_COMMAND\n", 12);
-		return (run_command(all, env, fd));
-	}
-	else
-	{
-		write(2, "FORK_COMMAND\n", 13);
-		return (fork_command(all, env, fd));
-	}
-	return (0);
-}
-
 int		parse_command(t_all *all, char **env, int fd[all->tube][2])
 {
 	if (all->pdir[all->data - all->countsmc] &&
@@ -124,6 +79,7 @@ int		parse_command(t_all *all, char **env, int fd[all->tube][2])
 	{
 		if (!all->tube)
 			joinquote(all);
+		tokentranslate(all, &*all->dir);
 		if (!all->dir[0] || ft_strlen(all->dir[0]) == 0)
 			return (1);
 		return (fork_or_not(all, env, fd));
