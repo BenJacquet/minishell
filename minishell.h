@@ -6,7 +6,7 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/04 16:18:54 by jabenjam          #+#    #+#             */
-/*   Updated: 2020/10/26 20:01:38 by jabenjam         ###   ########.fr       */
+/*   Updated: 2020/10/27 19:30:48 by jabenjam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,7 +148,7 @@ char			*make_exec(t_all *all, char *path);
 int				run_command(t_all *all, char **env, int fd[all->tube][2]);
 int				fork_command(t_all *all, char **env, int fd[all->tube][2]);
 int				is_binary(t_all *all);
-int				run_exec(t_all *all, char *exec, char **args);
+int				run_exec(t_all *all);
 char			*ft_getenv(t_all *all, char *name, int mode);
 char			*ft_getenv2(char *name, t_env *current, int mode);
 void			ft_putenv(t_env *env);
@@ -156,7 +156,7 @@ int				ft_export_core(t_all *all);
 int				ft_export_null(t_env *env);
 void			ft_export_edit(t_env *var, t_env *env);
 int				ft_export_check_name(char *var);
-t_env			*ft_export_find_name(t_env *var, t_env *env);
+t_env			*ft_export_find_name(t_env *var, t_env *env, int unset);
 void			ft_unset_core(t_all *all);
 int				ft_unset_check_name(char *var);
 t_env			*ft_unset_find_name(char *var, t_env *current);
@@ -206,10 +206,12 @@ void			free_vars(t_env	*vars);
 void			free_tokens(t_tok *toks);
 int				update_return(t_all *all, int new);
 char			**update_env(t_all *all, char **old);
-int				update_pwd(t_all *all, int old);
+int				update_pwd(t_all *all, int old, int new);
+void			update_shlvl(t_all *all);
 int				crocodir(t_all *all);
 int				env_command(t_all *all, char **env, int fd[all->tube][2]);
 int				error_exec(t_all *all);
 int				fork_or_not(t_all *all, char **env, int fd[all->tube][2]);
+void			new_env(t_all *all);
 
 #endif
