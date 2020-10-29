@@ -52,7 +52,7 @@ int			tokentranslate(t_all *all, char **dir)
 	return (1);
 }
 
-int			gestionpipe(t_all *all, char ***env)
+int			gestionpipe(t_all *all)
 {
 	int fd[all->tube][2];
 
@@ -62,11 +62,10 @@ int			gestionpipe(t_all *all, char ***env)
 	if (all->tube)
 		open_pipes(all, fd);
 	if (all->tube > 0)
-		multidir(all, env, fd);
+		multidir(all, fd);
 	else
 	{
-		action(all, env, fd);
-		*env = update_env(all, *env);
+		action(all, fd);
 		all->countsmc--;
 	}
 	return (0);
@@ -85,9 +84,9 @@ int			main(int ac, char **av, char **env)
 		here = all.data - all.countsmc;
 		all.tube = (g_freete == 0 && all.pdir[here] && all.countsmc > 0) ?
 			pipecount(all, all.pdir[here], '|') : 0;
-		gestionpipe(&all, &env);
+		gestionpipe(&all);
 		if (all.countsmc < 1)
 			letsgnl(&all);
 	}
-	return (freelance(&all, env));
+	return (freelance(&all));
 }

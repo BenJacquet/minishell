@@ -1,9 +1,5 @@
-- parsing de base -> si des parentheses fermees afficher "syntax error near unexpected token" et set ? a 258
-- get_path() ou get_exec() -> verifier le sd->d_type pour chdir si c'est un dossier et executer si un executable
-- a l'ouverture d'un nouveau minishell, update SHLVL
+- Heap-buffer-overflow si " " sur entree standard
 - general -> tester "cat < ."
-- echo -> fix les multiples -n (echo -n -n -n -n plop)
-- ctrl-D a faire marcher apres un ctrl-C
 
 LEAKS :
 - JOIN

@@ -6,7 +6,7 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/13 17:46:15 by jabenjam          #+#    #+#             */
-/*   Updated: 2020/10/29 11:34:56 by chgilber         ###   ########.fr       */
+/*   Updated: 2020/10/28 19:57:18 by chgilber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,32 +85,30 @@ int		run_exec(t_all *all)
 	return (1);
 }
 
-int		action(t_all *all, char ***env, int fd[all->tube][2])
+int		action(t_all *all, int fd[all->tube][2])
 {
 	if (all->countsmc > 0)
 	{
-		parse_command(all, *env, fd);
-		*env = update_env(all, *env);
+		parse_command(all, fd);
 		g_builtin = 0;
 	}
 	return (0);
 }
 
-int		multidir(t_all *all, char ***env, int fd[all->tube][2])
+int		multidir(t_all *all, int fd[all->tube][2])
 {
 	all->here = 0;
 	while (all->here <= all->tube)
 	{
 		joinquotev2(all);
 		tokentranslate(all, &*all->xdir);
-		free(all->kotey);
 		if (all->here == 0)
 			all->around = 1;
 		else if (all->here == all->tube)
 			all->around = 0;
 		else
 			all->around = 2;
-		action(all, env, fd);
+		action(all, fd);
 		all->here++;
 	}
 	all->countsmc--;

@@ -37,7 +37,7 @@ char	*ft_data_to_string(t_env *elem, int mode)
 	i = 0;
 	j = 0;
 	len = ft_strlen(elem->name) + ft_strlen(elem->value) + 1;
-	if (!(new = calloc(sizeof(char), len + 1 + 2)))
+	if (!(new = malloc(sizeof(char) * (len + 1 + 2))))
 		return (NULL);
 	while (elem->name[j] != '\0')
 		new[i++] = elem->name[j++];

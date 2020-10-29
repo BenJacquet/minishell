@@ -80,7 +80,6 @@ char	**convert_tokens_tab(t_tok *lst)
 		current = current->next;
 	}
 	tab[i] = NULL;
-	current = lst;
 	free_tokens(lst);
 	return (tab);
 }
@@ -90,12 +89,10 @@ t_tok	*convert_tokens_lst(char **cmd, int *whole)
 	int		i;
 	t_tok	*head;
 	t_tok	*current;
-	t_tok	*previous;
 
 	i = 0;
 	head = NULL;
 	current = NULL;
-	previous = NULL;
 	if (cmd)
 	{
 		current = new_token(cmd[i], NULL, whole[i]);

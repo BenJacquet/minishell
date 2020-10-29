@@ -41,7 +41,6 @@ int		joinquotev2(t_all *all)
 {
 	int	i;
 	int	inc;
-	int	here;
 
 	i = 0;
 	inc = 0;

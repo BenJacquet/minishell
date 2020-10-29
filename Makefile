@@ -22,6 +22,7 @@ SRCS =		cd.c\
 			env_display.c\
 			env_export.c\
 			env_unset.c\
+			fork.c\
 			freelance.c\
 			ft_splitmini.c\
 			ft_strjoin.c\
@@ -50,7 +51,6 @@ SRCS =		cd.c\
 			tab.c\
 			token.c\
 			update.c\
-			fork.c
 
 SRCSLIB =	libft/ft_split.c\
 			libft/ft_strlen.c\
@@ -97,10 +97,6 @@ OBJS = $(SRCS:.c=.o)
 OBJS_LIB = $(SRCSLIB:.c=.o)
 
 all : $(NAME)
-
-balek : $(eval CFLAGS=-fsanitize=address) $(NAME)
-
-bonus : $(NAME_BONUS)
 
 -include $(DPDCS)
 

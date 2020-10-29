@@ -61,7 +61,6 @@ void		init_allbis(t_all *all, char **env, int ac, char **av)
 		new_env(all);
 	else
 		update_shlvl(all);
-	all->env_replaced = 0;
 	all->ret = new_elem("?=0", 0);
 	all->red = 0;
 }

@@ -34,7 +34,7 @@ int		freedir(char **dir)
 	return (0);
 }
 
-int		freelance(t_all *all, char **env)
+int		freelance(t_all *all)
 {
 	int ret;
 
@@ -54,8 +54,6 @@ int		freelance(t_all *all, char **env)
 		free_tab(all->pdir);
 	if (all->env)
 		free_vars(all->env);
-	if (all->env_replaced)
-		free_tab(env);
 	if (all->xdir)
 		free_tab(all->xdir);
 	if (all->wd_backup)

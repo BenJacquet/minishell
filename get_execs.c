@@ -67,6 +67,7 @@ char	*find_dir(t_all *all, char **path, DIR **dir)
 			i++;
 		}
 	}
+	free(dir);
 	return (exec);
 }
 
@@ -80,13 +81,9 @@ char	*get_path(t_all *all)
 	dir = NULL;
 	if (!all->dir || !all->dir[0])
 		return (NULL);
-	/*if (all->dir && all->dir[0] && (all->dir[0][0] == '.' ||
-									all->dir[0][0] == '/'))
-		return (is_exec(all));*/
 	path = ft_splitf(ft_getenv(all, "PATH", 0), ':');
 	if ((exec = find_dir(all, path, dir)) == NULL)
 		exec = ft_strdup(all->dir[0]);
-	free(dir);
 	free_tab(path);
 	return (exec);
 }

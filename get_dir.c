@@ -32,6 +32,8 @@ int	get_dir_sig(void)
 	int		i;
 	int		a;
 
+	path = NULL;
+	printf("signal_get_dir\n");
 	path = getcwd(path, 0);
 	i = 0;
 	a = 0;
@@ -59,9 +61,12 @@ int	get_dir(t_all *all)
 	int		a;
 
 	path = NULL;
+	//printf("vanilla_get_dir\n");
 	path = getcwd(path, 0);
+	//printf("path=[%s]\n", path);
 	if (!path)
 		path = ft_strdup(all->wd_backup);
+	//printf("path=[%s]\n", path);
 	i = 0;
 	a = 0;
 	while (path[i])

@@ -43,10 +43,7 @@ void	free_tab(char **tab)
 	if (tab)
 	{
 		while (tab[i])
-		{
 			free(tab[i++]);
-			tab[i] = NULL;
-		}
 		free(tab);
 		tab = NULL;
 	}

@@ -19,7 +19,7 @@ void	ft_export_edit(t_env *var, t_env *env)
 		if (var->op == 1)
 		{
 			free(env->value);
-			env->value = ft_strtrim(ft_strdup(var->value), "\'\"");
+			env->value = ft_strtrimf(ft_strdup(var->value), "\'\"");
 		}
 		else if (var->op == 2)
 			env->value = ft_strjoinf(env->value,

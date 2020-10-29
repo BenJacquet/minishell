@@ -74,12 +74,9 @@ char	*ft_getenv2(char *name, t_env *current, int mode)
 
 char	*ft_getenv(t_all *all, char *name, int mode)
 {
-	int		i;
-	int		j;
 	char	*value;
 	t_env	*current;
 
-	i = 0;
 	value = NULL;
 	if (all->env)
 		current = all->env;
@@ -89,7 +86,6 @@ char	*ft_getenv(t_all *all, char *name, int mode)
 		return (ft_strdup(all->ret->value));
 	while (current != NULL)
 	{
-		j = 0;
 		if (!(ft_strcmp(name, current->name)))
 		{
 			value = ft_getenv2(name, current, mode);

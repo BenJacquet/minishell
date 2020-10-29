@@ -60,6 +60,24 @@ t_env	*elem_dup(t_env *elem)
 	return (new);
 }
 
+t_env	*allocate_elem(t_env *elem, char *var)
+{
+	if (!(elem = malloc(sizeof(t_env) + 1)))
+		return (0);
+	if (!(elem->name = malloc(sizeof(char) * ft_varlen(var, 0) + 1)))
+	{
+		free(elem);
+		return (NULL);
+	}
+	if (!(elem->value = malloc(sizeof(char) * ft_varlen(var, 1) + 1)))
+	{
+		free(elem->name);
+		free(elem);
+		return (NULL);
+	}
+	return (elem);
+}
+
 t_env	*new_elem(char *var, int free_)
 {
 	int		i;
@@ -68,8 +86,8 @@ t_env	*new_elem(char *var, int free_)
 
 	i = 0;
 	j = 0;
-	if (!(elem = malloc(sizeof(t_env) + 1)) ||
-		!(elem->name = malloc(sizeof(char) * ft_varlen(var, 0) + 1)))
+	elem = NULL;
+	if (!(elem = allocate_elem(elem, var)))
 		return (NULL);
 	while (var[i] != '\0' && var[i] != '=' && var[i] != '+')
 	{
@@ -78,8 +96,6 @@ t_env	*new_elem(char *var, int free_)
 	}
 	elem->name[i] = '\0';
 	i += (elem->op = get_op(var + i));
-	if (!(elem->value = malloc(sizeof(char) * ft_varlen(var, 1) + 1)))
-		return (NULL);
 	while (var[i] != '\0')
 		elem->value[j++] = var[i++];
 	elem->value[j] = '\0';

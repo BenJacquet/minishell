@@ -15,10 +15,8 @@
 char	*ft_strncpy(char *dest, const char *src, int dstsize)
 {
 	int	a;
-	int	i;
 
 	a = 0;
-	i = 0;
 	if (!dest || !src)
 		return (NULL);
 	if (dstsize > 0)

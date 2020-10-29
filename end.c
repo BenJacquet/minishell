@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-int		end2(char *buff, t_all *all, char **arg)
+int		end2(t_all *all, char **arg)
 {
 	free_tab(arg);
 	write(2, "minishell: exit: too many arguments\n", 36);
@@ -28,7 +28,7 @@ int		end(char *buff, t_all *all)
 	i = 0;
 	arg = ft_split(buff, ' ');
 	if (arg[2] && ft_isdigit(arg[1][i]) == 1)
-		return (end2(buff, all, arg));
+		return (end2(all, arg));
 	if (arg[1])
 	{
 		while (arg[1][i] && ft_isdigit(arg[1][i]) == 1)
