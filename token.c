@@ -6,7 +6,7 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/12 15:52:23 by chgilber          #+#    #+#             */
-/*   Updated: 2020/10/29 11:07:53 by chgilber         ###   ########.fr       */
+/*   Updated: 2020/10/29 18:06:35 by chgilber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,6 +107,13 @@ void	dolar(t_all *all, char **dir)
 	while (dir[j] && ft_strlen(dir[j]) > 0)
 	{
 		i = 0;
+		if (all->kotey[j] == 3)
+		{
+			if	(ft_tablen(dir) < j + 1)
+				j++;
+			else
+				break ;
+		}
 		all->pipe = (all->kotey[j] == 2) ? 1 : 0;
 		while (dir[j][i])
 		{
