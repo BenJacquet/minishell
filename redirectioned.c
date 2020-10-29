@@ -6,7 +6,7 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/20 14:38:32 by chgilber          #+#    #+#             */
-/*   Updated: 2020/10/28 19:57:00 by chgilber         ###   ########.fr       */
+/*   Updated: 2020/10/29 11:07:15 by chgilber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,7 @@ int		initcroco(t_all *all, int here)
 
 	i = 0;
 	len = cnt(i, all, here);
+	printf(" here = %d\n", here);
 	all->shouldi = malloc(sizeof(int *) * (len + 1));
 	all->kotey = malloc(sizeof(int *) * (len + 1));
 	while (i < len)
@@ -91,6 +92,7 @@ int		initcroco(t_all *all, int here)
 	return (0);
 }
 
+
 int		crocodir(t_all *all)
 {
 	int len;
@@ -99,8 +101,14 @@ int		crocodir(t_all *all)
 	i = 0;
 	len = ft_tablen(all->dir);
 	all->shouldi = malloc(sizeof(int *) * (len + 1));
+	all->kotey = malloc(sizeof(int *) * (len + 1));
 	while (i < len)
-		all->shouldi[i++] = 1;
+	{
+		all->shouldi[i] = 1;
+		all->kotey[i] = 1;
+		i++;
+	}
 	all->shouldi[i] = 0;
+	all->kotey[i] = 0;
 	return (0);
 }
