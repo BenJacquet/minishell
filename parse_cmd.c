@@ -6,7 +6,7 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/05 15:21:37 by jabenjam          #+#    #+#             */
-/*   Updated: 2020/10/28 19:26:07 by chgilber         ###   ########.fr       */
+/*   Updated: 2020/10/29 11:49:14 by chgilber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ int		parse_command2(t_all *all)
 int		run_command(t_all *all, char **env, int fd[all->tube][2])
 {
 	all->toks = convert_tokens_lst(all->dir, all->shouldi);
+	free(all->shouldi);
 	if (all->countsmc)
 		handle_redirections(all);
 	all->dir = convert_tokens_tab(all->toks);

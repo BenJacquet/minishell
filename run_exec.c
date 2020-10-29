@@ -6,7 +6,7 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/13 17:46:15 by jabenjam          #+#    #+#             */
-/*   Updated: 2020/10/28 19:57:18 by chgilber         ###   ########.fr       */
+/*   Updated: 2020/10/29 11:34:56 by chgilber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,6 +103,7 @@ int		multidir(t_all *all, char ***env, int fd[all->tube][2])
 	{
 		joinquotev2(all);
 		tokentranslate(all, &*all->xdir);
+		free(all->kotey);
 		if (all->here == 0)
 			all->around = 1;
 		else if (all->here == all->tube)

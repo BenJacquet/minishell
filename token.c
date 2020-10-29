@@ -6,7 +6,7 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/12 15:52:23 by chgilber          #+#    #+#             */
-/*   Updated: 2020/10/28 20:05:19 by chgilber         ###   ########.fr       */
+/*   Updated: 2020/10/29 11:07:53 by chgilber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,13 +104,10 @@ void	dolar(t_all *all, char **dir)
 
 	tmp[3] = NULL;
 	j = 0;
-	printf("dir[%d] = [%s]\n" , j, dir[j]);
 	while (dir[j] && ft_strlen(dir[j]) > 0)
 	{
 		i = 0;
-		printf("dir[%d] = [%s]\n" , j, dir[j]);
 		all->pipe = (all->kotey[j] == 2) ? 1 : 0;
-		printf("dir[%d] = [%s]\n" , j, dir[j]);
 		while (dir[j][i])
 		{
 			skipsquot(&all->pipe, &i, dir[j]);
@@ -119,7 +116,6 @@ void	dolar(t_all *all, char **dir)
 				i = nicedolbro(all, i, j, &*tmp, dir);
 				free(dir[j]);
 				dir[j] = ft_strdup(tmp[3]);
-				printf("afterdir[%d][%d] = [%s]\n" , j, i, dir[j]);
 				free(tmp[3]);
 				break ;
 			}
