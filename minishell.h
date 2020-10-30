@@ -56,6 +56,7 @@ typedef struct	s_env
 	char		*value;
 	int			op;
 	void		*next;
+	int			godmode;
 }				t_env;
 
 typedef struct	s_all
@@ -211,5 +212,6 @@ int				get_error(t_all *all);
 int				slash(char	*str, int mode);
 int				commands(t_all *all);
 void			update_wd(t_all *all, char *path);
+int				ft_envlen(t_env *env);
 
 #endif

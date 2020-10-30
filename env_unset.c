@@ -12,6 +12,19 @@
 
 #include "minishell.h"
 
+int		ft_envlen(t_env *env)
+{
+	int		i;
+
+	i = 0;
+	while (env)
+	{
+		i++;
+		env = env->next;
+	}
+	return (i);
+}
+
 t_env	*ft_unset_find_name(char *var, t_env *current)
 {
 	t_env	*backup;
@@ -19,7 +32,7 @@ t_env	*ft_unset_find_name(char *var, t_env *current)
 
 	head = current;
 	backup = current;
-	if (ft_strcmp(var, current->name) == 0)
+	if (ft_strcmp(var, current->name) == 0 && !current->godmode)
 	{
 		if (current->next)
 			backup = current->next;
@@ -29,7 +42,7 @@ t_env	*ft_unset_find_name(char *var, t_env *current)
 	while (current)
 	{
 		backup = (current->next ? current->next : current);
-		if (ft_strcmp(var, backup->name) == 0)
+		if (ft_strcmp(var, backup->name) == 0 && !backup->godmode)
 		{
 			current->next = backup->next;
 			free_var(backup);

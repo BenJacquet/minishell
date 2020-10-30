@@ -60,7 +60,10 @@ void		init_allbis(t_all *all, char **env, int ac, char **av)
 	if ((all->env = ft_tab_to_list(env, 0)) == NULL)
 		new_env(all);
 	else
+	{
 		update_shlvl(all);
+		update_pwd(all, 1, 1);
+	}
 	all->ret = new_elem("?=0", 0);
 	all->red = 0;
 }

@@ -28,11 +28,15 @@ void	free_tokens(t_tok *toks)
 
 void	free_var(t_env *var)
 {
-	if (var->name)
-		free(var->name);
-	if (var->value)
-		free(var->value);
-	free(var);
+	if (var)
+	{
+		if (var->name)
+			free(var->name);
+		if (var->value)
+			free(var->value);
+		free(var);
+		var = NULL;
+	}
 }
 
 void	free_vars(t_env *vars)

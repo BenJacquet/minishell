@@ -54,6 +54,7 @@ t_env	*elem_dup(t_env *elem)
 	if (elem)
 	{
 		new->name = ft_strdup(elem->name);
+		new->godmode = (ft_strcmp(elem->name, "_") == 0 ? 1 : 0);
 		new->op = elem->op;
 		new->value = ft_strdup(elem->value);
 	}
@@ -95,6 +96,7 @@ t_env	*new_elem(char *var, int free_)
 		i++;
 	}
 	elem->name[i] = '\0';
+	elem->godmode = (ft_strcmp(elem->name, "_") == 0 ? 1 : 0);
 	i += (elem->op = get_op(var + i));
 	while (var[i] != '\0')
 		elem->value[j++] = var[i++];

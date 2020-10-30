@@ -19,7 +19,7 @@ int	pwd(char *buff)
 	path = NULL;
 	(void)buff;
 	path = getcwd(path, 0);
-	write(1, path, strlen(path));
+	write(1, path, ft_strlen(path));
 	write(1, "\n", 1);
 	free(path);
 	return (0);
@@ -33,7 +33,6 @@ int	get_dir_sig(void)
 	int		a;
 
 	path = NULL;
-	printf("signal_get_dir\n");
 	path = getcwd(path, 0);
 	i = 0;
 	a = 0;
@@ -45,7 +44,7 @@ int	get_dir_sig(void)
 	}
 	if (path[a])
 	{
-		len = strlen(path + a);
+		len = ft_strlen(path + a);
 		write(1, path + a, len);
 		write(1, " : ", 3);
 		free(path);
@@ -77,7 +76,7 @@ int	get_dir(t_all *all)
 	}
 	if (path[a])
 	{
-		len = strlen(path + a);
+		len = ft_strlen(path + a);
 		write(1, path + a, len);
 		write(1, " : ", 3);
 		free(path);

@@ -24,7 +24,7 @@ void	ft_export_edit(t_env *var, t_env *env)
 		else if (var->op == 2)
 			env->value = ft_strjoinf(env->value,
 						ft_strtrim(var->value, "\'\""));
-		env->op = 1;
+		env->op = (var->op == 0 ? 0 : 1);
 	}
 }
 
@@ -35,12 +35,12 @@ t_env	*ft_export_find_name(t_env *var, t_env *env, int new)
 	head = env;
 	while (env)
 	{
-		if (ft_strcmp(var->name, env->name) == 0)
+		if (ft_strcmp(var->name, env->name) == 0 && var->godmode == 0)
 		{
 			ft_export_edit(var, env);
 			return (head);
 		}
-		if (!env->next && new == 1)
+		if (!env->next && new == 1 && var->godmode == 0)
 		{
 			env->next = elem_dup(var);
 			return (head);

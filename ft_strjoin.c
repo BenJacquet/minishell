@@ -47,7 +47,7 @@ char	*ft_strjoinf(char *s1, char *s2)
 
 	if (!s1 || !s2)
 		return (NULL);
-	i = strlen(s1) + strlen(s2);
+	i = ft_strlen(s1) + ft_strlen(s2);
 	j = 0;
 	if (!(new = malloc(sizeof(char) * (i + 1))))
 		return (NULL);

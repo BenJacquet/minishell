@@ -1,5 +1,6 @@
 - Heap-buffer-overflow si " " sur entree standard
 - general -> tester "cat < ."
+- mettre _ en variable impossible a unset
 
 LEAKS :
 - JOIN

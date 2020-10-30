@@ -109,9 +109,7 @@ void	get_redirections(t_all *all)
 			if (all->red == 0)
 				start++;
 			else if (all->red)
-			{
 				file = get_filename(&all->toks, &start);
-			}
 			if (file)
 				all->reds = new_red(all->reds, all->red, &file);
 			all->red = 0;

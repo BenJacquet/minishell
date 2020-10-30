@@ -40,14 +40,15 @@ int		update_pwd(t_all *all, int old, int new)
 	if (old == 1)
 	{
 		path = ft_getenv(all, "PWD", 0);
-		pwd = new_elem(ft_strjoin("OLDPWD=", path), 1);
+		pwd = (path[0] == '\0' ? new_elem("OLDPWD", 0) :
+				new_elem(ft_strjoin("OLDPWD=", path), 1));
 	}
 	else
 	{
 		path = getcwd(path, 0);
 		pwd = new_elem(ft_strjoin("PWD=", path), 1);
 	}
-		ft_export_find_name(pwd, all->env, new);
+	ft_export_find_name(pwd, all->env, new);
 	free(path);
 	free_var(pwd);
 	return (0);
@@ -57,7 +58,10 @@ void		new_env(t_all *all)
 {
 	t_env	*var;
 
-	all->env = new_elem("SHLVL=1", 0);
+	all->env = new_elem("_=/usr/bin/env", 0);
+	var = new_elem("SHLVL=1", 0);
+	ft_export_find_name(var, all->env, 1);
+	free_var(var);
 	var = new_elem("OLDPWD", 0);
 	ft_export_find_name(var, all->env, 1);
 	free_var(var);

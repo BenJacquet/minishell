@@ -65,7 +65,8 @@ char	**ft_list_to_tab(t_env *lst, int mode, int erase)
 	current = lst;
 	while (current != NULL)
 	{
-		if ((mode == 0 && current->op != 0 && current->value) || mode == 1)
+		if ((mode == 0 && current->op != 0 &&
+			current->value) || (mode == 1 && !current->godmode))
 			tab[i++] = ft_data_to_string(current, mode);
 		current = current->next;
 	}
