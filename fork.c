@@ -26,6 +26,7 @@ int		fork_command(t_all *all, int fd[all->tube][2])
 {
 	all->pid = 0;
 	all->toks = convert_tokens_lst(all->dir, all->shouldi);
+	free(all->shouldi);
 	if (all->countsmc)
 		handle_redirections(all);
 	all->dir = convert_tokens_tab(all->toks);

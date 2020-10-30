@@ -74,15 +74,15 @@ char	*finddolar(t_all *all, int *i, int j, char **tmp, char **dir)
 	}
 	tmp[1][all->j] = '\0';
 	tmp[2] = ft_getenv(all, tmp[1], (all->kotey[j] == 2) ? 0 : 1);
-	dol = (all->j == 0) ? ft_strjoin(dol, "$") : ft_strjoin(tmp[0], tmp[2]);
+	dol = (all->j == 0) ? ft_strjoinf(tmp[0], "$") : ft_strjoinf(tmp[0], tmp[2]);
 	return (dol);
 }
 
 int		nicedolbro(t_all *all, int i, int j, char **tmp, char **dir)
 {
 	tmp[3] = finddolar(all, &i, j, tmp, dir);
-	free(tmp[0]);
-	free(tmp[2]);
+//	free(tmp[0]);
+	all->j == 0 ? free(tmp[2]): 0;
 	all->j = 0;
 	while (i <= ft_strlen(dir[j]) && dir[j][i])
 	{

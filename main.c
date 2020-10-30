@@ -49,6 +49,7 @@ int			tokentranslate(t_all *all, char **dir)
 		dolar(all, &*dir);
 		index++;
 	}
+	free(all->kotey);
 	return (1);
 }
 
