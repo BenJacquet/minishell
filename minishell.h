@@ -114,8 +114,8 @@ int				checksquote(char *buff);
 char			*ft_strncpy(char *dest, const char *src, int dstsize);
 int				pipecount(t_all all, char *str, char c);
 char			**ft_splitmini(char *s, char c);
-int				counttoken(t_all *all, char **dir);
-void			dolar(t_all *all, char **dir);
+int				counttoken(t_all *all);
+void			dolar(t_all *all);
 int				join(t_all *all, char *buff, int inc, char quote);
 int				silence(char *buff);
 int				ifjoin(t_all *all, char *buff, int *inc, char quote);
@@ -134,7 +134,7 @@ int				signal_manager();
 int				letsgnl(t_all *all);
 int				multidir(t_all *all, int fd[all->tube][2]);
 int				action(t_all *all, int fd[all->tube][2]);
-int				tokentranslate(t_all *all, char **dir);
+int				tokentranslate(t_all *all);
 int				joinquotev2(t_all *all);
 
 /*

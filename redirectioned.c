@@ -36,14 +36,14 @@ void	crocofail(t_all *all, char **pdir, char c)
 
 	j = 0;
 	i = 0;
-	if (pdir[0])
+	if (pdir[0] && ft_strlen(pdir[0]) > 0)
 	{
-		while (pdir[i])
+		while (pdir[i] && ft_strlen(pdir[i]) > 0)
 		{
 			j = ft_strlen(pdir[i]) - 1;
-			while (pdir[i][j] == ' ')
+			while (j >= 0 && pdir[i][j] == ' ')
 				j--;
-			if (messagecroco(pdir, c, i, j) == 1)
+			if (j >= 0 && messagecroco(pdir, c, i, j) == 1)
 			{
 				all->countsmc = 0;
 				break ;

@@ -90,7 +90,7 @@ int		nicedolbro(t_all *all, int i, int j, char **tmp)
 		all->j++;
 	}
 	tmp[1][all->j] = '\0';
-	tmp[0] = ft_strjoin(tmp[0], tmp[1]);
+	tmp[0] = ft_strjoinf(tmp[0], tmp[1]);
 	free(tmp[1]);
 	return (i);
 }
