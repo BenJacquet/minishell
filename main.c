@@ -38,15 +38,15 @@ int			letsgnl(t_all *all)
 	return (0);
 }
 
-int			tokentranslate(t_all *all, char **dir)
+int			tokentranslate(t_all *all)
 {
 	int		index;
 
-	all->dolnbr = counttoken(all, dir);
+	all->dolnbr = counttoken(all);
 	index = 0;
 	while (index < all->dolnbr)
 	{
-		dolar(all, &*dir);
+		dolar(all);
 		index++;
 	}
 	free(all->kotey);
