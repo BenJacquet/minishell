@@ -69,20 +69,43 @@ void	get_last(t_all *all, t_red *reds)
 	}
 	if (last_in)
 	{
-		all->fds[0] = open(last_in->file, last_in->red, all->mask);
+		all->fds[0] = open(last_in->file, last_in->red, 0666);
 		last_in->last = 1;
 	}
 	if (last_out)
 	{
-		all->fds[1] = open(last_out->file, last_out->red, all->mask);
+		all->fds[1] = open(last_out->file, last_out->red, 0666);
 		last_out->last = 1;
 	}
 }
+
+/*void	check_reds(t_all *all)
+{
+	t_red	*current;
+
+	current = all->reds;
+	if (all->reds)
+	{
+		while (all->reds)
+		{
+			current = all->reds;
+			all->reds = all->reds->next;
+			if (current->red != 2 && current->last == 0)
+			{
+				current->fd = open(current->file, current->red, mask);
+				close(current->fd);
+			}
+			free_red(current);
+		}
+	}
+	all->reds = NULL;
+}*/
 
 void	process_reds(t_all *all, int mask)
 {
 	t_red	*current;
 
+	(void)mask;
 	current = all->reds;
 	if (all->reds)
 	{
@@ -93,7 +116,7 @@ void	process_reds(t_all *all, int mask)
 			all->reds = all->reds->next;
 			if (current->red != 2 && current->last == 0)
 			{
-				current->fd = open(current->file, current->red, mask);
+				current->fd = open(current->file, current->red, 0666);
 				close(current->fd);
 			}
 			free_red(current);
