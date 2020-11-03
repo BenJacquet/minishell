@@ -63,8 +63,10 @@ typedef struct	s_all
 {
 	t_env		*env;
 	t_env		*ret;
+	int			u;
+	int			dolhere;
 	int			*shouldi;
-	int			*kotey;
+	int			kotey;
 	int			dolnbr;
 	char		*buff;
 	char		*wd_backup;
@@ -88,6 +90,7 @@ typedef struct	s_all
 	int			around;
 	int			red;
 	int			mask;
+	int			diff;
 	t_tok		*toks;
 	t_red		*reds;
 }				t_all;
@@ -115,7 +118,7 @@ char			*ft_strncpy(char *dest, const char *src, int dstsize);
 int				pipecount(t_all all, char *str, char c);
 char			**ft_splitmini(char *s, char c);
 int				counttoken(t_all *all);
-void			dolar(t_all *all);
+void			dolar(t_all *all, char *buff, int u);
 int				join(t_all *all, char *buff, int inc, char quote);
 int				silence(char *buff);
 int				ifjoin(t_all *all, char *buff, int *inc, char quote);
