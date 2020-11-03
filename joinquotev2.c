@@ -45,20 +45,9 @@ int		joinquotev2(t_all *all)
 	i = 0;
 	inc = 0;
 	free_tab(all->dir);
-	if ((checksquote(all->xdir[all->here]) % 2 == 0 &&
-				checksquote(all->xdir[all->here]) > 1) ||
-			(checkdquote(all->xdir[all->here]) % 2 == 0 &&
-			checkdquote(all->xdir[all->here]) > 1))
-	{
-		initcroco(all, all->here);
-		all->dir = newdirquote(all->dir, cnt(i, all, all->here));
-		all->stop = ifquotev2(i, all, all->here, inc);
-		i = 0;
-	}
-	else
-	{
-		all->dir = ft_split(all->xdir[all->here], ' ');
-		crocodir(all);
-	}
+	initcroco(all, all->here);
+	all->dir = newdirquote(all->dir, cnt(i, all, all->here));
+	all->stop = ifquotev2(i, all, all->here, inc);
+	i = 0;
 	return (0);
 }

@@ -58,7 +58,7 @@ int		croco(t_all *all, char *buff, int len, int inc)
 	int	i;
 
 	i = 2;
-	all->kotey[inc] = (buff[1] && buff[1] == '\'' && buff[i] == '$') ? 3 : 2;
+	all->kotey = (buff[1] && buff[1] == '\'' && buff[i] == '$') ? 3 : 2;
 	while (buff[i] && i < len)
 	{
 		if (buff[i] == '<' || buff[i] == '>')
@@ -78,19 +78,17 @@ int		initcroco(t_all *all, int here)
 
 	i = 0;
 	len = cnt(i, all, here);
+	all->kotey = 0;
 	all->shouldi = malloc(sizeof(int *) * (len + 1));
-	all->kotey = malloc(sizeof(int *) * (len + 1));
 	while (i < len)
 	{
 		all->shouldi[i] = 1;
-		all->kotey[i] = 1;
 		i++;
 	}
 	all->shouldi[i] = 0;
-	all->kotey[i] = 0;
 	return (0);
 }
-
+/*
 int		crocodir(t_all *all)
 {
 	int len;
@@ -98,15 +96,13 @@ int		crocodir(t_all *all)
 
 	i = 0;
 	len = ft_tablen(all->dir);
+	all->kotey = 0;
 	all->shouldi = malloc(sizeof(int *) * (len + 1));
-	all->kotey = malloc(sizeof(int *) * (len + 1));
 	while (i < len)
 	{
 		all->shouldi[i] = 1;
-		all->kotey[i] = 1;
 		i++;
 	}
 	all->shouldi[i] = 0;
-	all->kotey[i] = 0;
 	return (0);
-}
+}*/
