@@ -101,7 +101,6 @@ int		multidir(t_all *all, int fd[all->tube][2])
 	while (all->here <= all->tube)
 	{
 		joinquotev2(all);
-		tokentranslate(all);
 		if (all->here == 0)
 			all->around = 1;
 		else if (all->here == all->tube)
