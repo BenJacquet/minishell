@@ -20,7 +20,7 @@ int		which_redirection(t_all *all, int *start)
 		all->red = (O_CREAT | O_TRUNC | O_RDWR);
 	else if (ft_strncmp(all->toks->value + *start, "<", 1) == 0)
 		all->red = (O_RDWR);
-	if (all->red == 1538 || all->red == 522 || all->red == 2)
+	if (all->red == 1538 || all->red == 578 || all->red == 2)
 	{
 		all->toks->end = (all->toks->end == ft_strlen(all->toks->value) ?
 						*start : all->toks->end);
@@ -31,9 +31,9 @@ int		which_redirection(t_all *all, int *start)
 			all->toks = all->toks->previous;
 		}
 	}
-	if (all->red == 2 || all->red == 1538)
+	if (all->red == 2 || all->red == 578)
 		*start += 1;
-	else if (all->red == 522)
+	else if (all->red == 1090)
 		*start += 2;
 	return (0);
 }
@@ -128,6 +128,7 @@ int		handle_redirections(t_all *all)
 	if (!all->toks)
 		return (-1);
 	get_redirections(all);
+	//if (!check_reds(all, all->mask))
 	process_reds(all, all->mask);
 	all->toks = head;
 	return (1);

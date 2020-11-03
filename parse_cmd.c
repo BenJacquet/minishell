@@ -57,8 +57,10 @@ int		parse_command(t_all *all, int fd[all->tube][2])
 			ft_strlen(all->pdir[all->data - all->countsmc]) > 0)
 	{
 		if (!all->tube)
+		{
 			joinquote(all);
-		tokentranslate(all, &*all->dir);
+			tokentranslate(all);
+		}
 		if (!all->dir[0] || ft_strlen(all->dir[0]) == 0)
 			return (1);
 		return (fork_or_not(all, fd));
