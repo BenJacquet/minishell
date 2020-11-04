@@ -70,7 +70,7 @@ char	**convert_tokens_tab(t_tok *lst)
 
 	current = lst;
 	i = ft_tokslen(lst);
-	if (!(tab = malloc(sizeof(char *) * (i + 1))))
+	if (!(tab = malloc(sizeof(char *) * (i + 2))))
 		return (NULL);
 	i = 0;
 	while (current != NULL)
@@ -79,6 +79,8 @@ char	**convert_tokens_tab(t_tok *lst)
 			tab[i++] = clean_token(current);
 		current = current->next;
 	}
+	if (i == 0)
+		tab[i++] = ft_strdup("\0");
 	tab[i] = NULL;
 	free_tokens(lst);
 	return (tab);

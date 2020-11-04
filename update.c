@@ -23,14 +23,6 @@ int		update_return(t_all *all, int new)
 	return (0);
 }
 
-/*
-void	update_wd(t_all *all, char *path) //POUR NE PAS SORTIR DU DIR APRES AVOIR RM
-{
-	if (all->wd_backup)
-		free(all->wd_backup);
-	all->wd_backup = ft_strdup(path);
-}*/
-
 int		update_pwd(t_all *all, int old, int new)
 {
 	t_env	*pwd;

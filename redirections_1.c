@@ -15,26 +15,26 @@
 int		which_redirection(t_all *all, int *start)
 {
 	if (ft_strncmp(all->toks->value + *start, ">>", 2) == 0)
-		all->red = (O_CREAT | O_APPEND | O_RDWR);
+		all->red = O_A;
 	else if (ft_strncmp(all->toks->value + *start, ">", 1) == 0)
-		all->red = (O_CREAT | O_TRUNC | O_RDWR);
+		all->red = O_T;
 	else if (ft_strncmp(all->toks->value + *start, "<", 1) == 0)
-		all->red = (O_RDWR);
-	if (all->red == 1538 || all->red == 578 || all->red == 2)
+		all->red = I_R;
+	if (all->red == O_A || all->red == O_T || all->red == I_R)
 	{
 		all->toks->end = (all->toks->end == ft_strlen(all->toks->value) ?
 						*start : all->toks->end);
-		if (all->toks->next && all->toks->value[(*start + 1)] == '\0')
+		if (all->red == I_R || all->red == O_T)
+			*start += 1;
+		else if (all->red == O_A)
+			*start += 2;
+		if (all->toks->next && all->toks->value[(*start)] == '\0')
 		{
 			all->toks = all->toks->next;
 			all->toks->ignore = 1;
 			all->toks = all->toks->previous;
 		}
 	}
-	if (all->red == 2 || all->red == 578)
-		*start += 1;
-	else if (all->red == 1090)
-		*start += 2;
 	return (0);
 }
 
@@ -111,7 +111,11 @@ void	get_redirections(t_all *all)
 			else if (all->red)
 				file = get_filename(&all->toks, &start);
 			if (file)
-				all->reds = new_red(all->reds, all->red, &file);
+			{
+				all->reds = new_red(all, all->reds, all->red, file);
+				free(file);
+				file = NULL;
+			}
 			all->red = 0;
 		}
 		start = 0;
@@ -128,8 +132,7 @@ int		handle_redirections(t_all *all)
 	if (!all->toks)
 		return (-1);
 	get_redirections(all);
-	//if (!check_reds(all, all->mask))
-	process_reds(all, all->mask);
+	process_reds(all);
 	all->toks = head;
 	return (1);
 }

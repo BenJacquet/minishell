@@ -64,6 +64,46 @@ int		get_error(t_all *all)
 	return (-1);
 }
 
+int		check_execution(t_all *all, char **envp)
+{
+	char **tmp;
+	if (ft_strcmp(all->dir[0], "\0") == 0)
+		return (0);
+	else if (all->bad && ft_tablen(all->dir) == 1 &&
+			ft_strcmp(all->dir[0], "cat") == 0)
+	{
+		if (all->bad->exists == 0)
+			return (0);
+		if (!(tmp = malloc(sizeof(char*) * (3))))
+			return (0);
+		tmp[0] = ft_strdup(all->dir[0]);
+		tmp[1] = ft_strdup(all->bad->file);
+		tmp[2] = NULL;
+		execve(all->exec, tmp, envp);
+		free_tab(tmp);
+		return (1);
+	}
+	else if (all->bad)
+	{
+		if (all->bad->red == I_R && all->bad->exists)
+			return (execve(all->exec, all->dir, envp));
+		return (0);
+	}
+	return (execve(all->exec, all->dir, envp));
+}
+
+int		bad_red(t_all *all)
+{
+	if (all->bad->red != I_R)
+		return (ft_put_error(strerror(21), all->bad->file, 1));
+	else if (all->bad->red == I_R && !all->bad->exists)
+		return (ft_put_error(strerror(2), all->bad->file, 1));
+	else if (all->bad->red == I_R &&
+			(ft_strcmp(all->dir[0], "\0") != 0 || ft_tablen(all->dir) > 1))
+		return (ft_put_error(strerror(21), all->bad->file, 1));
+	return (0);
+}
+
 int		run_exec(t_all *all)
 {
 	int		ret;
@@ -73,11 +113,12 @@ int		run_exec(t_all *all)
 	ret = 0;
 	status = 0;
 	envp = ft_list_to_tab(all->env, 0, 0);
-	status = execve(all->exec, all->dir, envp);
-	if (status == -1)
+	status = check_execution(all, envp);
+	if (status == -1 || all->bad)
 	{
-		ret = get_error(all);
-		if (ret < 0)
+		if (all->bad)
+			ret = bad_red(all);
+		else if ((ret = get_error(all)) < 0)
 			ft_put_error(strerror(errno), all->dir[0], 1);
 		update_return(all, ft_abs(ret));
 	}
@@ -108,6 +149,7 @@ int		multidir(t_all *all, int fd[all->tube][2])
 		else
 			all->around = 2;
 		action(all, fd);
+		all->bad = free_red(all->bad);
 		all->here++;
 	}
 	all->countsmc--;

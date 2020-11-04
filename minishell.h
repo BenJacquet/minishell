@@ -19,6 +19,7 @@
 # include <stdlib.h>
 # include <string.h>
 # include <sys/types.h>
+# include <sys/stat.h>
 # include <sys/wait.h>
 # include <sys/uio.h>
 # include <dirent.h>
@@ -27,16 +28,21 @@
 # include "GNL/get_next_line.h"
 # include "libft/libft.h"
 
+# define O_A (O_CREAT | O_APPEND | O_RDWR)
+# define O_T (O_CREAT | O_TRUNC | O_RDWR)
+# define I_R (O_RDWR)
+
 int				g_builtin;
 int				g_freete;
 
 typedef	struct	s_red
 {
 	int			red;
-	int			fd;
 	int			last;
 	char		*file;
 	void		*next;
+	int			exists;
+	int			bad;
 }				t_red;
 
 typedef struct	s_tok
@@ -63,6 +69,9 @@ typedef struct	s_all
 {
 	t_env		*env;
 	t_env		*ret;
+	t_tok		*toks;
+	t_red		*reds;
+	t_red		*bad;
 	int			u;
 	int			dolhere;
 	int			*shouldi;
@@ -91,8 +100,6 @@ typedef struct	s_all
 	int			red;
 	int			mask;
 	int			diff;
-	t_tok		*toks;
-	t_red		*reds;
 }				t_all;
 
 /*
@@ -140,7 +147,6 @@ int				signal_manager();
 int				letsgnl(t_all *all);
 int				multidir(t_all *all, int fd[all->tube][2]);
 int				action(t_all *all, int fd[all->tube][2]);
-int				tokentranslate(t_all *all);
 int				joinquotev2(t_all *all);
 
 /*
@@ -193,10 +199,11 @@ int				handle_redirections(t_all *all);
 int				which_redirection(t_all *all, int *start);
 char			*get_filename(t_tok **toks, int *start);
 char			*ft_dup_until_red(char *src);
-void			process_reds(t_all *all, int mask);
+void			process_reds(t_all *all);
 t_red			*find_last_in(t_red *reds);
-void			free_red(t_red *red);
-t_red			*new_red(t_red *head, int red, char **file);
+t_red			*free_red(t_red *red);
+t_red			*new_red(t_all *all, t_red *head, int red, char *file);
+int				check_red(t_all *all, t_red *red, int mode);
 int				ft_isinset(const char *set, char c);
 t_tok			*convert_tokens_lst(char **cmd, int *shouldi);
 char			**convert_tokens_tab(t_tok *lst);
@@ -217,7 +224,6 @@ void			new_env(t_all *all);
 int				get_error(t_all *all);
 int				slash(char	*str, int mode);
 int				commands(t_all *all);
-void			update_wd(t_all *all, char *path);
 int				ft_envlen(t_env *env);
 
 #endif

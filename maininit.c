@@ -52,7 +52,6 @@ void		init_allbis(t_all *all, char **env, int ac, char **av)
 	all->reds = NULL;
 	all->fds[0] = STDIN_FILENO;
 	all->fds[1] = STDOUT_FILENO;
-	all->mask = (S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
 	all->i = get_next_line(0, &all->buff);
 	crontold(all);
 	if (checkquote(all->buff) == 1)
@@ -83,4 +82,5 @@ void		init_all(t_all *all, char **env, int ac, char **av)
 	all->dir = ft_split(all->buff, ' ');
 	all->wd_backup = NULL;
 	all->wd_backup = getcwd(all->wd_backup, 0);
+	all->bad = NULL;
 }

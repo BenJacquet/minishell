@@ -52,6 +52,7 @@ int			gestionpipe(t_all *all)
 	else
 	{
 		action(all, fd);
+		all->bad = free_red(all->bad);
 		all->countsmc--;
 	}
 	return (0);

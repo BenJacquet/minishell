@@ -58,5 +58,6 @@ int		freelance(t_all *all)
 		free_tab(all->xdir);
 	if (all->wd_backup)
 		free(all->wd_backup);
+	all->bad = free_red(all->bad);
 	return (ret);
 }
