@@ -37,6 +37,51 @@ int		ifquotev2(int i, t_all *all, int here, int inc)
 	return (all->stop);
 }
 
+int		cntv2(int i, t_all *all, int here)
+{
+	int	inc;
+
+	inc = 0;
+	while (all->xdir[here][i])
+	{
+		while (all->xdir[here][i] == ' ')
+			i++;
+		if (all->xdir[here][i] == '\'')
+		{
+			i = i + ifjoincount(all->xdir[here] + i + 1, '\'') + 1;
+			inc++;
+		}
+		else if (all->xdir[here][i] == '\"')
+		{
+			i = i + ifjoincount(all->xdir[here] + i + 1, '\"') + 1;
+			inc++;
+		}
+		else if (all->xdir[here][i])
+			i = i + noquotecount(all->xdir[here] + i, &inc) + 1;
+		else
+			break ;
+	}
+	return (inc);
+}
+
+int		initcrocov2(t_all *all)
+{
+	int len;
+	int i;
+
+	i = 0;
+	len = cntv2(i, all, all->here);
+	all->kotey = 0;
+	all->shouldi = malloc(sizeof(int *) * (len + 1));
+	while (i < len)
+	{
+		all->shouldi[i] = 1;
+		i++;
+	}
+	all->shouldi[i] = 0;
+	return (0);
+}
+
 int		joinquotev2(t_all *all)
 {
 	int	i;
@@ -45,8 +90,8 @@ int		joinquotev2(t_all *all)
 	i = 0;
 	inc = 0;
 	free_tab(all->dir);
-	initcroco(all, all->here);
-	all->dir = newdirquote(all->dir, cnt(i, all, all->here));
+	initcrocov2(all);
+	all->dir = newdirquote(all->dir, cntv2(i, all, all->here));
 	all->stop = ifquotev2(i, all, all->here, inc);
 	i = 0;
 	return (0);

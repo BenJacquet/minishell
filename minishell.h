@@ -116,6 +116,8 @@ int				checkdquote(char *buff);
 int				checksquote(char *buff);
 char			*ft_strncpy(char *dest, const char *src, int dstsize);
 int				pipecount(t_all all, char *str, char c);
+int				ifjoincount(char *buff, char quote);
+int				noquotecount(char *buff, int *inc);
 char			**ft_splitmini(char *s, char c);
 int				counttoken(t_all *all);
 void			dolar(t_all *all, char *buff, int u);
