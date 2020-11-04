@@ -119,6 +119,7 @@ int				pipecount(t_all all, char *str, char c);
 char			**ft_splitmini(char *s, char c);
 int				counttoken(t_all *all);
 void			dolar(t_all *all, char *buff, int u);
+char			*tokla(t_all *all, char *buff, int *end, int mode);
 int				join(t_all *all, char *buff, int inc, char quote);
 int				silence(char *buff);
 int				ifjoin(t_all *all, char *buff, int *inc, char quote);
