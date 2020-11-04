@@ -1,14 +1,14 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   joinquote.c                                        :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/09/17 14:07:55 by chgilber          #+#    #+#             */
-/*   Updated: 2020/10/28 19:13:07 by chgilber         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
+/*************************************************************************** */
+/*                                                                           */
+/*                                                       :::      ::::::::   */
+/*  joinquote.c                                        :+:      :+:    :+:   */
+/*                                                   +:+ +:+         +:+     */
+/*  By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
+/*                                               +#+#+#+#+#+   +#+           */
+/*  Created: 2020/09/17 14:07:55 by chgilber          #+#    #+#             */
+/*  Updated: 2020/10/28 19:13:07 by chgilber         ###   ########.fr       */
+/*                                                                           */
+/*************************************************************************** */
 
 #include "minishell.h"
 
@@ -19,32 +19,6 @@ char	**newdirquote(char **dir, int count)
 	return (dir);
 }
 
-char	*tokla(t_all *all, char *buff, int *end, int mode)
-{
-	int	i;
-
-	i = 2;
-	if (mode == 1)
-		i = (buff[1] == ' ') ? 2 : 1;
-	all->dolhere = 0;
-	while (buff[i] && i < *end)
-	{
-		if (buff[i] == '$' && all->kotey != 3)
-		{
-			dolar(all, buff + i, i);
-			buff = all->pdir[all->data - all->countsmc] + all->u - 1 ;
-		//	printf("allu = %d et i = %d et len = %d\n" , all->u, i, ft_strlen(all->pdir[all->data -all->countsmc]));
-		//	printf("tokla buff = [%s]\n", buff);
-		//	printf("tokla pdir = [%s]\n",all->pdir[all->data - all->countsmc]);
-			all->kotey = 0;
-			*end = all->diff + i ;
-			return (buff);
-		}
-		i++;
-	}
-	all->kotey = 0;
-	return (buff);
-}
 int		noquote(t_all *all, char *buff, int *inc)
 {
 	int	i;
@@ -101,7 +75,6 @@ int		ifjoin(t_all *all, char *buff, int *inc, char quote)
 		all->dir[*inc] = malloc(sizeof(char) * i);
 		all->dir[*inc] = ft_strncpy(all->dir[*inc], buff + 2, i - 2);
 	}
-//	printf("allu = %d et i = %d et len = %d\n" , all->u, i, ft_strlen(all->pdir[all->data -all->countsmc]));
 	return (i);
 }
 

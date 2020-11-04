@@ -57,25 +57,28 @@ int		check(char *buff, t_all *all)
 int		checkquote(char *buff)
 {
 	int	i;
-	int	a;
-	int u;
 
 	i = 0;
-	a = 0;
-	u = 0;
 	while (buff[i])
 	{
-		while (buff[i] && (buff[i] != 34 && buff[i] != 39))
-			i++;
 		if (buff[i] && buff[i] == 34)
-			a++;
-		if (buff[i] && buff[i] == 39)
-			u++;
-		if (buff[i] && (buff[i] == 34 || buff[i] == 39))
+		{
 			i++;
+			while (buff[i] && buff[i] != 34)
+				i++;
+			if (buff[i] != 34)
+				return (1);
+		}
+		if (buff[i] && buff[i] == 39)
+		{
+			i++;
+			while (buff[i] && buff[i] != 39)
+				i++;
+			if (buff[i] != 39)
+				return (1);
+		}
+		i++;
 	}
-	if (a % 2 != 0 || u % 2 != 0)
-		return (1);
 	return (0);
 }
 

@@ -30,12 +30,7 @@ void	finddolar(t_all *all, int *i, char **tmp)
 	tmp[1][all->j] = '\0';
 	tmp[2] = ft_getenv(all, tmp[1], (all->kotey == 2) ? 0 : 1);
 	all->diff = ft_strlen(tmp[2]);
-/*	if ((all->j == 0))
-		tmp[0] = ft_strdup("$");
-	else
-		tmp[0] = ft_strdup(tmp[2]);
-	free(tmp[2]);
-*/}
+}
 
 int		nicedolbro(t_all *all, int i, char **tmp)
 {
@@ -73,6 +68,33 @@ void	dolar(t_all *all, char *buff, int u)
 	all->pdir[all->data - all->countsmc] = ft_strjoin(tmp[3], tmp[0]);
 //	printf("buff final = %s\n", all->pdir[all->data - all->countsmc]);
 	free(tmp[3]);
-//	buff = ft_strdup(tmp[0]);
 	free(tmp[0]);
 }
+
+char	*tokla(t_all *all, char *buff, int *end, int mode)
+{
+	int	i;
+
+	i = 2;
+	if (mode == 1)
+		i = (buff[1] == ' ') ? 2 : 1;
+	all->dolhere = 0;
+	while (buff[i] && i < *end)
+	{
+		if (buff[i] == '$' && all->kotey != 3)
+		{
+			dolar(all, buff + i, i);
+			buff = all->pdir[all->data - all->countsmc] + all->u - 1;
+			//	printf("allu = %d et i = %d et len = %d\n" , all->u, i, ft_strlen(all->pdir[all->data -all->countsmc]));
+			//	printf("tokla buff = [%s]\n", buff);
+			//	printf("tokla pdir = [%s]\n",all->pdir[all->data - all->countsmc]);
+			all->kotey = 0;
+			*end = all->diff + i;
+			return (buff);
+		}
+		i++;
+	}
+	all->kotey = 0;
+	return (buff);
+}
+
