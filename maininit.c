@@ -83,4 +83,5 @@ void		init_all(t_all *all, char **env, int ac, char **av)
 	all->wd_backup = NULL;
 	all->wd_backup = getcwd(all->wd_backup, 0);
 	all->bad = NULL;
+	all->shouldi = malloc(sizeof(int *) *  1);
 }

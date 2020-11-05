@@ -113,7 +113,7 @@ int		joinquote(t_all *all)
 	all->u = 0;
 	inc = 0;
 	all->dolhere = 0;
-	freedir(all->dir);
+	free_tab(all->dir);
 	initcroco(all, here);
 	all->dir = newdirquote(all->dir, cnt(0, all, here));
 	all->stop = ifquote(all, here, inc);

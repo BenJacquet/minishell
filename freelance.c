@@ -11,27 +11,14 @@
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-int		freedir(char **dir)
+void	freelancebis(t_all *all)
 {
-	int	i;
-
-	i = 0;
-	if (dir && dir != NULL)
-	{
-		if (dir[0])
-		{
-			while (dir[i])
-			{
-				free(dir[i]);
-				dir[i] = NULL;
-				i++;
-			}
-			free(dir);
-			dir = NULL;
-		}
-	}
-	return (0);
+	if (all->dir)
+		free_tab(all->dir);
+	if (all->buff)
+		free(all->buff);
+	if (all->pdir)
+		free_tab(all->pdir);
 }
 
 int		freelance(t_all *all)
@@ -46,12 +33,7 @@ int		freelance(t_all *all)
 	}
 	if (all->i == 0)
 		write(1, "exit\n", 5);
-	if (all->dir)
-		free_tab(all->dir);
-	if (all->buff)
-		free(all->buff);
-	if (all->pdir)
-		free_tab(all->pdir);
+	freelancebis(all);
 	if (all->env)
 		free_vars(all->env);
 	if (all->xdir)
@@ -59,5 +41,6 @@ int		freelance(t_all *all)
 	if (all->wd_backup)
 		free(all->wd_backup);
 	all->bad = free_red(all->bad);
+	free(all->shouldi);
 	return (ret);
 }

@@ -25,14 +25,14 @@ int			letsgnl(t_all *all)
 		write(1, "No Multilines\n", 14);
 	g_builtin = 0;
 	all->countsmc = pipecount(*all, all->buff, ';') + 1;
-	freedir(all->pdir);
+	free_tab(all->pdir);
 	all->pdir = ft_splitmini(all->buff, ';');
 	crocofail(all, all->pdir, ';');
 	all->tube = (all->pdir[0] && all->countsmc > 0) ?
 		pipecount(*all, all->pdir[0], '|') : 0;
 	all->countsmc = (all->tube >= 0) ? all->countsmc : 0;
 	all->data = all->countsmc;
-	freedir(all->xdir);
+	free_tab(all->xdir);
 	all->xdir = ft_splitmini(all->pdir[0], '|');
 	(all->tube > 0 && all->countsmc > 1) ? crocofail(all, all->pdir, '|') : 0;
 	return (0);
