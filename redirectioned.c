@@ -79,6 +79,7 @@ int		initcroco(t_all *all, int here)
 	i = 0;
 	len = cnt(i, all, here);
 	all->kotey = 0;
+	free(all->shouldi);
 	all->shouldi = malloc(sizeof(int *) * (len + 1));
 	while (i < len)
 	{

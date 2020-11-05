@@ -52,9 +52,9 @@ int		ft_put_error(char *error, char *var, int mode)
 	write(2, "minishell:", 10);
 	if (mode == 1)
 	{
-		ft_putstr_fd(" \'", 2);
+		ft_putstr_fd(" ", 1);
 		ft_putstr_fd(var, 2);
-		ft_putstr_fd("\':", 2);
+		ft_putstr_fd(":", 1);
 	}
 	ft_putstr_fd(" ", 2);
 	ft_putstr_fd(error, 2);
