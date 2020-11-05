@@ -19,10 +19,12 @@ void	joinjoin(t_all *all, char *buff, int *inc, int i)
 
 	(*inc)--;
 	tmp = ft_strdup(all->dir[*inc]);
+	printf("[%s]\n" , all->dir[*inc]);
 	free(all->dir[*inc]);
 	all->dir[*inc] = malloc(sizeof(char) * i + ft_strlen(tmp) + 1);
 	all->dir[*inc] = ft_strncpy(all->dir[*inc], tmp, ft_strlen(tmp));
 	all->dir[*inc] = ft_strncat(all->dir[*inc], buff + 2, i - 2);
+	printf("[%s]\n" , all->dir[*inc]);
 	free(tmp);
 }
 

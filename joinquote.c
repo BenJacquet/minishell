@@ -31,7 +31,10 @@ int		noquote(t_all *all, char *buff, int *inc)
 	while (buff[i] && buff[i] != '\'' && buff[i] != ' ' && buff[i] != '\"')
 		i++;
 	buff = tokla(all, buff, &i, (buff[1] == ' ') ? 0 : 1);
+	if (ft_strlen(all->pdir[all->data - all->countsmc]) == all->u + i)
+		return (i);
 //	printf("i = %d fusion = %d\n", i, fusion);
+	
 //	printf("noquote buff = [%s]\n", buff + ((buff[1] == ' ') ? 2 : 1));
 //	printf("noquote pdir = [%s]\n",all->pdir[all->data - all->countsmc]);
 	if (fusion == 0 && ((buff[1] == ' ') ? i > 2 : i > 1))
@@ -61,8 +64,8 @@ int		ifjoin(t_all *all, char *buff, int *inc, char quote)
 		i++;
 //	printf("ifjoin buff avant = [%s] et %d\n", buff  + 2, i );
 	croco(all, buff, i, *inc);
-//	buff = tokla(all, buff, &i, 0);
-	printf("ifjoin buff = [%s] et %d\n", buff  + 2, i );
+	buff = tokla(all, buff, &i, 0);
+//	printf("ifjoin buff = [%s] et %d\n", buff  + 2, i );
 	if (*inc > 0 && (buff[0] == ' ' || buff[0] == '<' || buff[0] == '>')
 			&& buff[2] != quote)
 	{
