@@ -6,7 +6,7 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/13 18:01:06 by jabenjam          #+#    #+#             */
-/*   Updated: 2020/10/25 15:48:51 by jabenjam         ###   ########.fr       */
+/*   Updated: 2020/11/05 22:17:10 by jabenjam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,18 +130,4 @@ void	process_reds(t_all *all)
 		}
 	}
 	all->reds = NULL;
-}
-
-int		ft_isinset(const char *set, char c)
-{
-	int		i;
-
-	i = 0;
-	while (set[i])
-	{
-		if (c == set[i])
-			return (1);
-		i++;
-	}
-	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/28 15:51:47 by chgilber          #+#    #+#             */
-/*   Updated: 2020/10/26 19:38:30 by chgilber         ###   ########.fr       */
+/*   Updated: 2020/11/05 22:18:01 by jabenjam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,12 +25,14 @@ void	joinjoin(t_all *all, char *buff, int *inc, int i)
 	free(tmp);
 }
 
+/* && all->countpipe >= 0*/ // g_freete pour le ctrld apres un ctrlc
+
 int		crontold(t_all *all)
 {
 	char	*tmp[2];
 
 	while (all->buff && ft_strlen(all->buff) > 0 && all->i == 0
-			&& g_freete == 0/* && all->countpipe >= 0*/) // g_freete pour le ctrld apres un ctrlc
+			&& g_freete == 0)
 	{
 		tmp[0] = ft_strdup(all->buff);
 		free(all->buff);

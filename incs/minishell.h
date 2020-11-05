@@ -6,7 +6,7 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/04 16:18:54 by jabenjam          #+#    #+#             */
-/*   Updated: 2020/10/28 19:40:54 by chgilber         ###   ########.fr       */
+/*   Updated: 2020/11/05 22:28:03 by jabenjam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,15 @@
 # include "../srcs/GNL/get_next_line.h"
 # include "../srcs/libft/libft.h"
 
-# define O_A (O_CREAT | O_APPEND | O_RDWR)
-# define O_T (O_CREAT | O_TRUNC | O_RDWR)
-# define I_R (O_RDWR)
+/*
+** O_A = (O_CREAT | O_APPEND | O_RDWR)
+** O_T = (O_CREAT | O_TRUNC | O_RDWR)
+** I_R = (O_RDWR)
+*/
+
+# define O_A 1090
+# define O_T 578
+# define I_R 2
 
 int				g_builtin;
 int				g_freete;
@@ -189,7 +195,8 @@ char			*ft_strjoin(char const *s1, char const *s2);
 char			*ft_strjoinf(char *s1, char *s2);
 int				ft_put_error(char *error, char *var, int mode);
 int				ft_check_name(char *var);
-int				io_manager_dup_replace(t_all *all, int fd[all->tube][2], int fork);
+int				io_manager_dup_replace(t_all *all,
+					int fd[all->tube][2], int fork);
 int				io_manager_dup_restore(t_all *all);
 void			pipes_child(t_all *all, int fd[all->tube][2]);
 void			pipes_parent(t_all *all, int fd[all->tube][2]);

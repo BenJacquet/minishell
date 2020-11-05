@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fork.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: chgilber <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/28 15:58:32 by chgilber          #+#    #+#             */
-/*   Updated: 2020/10/28 19:21:22 by chgilber         ###   ########.fr       */
+/*   Updated: 2020/11/05 22:20:12 by jabenjam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,5 @@ int		fork_or_not(t_all *all, int fd[all->tube][2])
 		}
 		return (fork_command(all, fd));
 	}
-	
 	return (0);
 }

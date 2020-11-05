@@ -6,7 +6,7 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/13 17:30:33 by jabenjam          #+#    #+#             */
-/*   Updated: 2020/10/28 16:12:45 by jabenjam         ###   ########.fr       */
+/*   Updated: 2020/11/05 22:15:38 by jabenjam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,22 +16,6 @@
 ** MODE = 0 : NAME
 ** MODE = 1 : VALUE
 */
-
-int		ft_varlen(char *var, int mode)
-{
-	int		i;
-	int		j;
-
-	i = 0;
-	j = 0;
-	while (var[i] != '\0' && var[i] != '=' && var[i] != '+')
-		i++;
-	if (mode == 0)
-		return (i);
-	while (var[i + j] != '\0')
-		j++;
-	return (j);
-}
 
 int		get_op(char *var)
 {

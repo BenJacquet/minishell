@@ -6,38 +6,11 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/13 17:46:15 by jabenjam          #+#    #+#             */
-/*   Updated: 2020/10/28 19:57:18 by chgilber         ###   ########.fr       */
+/*   Updated: 2020/11/05 22:19:13 by jabenjam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incs/minishell.h"
-
-/*
-**	MODE 0 : Si le dernier char est un '/'
-**	MODE 1 : Si la string contient un '/'
-*/
-
-int		slash(char	*str, int mode)
-{
-	int		i;
-
-	i = (mode == 0 ? ft_strlen(str) : 0);
-	if (i > 0 && mode == 0)
-	{
-		if (str[i - 1] == '/' || str[i - 1] == '.')
-			return (1);
-	}
-	else if (mode == 1)
-	{
-		while (str[i])
-		{
-			if (str[i] == '/')
-				return (1);
-			i++;
-		}
-	}
-	return (0);
-}
 
 int		get_error(t_all *all)
 {
@@ -66,6 +39,7 @@ int		get_error(t_all *all)
 int		check_execution(t_all *all, char **envp)
 {
 	char **tmp;
+
 	if (ft_strcmp(all->dir[0], "\0") == 0)
 		return (0);
 	else if (all->bad && ft_tablen(all->dir) == 1 &&
@@ -123,36 +97,4 @@ int		run_exec(t_all *all)
 	}
 	free_tab(envp);
 	return (1);
-}
-
-int		action(t_all *all, int fd[all->tube][2])
-{
-	if (all->countsmc > 0)
-	{
-		parse_command(all, fd);
-	//	free(all->shouldi);
-		g_builtin = 0;
-	}
-	return (0);
-}
-
-int		multidir(t_all *all, int fd[all->tube][2])
-{
-	all->here = 0;
-	while (all->here <= all->tube)
-	{
-		joinquotev2(all);
-		if (all->here == 0)
-			all->around = 1;
-		else if (all->here == all->tube)
-			all->around = 0;
-		else
-			all->around = 2;
-		action(all, fd);
-		all->bad = free_red(all->bad);
-		all->here++;
-	}
-	all->countsmc--;
-	all->tube = 0;
-	return (0);
 }

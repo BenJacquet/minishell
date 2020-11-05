@@ -48,6 +48,7 @@ SRCS =		srcs/cd.c\
 			srcs/tab.c\
 			srcs/token.c\
 			srcs/update.c\
+			srcs/utils.c\
 
 SRCSLIB =	srcs/libft/ft_split.c\
 			srcs/libft/ft_strlen.c\

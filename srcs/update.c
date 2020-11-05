@@ -6,13 +6,13 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/12 16:50:19 by jabenjam          #+#    #+#             */
-/*   Updated: 2020/10/28 16:32:42 by jabenjam         ###   ########.fr       */
+/*   Updated: 2020/11/05 22:14:16 by jabenjam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incs/minishell.h"
 
-int		update_return(t_all *all, int new)
+int			update_return(t_all *all, int new)
 {
 	if (all->ret)
 	{
@@ -23,7 +23,7 @@ int		update_return(t_all *all, int new)
 	return (0);
 }
 
-int		update_pwd(t_all *all, int old, int new)
+int			update_pwd(t_all *all, int old, int new)
 {
 	t_env	*pwd;
 	char	*path;
