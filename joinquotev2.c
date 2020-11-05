@@ -72,6 +72,7 @@ int		initcrocov2(t_all *all)
 	i = 0;
 	len = cntv2(i, all, all->here);
 	all->kotey = 0;
+	free(all->shouldi);
 	all->shouldi = malloc(sizeof(int *) * (len + 1));
 	while (i < len)
 	{
