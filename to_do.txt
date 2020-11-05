@@ -1,9 +1,0 @@
-- Heap-buffer-overflow si " " sur entree standard
-- general -> tester "cat < ."
-- mettre _ en variable impossible a unset
-
-LEAKS :
-- JOIN
-- GNL quand exit apres lancement du minishell
-- ECHO quand on demande une expansion
-- ECHO quand il y a des quotes
