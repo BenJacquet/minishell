@@ -12,54 +12,51 @@
 
 NAME = minishell
 
-SRCS =		cd.c\
-			check.c\
-			cmd_conversion.c\
-			echo.c\
-			end.c\
-			env_conversion_list.c\
-			env_conversion_tab.c\
-			env_display.c\
-			env_export.c\
-			env_unset.c\
-			fork.c\
-			freelance.c\
-			ft_splitmini.c\
-			ft_strjoin.c\
-			ft_strncat.c\
-			ft_strncpy.c\
-			get_dir.c\
-			get_execs.c\
-			GNL/get_next_line_utils.c\
-			GNL/get_next_line.c\
-			io_manager.c\
-			joinjoin.c\
-			joinquote.c\
-			joinquotev2.c\
-			joinquotecount.c\
-			list.c\
-			main.c\
-			maininit.c\
-			parse_cmd.c\
-			pipepars.c\
-			pipes.c\
-			realloc.c\
-			redirectioned.c\
-			redirections_1.c\
-			redirections_2.c\
-			run_exec.c\
-			tab.c\
-			token.c\
-			update.c\
+SRCS =		srcs/cd.c\
+			srcs/check.c\
+			srcs/cmd_conversion.c\
+			srcs/echo.c\
+			srcs/end.c\
+			srcs/env_conversion_list.c\
+			srcs/env_conversion_tab.c\
+			srcs/env_display.c\
+			srcs/env_export.c\
+			srcs/env_unset.c\
+			srcs/fork.c\
+			srcs/freelance.c\
+			srcs/ft_splitmini.c\
+			srcs/get_dir.c\
+			srcs/get_execs.c\
+			srcs/GNL/get_next_line_utils.c\
+			srcs/GNL/get_next_line.c\
+			srcs/io_manager.c\
+			srcs/joinjoin.c\
+			srcs/joinquote.c\
+			srcs/joinquotev2.c\
+			srcs/joinquotecount.c\
+			srcs/list.c\
+			srcs/main.c\
+			srcs/maininit.c\
+			srcs/parse_cmd.c\
+			srcs/pipepars.c\
+			srcs/pipes.c\
+			srcs/realloc.c\
+			srcs/redirectioned.c\
+			srcs/redirections_1.c\
+			srcs/redirections_2.c\
+			srcs/run_exec.c\
+			srcs/tab.c\
+			srcs/token.c\
+			srcs/update.c\
 
-SRCSLIB =	libft/ft_split.c\
-			libft/ft_strlen.c\
-			libft/ft_strncmp.c\
-			libft/ft_abs.c
+SRCSLIB =	srcs/libft/ft_split.c\
+			srcs/libft/ft_strlen.c\
+			srcs/libft/ft_strncmp.c\
+			srcs/libft/ft_abs.c
 
 INCLUDES = .
 
-LIBFT = libft/libft.a
+LIBFT = srcs/libft/libft.a
 
 CC = gcc
 
@@ -102,25 +99,22 @@ all : $(NAME)
 
 $(NAME) : $(OBJS)
 	@echo "$(_END)$(_GREEN) [OK]\t"
-	@make bonus -C libft
+	@make bonus -C srcs/libft
 	@gcc $(CFLAGS) -o $@ $(OBJS) $(LIBFT)
-#	@gcc $(CFLAGS) -L libft -lft -o $@ $(OBJS) $(LMINX)
 	@echo "$(_END)$(_GREEN)[Minishell-Done]"
 
 %.o : %.c
 	@echo "$(_END)$(_GREEN) [OK]\t"
 	@$(CC) $(CFLAGS) -I $(INCLUDES) -o ${<:.c=.o} -c $<
 
-re : 
-	@make fclean
-	@make all
+clean :
+	@rm -f $(OBJS) 
+	@make clean -C srcs/libft
 
 fclean : clean
 	@rm -f $(NAME) 
-	@make fclean -C libft
+	@make fclean -C srcs/libft
 
-clean :
-	@rm -f $(OBJS) 
-	@make clean -C libft
+re : fclean all
 
 .PHONY : all re fclean clean bonus
