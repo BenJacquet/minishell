@@ -131,6 +131,7 @@ int		action(t_all *all, int fd[all->tube][2])
 	if (all->countsmc > 0)
 	{
 		parse_command(all, fd);
+		free(all->shouldi);
 		g_builtin = 0;
 	}
 	return (0);
