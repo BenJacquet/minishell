@@ -78,6 +78,7 @@ typedef struct	s_all
 	t_tok		*toks;
 	t_red		*reds;
 	t_red		*bad;
+	int			mode;
 	int			dolhere;
 	int			*shouldi;
 	int			kotey;

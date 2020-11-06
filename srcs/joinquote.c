@@ -15,6 +15,7 @@
 char	**newdirquote(char **dir, int count)
 {
 	dir = malloc(sizeof(char *) * (count + 2));
+//	dir[count] = NULL;
 	return (dir);
 }
 
@@ -26,16 +27,18 @@ int		noquote(t_all *all, char *buff, int *inc)
 	fusion = (*inc > 0 && (buff[0] != ' ')//(buff[0] == '\'' || buff[0] == '\"')
 			&& (buff[1] != '<' && buff[1] != '>')) ? 1 : 0;
 	i = (buff[1] == ' ') ? 2 : 1;
-//	printf("noquote buff before = [%s]\n", buff + ((buff[1] == ' ') ? 2 : 1));
+
 	while (buff[i] && buff[i] != '\'' && buff[i] != ' ' && buff[i] != '\"')
 		i++;
+	printf("noquote buff before = [%s] et %d\n", buff + ((buff[1] == ' ') ? 2 : 1), i);
 	buff = tokla(all, buff, &i, (buff[1] == ' ') ? 0 : 1);
-	if (ft_strlen(all->pdir[all->data - all->countsmc]) == all->u + i)
+//	if (ft_strlen(all->pdir[all->data - all->countsmc]) == all->u + i || all->diff == -666)
+	if (all->diff == -666)
 		return (i);
 //	printf("i = %d fusion = %d\n", i, fusion);
 	
-//	printf("noquote buff = [%s]\n", buff + ((buff[1] == ' ') ? 2 : 1));
-//	printf("noquote pdir = [%s]\n",all->pdir[all->data - all->countsmc]);
+	printf("noquote buff = [%s]\n", buff + ((buff[1] == ' ') ? 2 : 1));
+	printf("noquote pdir = [%s]\n",all->pdir[all->data - all->countsmc]);
 	if (fusion == 0 && ((buff[1] == ' ') ? i > 2 : i > 1))
 	{
 		all->dir[*inc] = malloc(sizeof(char) * i + 1);
@@ -61,17 +64,22 @@ int		ifjoin(t_all *all, char *buff, int *inc, char quote)
 	i = 2;
 	while (buff[i] != quote)
 		i++;
-//	printf("ifjoin buff avant = [%s] et %d\n", buff  + 2, i );
+	printf("ifjoin buff avant = [%s] et %d\n", buff  + 2, i );
 	croco(all, buff, i, *inc);
 	buff = tokla(all, buff, &i, 0);
-//	printf("ifjoin buff = [%s] et %d\n", buff  + 2, i );
+	if (all->diff == -666)
+	{
+		(*inc)--;
+		return (i);
+	}
+	printf("ifjoin buff = [%s] et %d\n", buff  + 2, i );
 	if (*inc > 0 && (buff[0] == ' ' || buff[0] == '<' || buff[0] == '>')
 			&& buff[2] != quote)
 	{
 		all->dir[*inc] = malloc(sizeof(char) * i);
 		all->dir[*inc] = ft_strncpy(all->dir[*inc], buff + 2, i - 2);
 	}
-	else if (*inc > 0 && buff[0] != ' ')//i != 2)
+	else if (*inc > 0 && buff[0] != ' ' && i != 2)
 		joinjoin(all, buff, inc, i);
 	else
 	{
@@ -120,5 +128,6 @@ int		joinquote(t_all *all)
 	initcroco(all, here);
 	all->dir = newdirquote(all->dir, cnt(0, all, here));
 	all->stop = ifquote(all, here, inc);
+	printf("%d [%s]\n" , ft_tablen(all->dir), all->dir[1]);
 	return (0);
 }

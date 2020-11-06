@@ -1,14 +1,14 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/08/04 14:09:45 by chgilber          #+#    #+#             */
-/*   Updated: 2020/10/28 20:00:03 by chgilber         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
+/*************************************************************************** */
+/*                                                                           */
+/*                                                       :::      ::::::::   */
+/*  main.c                                             :+:      :+:    :+:   */
+/*                                                   +:+ +:+         +:+     */
+/*  By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
+/*                                               +#+#+#+#+#+   +#+           */
+/*  Created: 2020/08/04 14:09:45 by chgilber          #+#    #+#             */
+/*  Updated: 2020/10/28 20:00:03 by chgilber         ###   ########.fr       */
+/*                                                                           */
+/*************************************************************************** */
 
 #include "../incs/minishell.h"
 
@@ -22,7 +22,10 @@ int			letsgnl(t_all *all)
 	signal_manager();
 	crontold(all);
 	if (checkquote(all->buff) == 1)
+	{
 		write(1, "No Multilines\n", 14);
+		letsgnl(all);
+	}
 	g_builtin = 0;
 	all->countsmc = pipecount(*all, all->buff, ';') + 1;
 	free_tab(all->pdir);
@@ -71,7 +74,8 @@ int			main(int ac, char **av, char **env)
 		here = all.data - all.countsmc;
 		all.tube = (g_freete == 0 && all.pdir[here] && all.countsmc > 0) ?
 			pipecount(all, all.pdir[here], '|') : 0;
-		gestionpipe(&all);
+		if (all.countsmc > 0)
+			gestionpipe(&all);
 		if (all.countsmc < 1)
 			letsgnl(&all);
 	}

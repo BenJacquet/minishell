@@ -6,7 +6,7 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/06 16:15:04 by chgilber          #+#    #+#             */
-/*   Updated: 2020/11/05 22:12:29 by jabenjam         ###   ########.fr       */
+/*   Updated: 2020/10/28 19:40:50 by chgilber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void		handle(int sig)
 	}
 }
 
-int			signal_manager(void)
+int			signal_manager()
 {
 	(signal(SIGQUIT, &handle));
 	(signal(SIGINT, &handle));
@@ -54,8 +54,6 @@ void		init_allbis(t_all *all, char **env, int ac, char **av)
 	all->fds[1] = STDOUT_FILENO;
 	all->i = get_next_line(0, &all->buff);
 	crontold(all);
-	if (checkquote(all->buff) == 1)
-		write(1, "No Multilines\n", 14);
 	if ((all->env = ft_tab_to_list(env, 0)) == NULL)
 		new_env(all);
 	else
@@ -83,5 +81,10 @@ void		init_all(t_all *all, char **env, int ac, char **av)
 	all->wd_backup = NULL;
 	all->wd_backup = getcwd(all->wd_backup, 0);
 	all->bad = NULL;
-	all->shouldi = malloc(sizeof(int *) * 1);
+	all->shouldi = malloc(sizeof(int *) *  1);
+	if (checkquote(all->buff) == 1)
+	{
+		write(1, "No Multilines\n", 14);
+		letsgnl(all);
+	}
 }
