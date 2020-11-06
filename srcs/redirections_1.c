@@ -6,7 +6,7 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/23 14:38:04 by jabenjam          #+#    #+#             */
-/*   Updated: 2020/11/05 22:12:46 by jabenjam         ###   ########.fr       */
+/*   Updated: 2020/11/06 14:11:19 by jabenjam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,14 @@
 
 int		which_redirection(t_all *all, int *start)
 {
-	if (ft_strncmp(all->toks->value + *start, ">>", 2) == 0)
+	if (!ft_strncmp(all->toks->value + *start, "=>", 2) ||
+		!ft_strncmp(all->toks->value + *start, "=<", 2))
+		*start += (!ft_strncmp(all->toks->value + *start, "=>>", 3) ? 3 : 2);
+	else if (!ft_strncmp(all->toks->value + *start, ">>", 2))
 		all->red = O_A;
-	else if (ft_strncmp(all->toks->value + *start, ">", 1) == 0)
+	else if (!ft_strncmp(all->toks->value + *start, ">", 1))
 		all->red = O_T;
-	else if (ft_strncmp(all->toks->value + *start, "<", 1) == 0)
+	else if (!ft_strncmp(all->toks->value + *start, "<", 1))
 		all->red = I_R;
 	if (all->red == O_A || all->red == O_T || all->red == I_R)
 	{
@@ -105,7 +108,9 @@ void	get_redirections(t_all *all)
 	{
 		while (all->toks->value && ft_strlen(all->toks->value + start))
 		{
+			printf("all->toks->value + %d=[%s]\n", start, all->toks->value + start);
 			which_redirection(all, &start);
+			printf("all->red=[%d]\n", all->red);
 			if (all->red == 0)
 				start++;
 			else if (all->red)

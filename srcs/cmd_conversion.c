@@ -6,7 +6,7 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/30 14:30:56 by jabenjam          #+#    #+#             */
-/*   Updated: 2020/10/25 18:52:09 by jabenjam         ###   ########.fr       */
+/*   Updated: 2020/11/06 16:06:05 by jabenjam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ char	**convert_tokens_tab(t_tok *lst)
 	i = 0;
 	while (current != NULL)
 	{
-		if (current->ignore == 0 && current->beg < current->end)
+		if (current->ignore == 0 && current->beg <= current->end)
 			tab[i++] = clean_token(current);
 		current = current->next;
 	}
