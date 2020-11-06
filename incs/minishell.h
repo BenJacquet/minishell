@@ -6,7 +6,7 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/04 16:18:54 by jabenjam          #+#    #+#             */
-/*   Updated: 2020/11/05 22:28:03 by jabenjam         ###   ########.fr       */
+/*   Updated: 2020/11/06 16:59:18 by jabenjam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -233,5 +233,6 @@ int				get_error(t_all *all);
 int				slash(char	*str, int mode);
 int				commands(t_all *all);
 int				ft_envlen(t_env *env);
+t_tok			*skip_empty(t_tok *lst);
 
 #endif

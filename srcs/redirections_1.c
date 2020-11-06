@@ -6,7 +6,7 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/23 14:38:04 by jabenjam          #+#    #+#             */
-/*   Updated: 2020/11/06 14:11:19 by jabenjam         ###   ########.fr       */
+/*   Updated: 2020/11/06 16:32:14 by jabenjam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,9 +108,7 @@ void	get_redirections(t_all *all)
 	{
 		while (all->toks->value && ft_strlen(all->toks->value + start))
 		{
-			printf("all->toks->value + %d=[%s]\n", start, all->toks->value + start);
 			which_redirection(all, &start);
-			printf("all->red=[%d]\n", all->red);
 			if (all->red == 0)
 				start++;
 			else if (all->red)
