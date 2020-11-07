@@ -21,6 +21,9 @@ static int		in_charset(char c, char *charset)
 
 int				quote(char *s, int i)
 {
+	int stock;
+
+	stock = i;
 	if (s[i] == '\'' && checksquote(s) % 2 == 0)
 	{
 		i++;
@@ -34,8 +37,10 @@ int				quote(char *s, int i)
 		i++;
 		while (s[i] != '\"' && s[i])
 			i++;
-		if (s[i] != '\0')
+		if (s[i] == '\"')
 			i++;
+		else
+			return (stock++);
 	}
 	return (i);
 }
@@ -57,8 +62,10 @@ static int		ft_count_word(char *s, char *charset)
 				while (in_charset(s[i], charset) && s[i] != '\0')
 					i++;
 		}
-		else if (s[i] != '\0')
+		else if (s[i] != '\0' && (s[i] != '\"' && s[i] != '\''))
 			i++;
+		else if ((s[i] == '\"' || s[i] == '\''))
+			i = i;
 		else
 			break ;
 	}

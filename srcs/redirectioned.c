@@ -89,21 +89,3 @@ int		initcroco(t_all *all, int here)
 	all->shouldi[i] = 0;
 	return (0);
 }
-/*
-int		crocodir(t_all *all)
-{
-	int len;
-	int i;
-
-	i = 0;
-	len = ft_tablen(all->dir);
-	all->kotey = 0;
-	all->shouldi = malloc(sizeof(int *) * (len + 1));
-	while (i < len)
-	{
-		all->shouldi[i] = 1;
-		i++;
-	}
-	all->shouldi[i] = 0;
-	return (0);
-}*/

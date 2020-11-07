@@ -1,14 +1,14 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   maininit.c                                         :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/10/06 16:15:04 by chgilber          #+#    #+#             */
-/*   Updated: 2020/10/28 19:40:50 by chgilber         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
+/*************************************************************************** */
+/*                                                                           */
+/*                                                       :::      ::::::::   */
+/*  maininit.c                                         :+:      :+:    :+:   */
+/*                                                   +:+ +:+         +:+     */
+/*  By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
+/*                                               +#+#+#+#+#+   +#+           */
+/*  Created: 2020/10/06 16:15:04 by chgilber          #+#    #+#             */
+/*  Updated: 2020/10/28 19:40:50 by chgilber         ###   ########.fr       */
+/*                                                                           */
+/*************************************************************************** */
 
 #include "../incs/minishell.h"
 
@@ -81,7 +81,7 @@ void		init_all(t_all *all, char **env, int ac, char **av)
 	all->wd_backup = NULL;
 	all->wd_backup = getcwd(all->wd_backup, 0);
 	all->bad = NULL;
-	all->shouldi = malloc(sizeof(int *) *  1);
+	all->shouldi = malloc(sizeof(int *) * 1);
 	if (checkquote(all->buff) == 1)
 	{
 		write(1, "No Multilines\n", 14);

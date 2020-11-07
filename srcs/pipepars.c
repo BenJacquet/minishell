@@ -47,18 +47,18 @@ int	pipeok(t_all all, char c, int i)
 int	skipquote(char *str, int i)
 {
 	if (str[i] == '\'' && checksquote(str) % 2 == 0)
-		{
+	{
+		i++;
+		while (str[i] != '\'')
 			i++;
-			while (str[i] != '\'')
-				i++;
-		}
-		if (str[i] == '\"' && checkquote(str) % 2 == 0)
-		{
+	}
+	if (str[i] == '\"' && checkquote(str) % 2 == 0)
+	{
+		i++;
+		while (str[i] != '\"')
 			i++;
-			while (str[i] != '\"')
-				i++;
-		}
-		return (i);
+	}
+	return (i);
 }
 
 int	pipecount(t_all all, char *str, char c)

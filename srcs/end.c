@@ -20,6 +20,34 @@ int		end2(t_all *all, char **arg)
 	return (1);
 }
 
+int		numskip(char **arg, int i)
+{
+	char	*max;
+	int		index;
+	int		sign;
+
+	index = 0;
+	sign = 0;
+	max = "9223372036854775807\0";
+	while ((arg[1][i] && ft_isdigit(arg[1][i]) == 1) ||
+		((arg[1][0] == '+' || arg[1][0] == '-') && i == 0))
+			i++;
+	if (i >= 19)
+	{
+		if (i == 20)
+			sign = (arg[1][0] == '-' || arg[1][0] == '+') ? 1 : 0;
+		if ((i - sign) == 19)
+		{
+			while (index < 19 && max[index] - arg[1][index + sign] == 0)
+				index++;
+			i = ((max[index] - arg[1][index]) >= 0) ? i : 0;
+			return (i);
+		}
+		return (0);
+	}
+	return (i);
+}
+
 int		end(char *buff, t_all *all)
 {
 	int		i;
@@ -31,8 +59,7 @@ int		end(char *buff, t_all *all)
 		return (end2(all, arg));
 	if (arg[1])
 	{
-		while (arg[1][i] && ft_isdigit(arg[1][i]) == 1)
-			i++;
+		i = numskip(arg, i);
 		if (i != ft_strlen(arg[1]))
 		{
 			write(2, "minishell: exit: ", 17);
