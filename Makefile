@@ -29,6 +29,7 @@ SRCS =		srcs/cd.c\
 			srcs/get_execs.c\
 			srcs/GNL/get_next_line_utils.c\
 			srcs/GNL/get_next_line.c\
+			srcs/ifjoin.c\
 			srcs/io_manager.c\
 			srcs/joinjoin.c\
 			srcs/joinquote.c\
@@ -37,6 +38,7 @@ SRCS =		srcs/cd.c\
 			srcs/list.c\
 			srcs/main.c\
 			srcs/maininit.c\
+			srcs/noquote.c\
 			srcs/parse_cmd.c\
 			srcs/pipepars.c\
 			srcs/pipes.c\
@@ -109,11 +111,11 @@ $(NAME) : $(OBJS)
 	@$(CC) $(CFLAGS) -I $(INCLUDES) -o ${<:.c=.o} -c $<
 
 clean :
-	@rm -f $(OBJS) 
+	@rm -f $(OBJS)
 	@make clean -C srcs/libft
 
 fclean : clean
-	@rm -f $(NAME) 
+	@rm -f $(NAME)
 	@make fclean -C srcs/libft
 
 re : fclean all

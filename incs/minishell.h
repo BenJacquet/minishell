@@ -6,7 +6,7 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/04 16:18:54 by jabenjam          #+#    #+#             */
-/*   Updated: 2020/11/06 16:59:18 by jabenjam         ###   ########.fr       */
+/*   Updated: 2020/11/07 17:28:21 by jabenjam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -155,6 +155,11 @@ int				letsgnl(t_all *all);
 int				multidir(t_all *all, int fd[all->tube][2]);
 int				action(t_all *all, int fd[all->tube][2]);
 int				joinquotev2(t_all *all);
+int				ifjoin(t_all *all, char *buff, int *inc, char quote);
+int				ifjoininit(char *buff, int quote, int i);
+int				ifjoin(t_all *all, char *buff, int *inc, char quote);
+int				noquote(t_all *all, char *buff, int *inc);
+int				noquoteinit(int *inc, char *buff, int i, int *fusion);
 
 /*
 ** -------------BEN------------------------------------------------------------
