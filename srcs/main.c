@@ -17,14 +17,13 @@ int			letsgnl(t_all *all)
 	g_freete = 0;
 	get_dir(all);
 	free(all->buff);
-	signal_manager();
 	all->i = get_next_line(0, &all->buff);
 	signal_manager();
 	crontold(all);
 	if (checkquote(all->buff) == 1)
 	{
 		write(1, "No Multilines\n", 14);
-		letsgnl(all);
+		return (letsgnl(all));
 	}
 	g_builtin = 0;
 	all->countsmc = pipecount(*all, all->buff, ';') + 1;

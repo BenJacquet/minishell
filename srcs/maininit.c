@@ -63,11 +63,23 @@ void		init_allbis(t_all *all, char **env, int ac, char **av)
 	}
 	all->ret = new_elem("?=0", 0);
 	all->red = 0;
+	all->wd_backup = NULL;
+	all->wd_backup = getcwd(all->wd_backup, 0);
 }
 
 void		init_all(t_all *all, char **env, int ac, char **av)
 {
 	init_allbis(all, env, ac, av);
+	all->bad = NULL;
+	all->shouldi = malloc(sizeof(int *) * 1);
+	all->dir = ft_split(all->buff, ' ');
+	if (checkquote(all->buff) == 1)
+	{
+		all->xdir = ft_split(all->buff, ' ');
+		all->pdir = ft_split(all->buff, ' ');
+		write(1, "No Multilines\n", 14);
+		return ((void)letsgnl(all));
+	}
 	all->countsmc = (g_freete == 0) ? pipecount(*all, all->buff, ';') + 1 : 0;
 	all->pdir = ft_splitmini(all->buff, ';');
 	crocofail(all, all->pdir, ';');
@@ -77,14 +89,4 @@ void		init_all(t_all *all, char **env, int ac, char **av)
 	all->data = all->countsmc;
 	all->xdir = ft_splitmini(all->pdir[0], '|');
 	(all->tube > 0 && all->countsmc > 1) ? crocofail(all, all->pdir, '|') : 0;
-	all->dir = ft_split(all->buff, ' ');
-	all->wd_backup = NULL;
-	all->wd_backup = getcwd(all->wd_backup, 0);
-	all->bad = NULL;
-	all->shouldi = malloc(sizeof(int *) * 1);
-	if (checkquote(all->buff) == 1)
-	{
-		write(1, "No Multilines\n", 14);
-		letsgnl(all);
-	}
 }
