@@ -6,7 +6,7 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/05 15:21:37 by jabenjam          #+#    #+#             */
-/*   Updated: 2020/11/05 22:20:27 by jabenjam         ###   ########.fr       */
+/*   Updated: 2020/11/09 15:05:59 by jabenjam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int		commands(t_all *all)
 	else if (ft_strcmp(all->dir[0], "unset") == 0)
 		ft_unset_core(all);
 	else if (ft_strcmp(all->dir[0], "env") == 0)
-		ft_putenv(all->env);
+		ft_putenv(all);
 	else
 	{
 		all->exec = get_path(all);
