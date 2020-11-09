@@ -6,25 +6,32 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/05 21:47:26 by jabenjam          #+#    #+#             */
-/*   Updated: 2020/11/05 22:28:10 by jabenjam         ###   ########.fr       */
+/*   Updated: 2020/11/09 15:05:56 by jabenjam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incs/minishell.h"
 
-void	ft_putenv(t_env *env)
+void	ft_putenv(t_all *all)
 {
 	int		i;
 	char	**new;
 
 	i = 0;
-	new = ft_list_to_tab(env, 0, 0);
+	if (ft_tablen(all->dir) > 1)
+	{
+		update_return(all, 127);
+		ft_put_error(strerror(2), all->dir[1], 1, 1);
+		return ;
+	}
+	new = ft_list_to_tab(all->env, 0, 0);
 	while (new[i] != 0)
 	{
 		ft_putstr_fd(new[i++], 1);
 		write(1, "\n", 1);
 	}
 	free_tab(new);
+	update_return(all, 0);
 }
 
 char	*remove_space(char *str)

@@ -6,7 +6,7 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/04 17:30:12 by chgilber          #+#    #+#             */
-/*   Updated: 2020/11/09 11:47:16 by jabenjam         ###   ########.fr       */
+/*   Updated: 2020/11/09 15:06:33 by jabenjam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ int		end(char *buff, t_all *all)
 			write(2, "minishell: exit: ", 17);
 			write(2, arg[1], ft_strlen(arg[1]));
 			write(2, ": numeric argument required\n", 29);
-			update_return(all, 255);
+			update_return(all, 2);
 		}
 		else
 			update_return(all, ft_atoi(arg[1]));
@@ -74,9 +74,12 @@ int		end(char *buff, t_all *all)
 	return (0);
 }
 
-int		ft_put_error(char *error, char *var, int mode)
+int		ft_put_error(char *error, char *var, int env, int mode)
 {
-	write(2, "minishell:", 10);
+	if (env == 0)
+		write(2, "minishell:", 10);
+	else
+		write(2, "env:", 4);
 	if (mode == 1)
 	{
 		ft_putstr_fd(" ", 1);

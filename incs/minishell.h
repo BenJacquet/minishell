@@ -6,7 +6,7 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/04 16:18:54 by jabenjam          #+#    #+#             */
-/*   Updated: 2020/11/07 17:28:21 by jabenjam         ###   ########.fr       */
+/*   Updated: 2020/11/09 15:05:54 by jabenjam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -175,7 +175,7 @@ int				is_binary(t_all *all);
 int				run_exec(t_all *all);
 char			*ft_getenv(t_all *all, char *name, int mode);
 char			*ft_getenv2(char *name, t_env *current, int mode);
-void			ft_putenv(t_env *env);
+void			ft_putenv(t_all *all);
 int				ft_export_core(t_all *all);
 int				ft_export_null(t_env *env);
 void			ft_export_edit(t_env *var, t_env *env);
@@ -199,7 +199,7 @@ t_env			*new_elem(char *var, int free_);
 t_env			*allocate_elem(t_env *elem, char *var);
 char			*ft_strjoin(char const *s1, char const *s2);
 char			*ft_strjoinf(char *s1, char *s2);
-int				ft_put_error(char *error, char *var, int mode);
+int				ft_put_error(char *error, char *var, int env, int mode);
 int				ft_check_name(char *var);
 int				io_manager_dup_replace(t_all *all,
 					int fd[all->tube][2], int fork);
