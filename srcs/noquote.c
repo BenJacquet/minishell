@@ -19,7 +19,6 @@ int		noquoteinit(int *inc, char *buff, int i, int *fusion)
 	i = (buff[1] == ' ') ? 2 : 1;
 	while (buff[i] && buff[i] != '\'' && buff[i] != ' ' && buff[i] != '\"')
 		i++;
-	//	printf("noquote buff before = [%s] et %d\n", buff + ((buff[1] == ' ') ? 2 : 1), i);
 	return (i);
 }
 
