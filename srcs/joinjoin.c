@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/09/28 15:51:47 by chgilber          #+#    #+#             */
-/*   Updated: 2020/11/05 22:18:01 by jabenjam         ###   ########.fr       */
+/*   Created: 2020/11/09 14:31:19 by jabenjam          #+#    #+#             */
+/*   Updated: 2020/11/09 14:34:47 by jabenjam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,6 @@ void	joinjoin(t_all *all, char *buff, int *inc, int i)
 	all->dir[*inc] = ft_strncat(all->dir[*inc], buff + 2, i - 2);
 	free(tmp);
 }
-
-/* && all->countpipe >= 0*/ // g_freete pour le ctrld apres un ctrlc
 
 int		crontold(t_all *all)
 {

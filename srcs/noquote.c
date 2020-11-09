@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   noquote.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/11/09 14:32:05 by jabenjam          #+#    #+#             */
+/*   Updated: 2020/11/09 14:35:24 by jabenjam         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "../incs/minishell.h"
 
@@ -19,7 +30,7 @@ int		noquote(t_all *all, char *buff, int *inc)
 
 	i = noquoteinit(inc, buff, i, &fusion);
 	buff = tokla(all, buff, &i, (buff[1] == ' ') ? 0 : 1);
-		if (all->diff == -666)
+	if (all->diff == -666)
 		return (i);
 //	printf("noquote pdir = [%s]\n",all->pdir[all->data - all->countsmc]);
 	if (fusion == 0 && ((buff[1] == ' ') ? i > 2 : i > 1))
