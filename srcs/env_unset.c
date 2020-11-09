@@ -6,7 +6,7 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/05 12:35:39 by jabenjam          #+#    #+#             */
-/*   Updated: 2020/11/05 22:10:24 by jabenjam         ###   ########.fr       */
+/*   Updated: 2020/11/09 15:11:24 by jabenjam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,12 +61,12 @@ int		ft_unset_check_name(char *var)
 	{
 		if (ft_isdigit(var[i]) || var[i] == '=' ||
 			(!ft_isalnum(var[i]) && var[i] != '_'))
-			return (ft_put_error("not a valid identifier", var, 1));
+			return (ft_put_error("not a valid identifier", var, 0, 1));
 		while (ft_isalnum(var[i]) || var[i] == '_')
 			i++;
 		if (var[i] != '\0')
 		{
-			return (ft_put_error("not a valid identifier", var, 1));
+			return (ft_put_error("not a valid identifier", var, 0, 1));
 		}
 		else
 			return (0);
