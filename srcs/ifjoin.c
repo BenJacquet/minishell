@@ -39,7 +39,7 @@ int		ifjoin(t_all *all, char *buff, int *inc, char quote)
 		all->dir[*inc] = malloc(sizeof(char) * i);
 		all->dir[*inc] = ft_strncpy(all->dir[*inc], buff + 2, i - 2);
 	}
-	else if (*inc > 0 && buff[0] != ' ' && i != 2)
+	else if (*inc > 0 && buff[0] != ' ')
 		joinjoin(all, buff, inc, i);
 	else
 	{
