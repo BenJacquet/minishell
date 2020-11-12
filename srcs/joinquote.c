@@ -23,16 +23,19 @@ int		ifquote(t_all *all, int here, int inc)
 {
 	while (all->u < ft_strlen(all->pdir[here]) && all->pdir[here][all->u])
 	{
+		//	printf("pdir sent = [%s]et %d\n",all->pdir[all->data - all->countsmc] + all->u -1 , all->u);
 		while (all->pdir[here][all->u] == ' ')
 			all->u++;
 		if (all->pdir[here][all->u] == '\'')
 		{
-			all->u = all->u + ifjoin(all, all->pdir[here] + all->u - 1, &inc, '\'');
+			all->u = all->u +
+				ifjoin(all, all->pdir[here] + all->u - 1, &inc, '\'');
 			inc++;
 		}
 		else if (all->pdir[here][all->u] == '\"')
 		{
-			all->u = all->u + ifjoin(all, all->pdir[here] + all->u - 1, &inc, '\"');
+			all->u = all->u +
+				ifjoin(all, all->pdir[here] + all->u - 1, &inc, '\"');
 			inc++;
 		}
 		else if (all->pdir[here][all->u])
@@ -52,7 +55,6 @@ int		joinquote(t_all *all)
 	here = all->data - all->countsmc;
 	all->u = 0;
 	inc = 0;
-	all->dolhere = 0;
 	free_tab(all->dir);
 	initcroco(all, here);
 	all->dir = newdirquote(all->dir, cnt(0, all, here));

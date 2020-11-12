@@ -12,6 +12,22 @@
 
 #include "../incs/minishell.h"
 
+int		hmwtoken(t_all *all, int here)
+{
+	int	i;
+	int	dol;
+
+	i = 0;
+	dol = 0;
+	while (all->pdir[here][i])
+	{
+		if (all->pdir[here][i] == '$')
+			dol++;
+		i++;
+	}
+	return ((dol * 10));
+}
+
 int		noquotecount(char *buff, int *inc)
 {
 	int	i;
@@ -65,5 +81,5 @@ int		cnt(int i, t_all *all, int here)
 		else
 			break ;
 	}
-	return (inc);
+	return ((inc + hmwtoken(all, here)));
 }

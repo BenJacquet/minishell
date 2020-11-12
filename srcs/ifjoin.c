@@ -12,12 +12,14 @@
 
 #include "../incs/minishell.h"
 
-int		ifjoininit(char *buff, int quote, int i)
+int		ifjoininit(char *buff, int quote)
 {
+	int	i;
+
 	i = 2;
-	while (buff[i] != quote)
-		i++;
 //	printf("ifjoin buff avant = [%s] et %d\n", buff  + 2, i );
+	while (buff[i] && buff[i] != quote)
+		i++;
 	return (i);
 }
 
@@ -25,14 +27,11 @@ int		ifjoin(t_all *all, char *buff, int *inc, char quote)
 {
 	int		i;
 
-	i = ifjoininit(buff, quote, i);
+	i = ifjoininit(buff, quote);
 	croco(all, buff, i, *inc);
-	buff = tokla(all, buff, &i, 0);
-	if (all->diff == -666)
-	{
-		(*inc)--;
-		return (i);
-	}
+	buff = tokla(all, buff, &i, 2);
+//	printf("ifjoin buff apres = [%s] et %d\n", buff  + 2, i );
+//		printf("ifjoin\n");
 	if (*inc > 0 && (buff[0] == ' ' || buff[0] == '<' || buff[0] == '>')
 			&& buff[2] != quote)
 	{

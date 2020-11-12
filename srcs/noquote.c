@@ -12,8 +12,10 @@
 
 #include "../incs/minishell.h"
 
-int		noquoteinit(int *inc, char *buff, int i, int *fusion)
+int		noquoteinit(int *inc, char *buff, int *fusion)
 {
+	int	i;
+
 	*fusion = (*inc > 0 && (buff[0] != ' ')
 			&& (buff[1] != '<' && buff[1] != '>')) ? 1 : 0;
 	i = (buff[1] == ' ') ? 2 : 1;
@@ -27,11 +29,12 @@ int		noquote(t_all *all, char *buff, int *inc)
 	int	i;
 	int fusion;
 
-	i = noquoteinit(inc, buff, i, &fusion);
-	buff = tokla(all, buff, &i, (buff[1] == ' ') ? 0 : 1);
+	i = noquoteinit(inc, buff, &fusion);
+	buff = tokla(all, buff, &i, (buff[1] == ' ') ? 2 : 1);
 	if (all->diff == -666)
-		return (i);
-//	printf("noquote pdir = [%s]\n",all->pdir[all->data - all->countsmc]);
+		return (0);
+	if (ft_count_word(buff + (all->u + (buff[1] == ' ') ? 2 : 1), " ") > 0)
+		i = noquoteinit(inc, buff, &fusion);
 	if (fusion == 0 && ((buff[1] == ' ') ? i > 2 : i > 1))
 	{
 		all->dir[*inc] = malloc(sizeof(char) * i + 1);
@@ -46,6 +49,5 @@ int		noquote(t_all *all, char *buff, int *inc)
 		i = (buff[i] == ' ') ? i : i - 1;
 		(*inc)++;
 	}
-//	printf("allu = %d et i = %d et len = %d\n" , all->u, i, ft_strlen(all->pdir[all->data -all->countsmc]));
 	return ((i));
 }
