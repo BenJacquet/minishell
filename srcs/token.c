@@ -75,7 +75,6 @@ void	dolar(t_all *all, char *buff, int u)
 	free(all->pdir[all->data - all->countsmc]);
 	all->pdir[all->data - all->countsmc] = ft_strjoin(tmp[3], tmp[0]);
 //	printf("buff final = %s\n", all->pdir[all->data - all->countsmc]);
-	all->kotey = 0;
 	free(tmp[3]);
 	free(tmp[0]);
 }
@@ -84,12 +83,8 @@ char	*tokla(t_all *all, char *buff, int *end, int i)
 {
 	while (buff[i] && i < *end)
 	{
-	//	printf("buff -> [%s][%c] et %d \n", buff + i, buff[i], i);
 		if (buff[i] == '\"')
-		{
-			i--;
 			break ;
-		}
 		all->mode = (all->kotey > 1) ? 1 : 0;
 		all->diff = 0;
 		if (buff[i] == '$' && all->kotey != 3)
