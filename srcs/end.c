@@ -55,7 +55,7 @@ int		end(char *buff, t_all *all)
 
 	i = 0;
 	arg = ft_split(buff, ' ');
-	if (arg[2] && ft_isdigit(arg[1][i]) == 1)
+	if (arg[2] && arg[1] && ft_isdigit(arg[1][i]) == 1)
 		return (end2(all, arg));
 	if (arg[1])
 	{

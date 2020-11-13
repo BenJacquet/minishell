@@ -66,16 +66,12 @@ int		croco(t_all *all, char *buff, int len, int inc)
 
 	i = 2;
 	all->kotey = (buff[1] && buff[1] == '\'') ? 3 : 2;
-			printf(" shouldi = %d, inc = %d, len = %d, buff=[%s]\n", all->shouldi[inc], inc, len, buff);
 	while (buff[i] && i < len)
 	{
 		if (buff[i] == '<' || buff[i] == '>')
 		{
-
 			all->shouldi[inc] = 2;
-			printf(" shouldi = %d, inc = %d\n", all->shouldi[inc], inc);
 			return (1);
-
 		}
 		i++;
 	}

@@ -43,7 +43,6 @@ int		ifquote(t_all *all, int here, int inc)
 		else
 			break ;
 	}
-			printf("endshouldi = %d, inc = %d\n", all->shouldi[inc], inc);
 	all->dir[inc] = NULL;
 	return (all->stop);
 }
@@ -60,8 +59,5 @@ int		joinquote(t_all *all)
 	initcroco(all, here);
 	all->dir = newdirquote(all->dir, cnt(0, all, here));
 	all->stop = ifquote(all, here, inc);
-	int i = 0;
-	for ( i = 0; all->dir[i] ; i++)
-		printf("forshouldi = %d, inc = %d\n", all->shouldi[i], i);
 	return (0);
 }
