@@ -19,7 +19,7 @@ int		noquoteinit(int *inc, char *buff, int *fusion)
 	*fusion = (*inc > 0 && (buff[0] != ' ')
 			&& (buff[1] != '<' && buff[1] != '>')) ? 1 : 0;
 	i = (buff[1] == ' ') ? 2 : 1;
-	while (buff[i] && buff[i] != '\'' && buff[i] != ' ' && buff[i] != '\"')
+	while (buff[i] && buff[i] != '\'' && buff[i] != ' ' && buff[i] != '\"' && buff[i] != '<' && buff[i] != '>')
 		i++;
 	return (i);
 }
@@ -35,12 +35,12 @@ int		noquote(t_all *all, char *buff, int *inc)
 		return (0);
 	if (ft_count_word(buff + (all->u + (buff[1] == ' ') ? 2 : 1), " ") > 0)
 		i = noquoteinit(inc, buff, &fusion);
-	if (fusion == 0 && ((buff[1] == ' ') ? i > 2 : i > 1))
+	if (fusion == 0 && (((buff[1] == ' ') ? i > 2 : i > 1)  || (buff[i] == '>' || buff[i] == '<')))
 	{
 		all->dir[*inc] = malloc(sizeof(char) * i + 1);
 		all->dir[*inc] = ft_strncpy(all->dir[*inc],
-				buff + ((buff[1] == ' ') ? 2 : 1), i - 1);
-		i = (buff[i] == ' ') ? i : i - 1;
+				buff + ((buff[1] == ' ') ? 2 : 1), i - ((i != 1) ? 1 : 0));
+		i = (buff[i] == ' ' || ((buff[i] == '>' || buff[i] == '<' ) && i == 1)) ? i : i - 1;
 		(*inc)++;
 	}
 	else if (fusion == 1)
