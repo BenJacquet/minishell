@@ -22,6 +22,7 @@ void	joinjoin(t_all *all, char *buff, int *inc, int i)
 	all->dir[*inc] = malloc(sizeof(char) * i + ft_strlen(tmp) + 1);
 	all->dir[*inc] = ft_strncpy(all->dir[*inc], tmp, ft_strlen(tmp));
 	all->dir[*inc] = ft_strncat(all->dir[*inc], buff + 2, i - 2);
+	croco(all, all->dir[*inc], ft_strlen(all->dir[*inc]), *inc);
 	free(tmp);
 }
 
