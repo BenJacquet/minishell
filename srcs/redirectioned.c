@@ -12,6 +12,13 @@
 
 #include "../incs/minishell.h"
 
+int		itscroco(char comp)
+{
+	if (comp == '>' || comp == '<')
+		return (1);
+	return (0);
+}
+
 int		messagecroco(char **pdir, char c, int i, int j)
 {
 	if (pdir[i][j] == '>' || pdir[i][j] == '<')
@@ -58,13 +65,17 @@ int		croco(t_all *all, char *buff, int len, int inc)
 	int	i;
 
 	i = 2;
-	all->kotey = (buff[1] && buff[1] == '\'' && buff[i] == '$') ? 3 : 2;
+	all->kotey = (buff[1] && buff[1] == '\'') ? 3 : 2;
+			printf(" shouldi = %d, inc = %d, len = %d, buff=[%s]\n", all->shouldi[inc], inc, len, buff);
 	while (buff[i] && i < len)
 	{
 		if (buff[i] == '<' || buff[i] == '>')
 		{
+
 			all->shouldi[inc] = 2;
+			printf(" shouldi = %d, inc = %d\n", all->shouldi[inc], inc);
 			return (1);
+
 		}
 		i++;
 	}

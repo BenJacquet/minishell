@@ -15,9 +15,16 @@
 int		noquoteinit(int *inc, char *buff, int *fusion)
 {
 	int	i;
-
+	
+	printf("%s et %c \n", buff + 1, buff[1]);
+	if (itscroco(buff[1]) == 1)
+	{
+	printf("ok");
+		*fusion = 0;
+		return (1);
+	}
 	*fusion = (*inc > 0 && (buff[0] != ' ')
-			&& (buff[1] != '<' && buff[1] != '>')) ? 1 : 0;
+			&& (itscroco(buff[0]) == 0)) ? 1 : 0;
 	i = (buff[1] == ' ') ? 2 : 1;
 	while (buff[i] && buff[i] != '\'' && buff[i] != ' ' && buff[i] != '\"' && buff[i] != '<' && buff[i] != '>')
 		i++;
@@ -35,7 +42,7 @@ int		noquote(t_all *all, char *buff, int *inc)
 		return (0);
 	if (ft_count_word(buff + (all->u + (buff[1] == ' ') ? 2 : 1), " ") > 0)
 		i = noquoteinit(inc, buff, &fusion);
-	if (fusion == 0 && (((buff[1] == ' ') ? i > 2 : i > 1)  || (buff[i] == '>' || buff[i] == '<')))
+	if (fusion == 0 && (((buff[1] == ' ') ? i > 2 : i > 1)  || itscroco(buff[i]) == 1 ))
 	{
 		all->dir[*inc] = malloc(sizeof(char) * i + 1);
 		all->dir[*inc] = ft_strncpy(all->dir[*inc],

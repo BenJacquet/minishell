@@ -21,7 +21,7 @@ int		hmwtoken(t_all *all, int here)
 	dol = 0;
 	while (all->pdir[here][i])
 	{
-		if (all->pdir[here][i] == '$')
+		if (all->pdir[here][i] == '$' || itscroco(all->pdir[here][i]) == 1)
 			dol++;
 		i++;
 	}
