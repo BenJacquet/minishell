@@ -79,7 +79,6 @@ typedef struct	s_all
 	t_red		*reds;
 	t_red		*bad;
 	int			mode;
-	int			dolhere;
 	int			*shouldi;
 	int			kotey;
 	int			dolnbr;
@@ -156,10 +155,12 @@ int				multidir(t_all *all, int fd[all->tube][2]);
 int				action(t_all *all, int fd[all->tube][2]);
 int				joinquotev2(t_all *all);
 int				ifjoin(t_all *all, char *buff, int *inc, char quote);
-int				ifjoininit(char *buff, int quote, int i);
+int				ifjoininit(char *buff, int quote);
 int				ifjoin(t_all *all, char *buff, int *inc, char quote);
 int				noquote(t_all *all, char *buff, int *inc);
-int				noquoteinit(int *inc, char *buff, int i, int *fusion);
+int				noquoteinit(int *inc, char *buff, int *fusion);
+int				ft_count_word(char *s, char *charset);
+void			handle(int sig);
 
 /*
 ** -------------BEN------------------------------------------------------------

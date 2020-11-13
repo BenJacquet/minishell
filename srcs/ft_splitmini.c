@@ -31,21 +31,23 @@ int				quote(char *s, int i)
 			i++;
 		if (s[i] != '\0')
 			i++;
+		else
+			return (stock + 1);
 	}
 	if (s[i] == '\"' && checkdquote(s) % 2 == 0)
 	{
 		i++;
 		while (s[i] != '\"' && s[i])
 			i++;
-		if (s[i] == '\"')
+		if (s[i] != '\0')
 			i++;
 		else
-			return (stock++);
+			return (stock + 1);
 	}
 	return (i);
 }
 
-static int		ft_count_word(char *s, char *charset)
+int				ft_count_word(char *s, char *charset)
 {
 	int	words;
 	int	i;
