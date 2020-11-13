@@ -6,7 +6,7 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/23 14:38:04 by jabenjam          #+#    #+#             */
-/*   Updated: 2020/11/06 16:32:14 by jabenjam         ###   ########.fr       */
+/*   Updated: 2020/11/13 17:33:33 by jabenjam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,8 @@
 
 int		which_redirection(t_all *all, int *start)
 {
-	if (!ft_strncmp(all->toks->value + *start, "=>", 2) ||
-		!ft_strncmp(all->toks->value + *start, "=<", 2))
-		*start += (!ft_strncmp(all->toks->value + *start, "=>>", 3) ? 3 : 2);
+	if (all->toks->whole == 2)
+		*start += ft_strlen(all->toks->value);
 	else if (!ft_strncmp(all->toks->value + *start, ">>", 2))
 		all->red = O_A;
 	else if (!ft_strncmp(all->toks->value + *start, ">", 1))

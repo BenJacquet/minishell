@@ -6,7 +6,7 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/30 14:30:56 by jabenjam          #+#    #+#             */
-/*   Updated: 2020/11/09 11:46:36 by jabenjam         ###   ########.fr       */
+/*   Updated: 2020/11/13 17:38:36 by jabenjam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,11 +99,13 @@ t_tok	*convert_tokens_lst(char **cmd, int *whole)
 	if (cmd)
 	{
 		current = new_token(cmd[i], NULL, whole[i]);
+		printf("cmd[%d]=[%s] --- whole=[%d]\n", i, cmd[i], whole[i]);
 		head = current;
 		i++;
 		while (cmd[i] != NULL)
 		{
 			current->next = new_token(cmd[i], current, whole[i]);
+			printf("cmd[%d]=[%s] --- whole=[%d]\n", i, cmd[i], whole[i]);
 			current = current->next;
 			i++;
 		}
