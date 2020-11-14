@@ -6,7 +6,7 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/30 14:30:56 by jabenjam          #+#    #+#             */
-/*   Updated: 2020/11/13 17:38:36 by jabenjam         ###   ########.fr       */
+/*   Updated: 2020/11/14 11:33:05 by jabenjam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,12 @@ t_tok	*new_token(char *token, t_tok *previous, int whole)
 	new->beg = 0;
 	new->end = ft_strlen(token);
 	new->whole = whole;
-	if (!ft_strncmp(token, ">", 1) || !ft_strncmp(token, "<", 1))
+	if (whole == 1 && (!ft_strncmp(token, ">", 1) || !ft_strncmp(token, "<", 1)))
 		new->ignore = 1;
 	else
 		new->ignore = 0;
 	new->previous = previous;
+	printf("TOKEN --- Value=[%s] --- ignore=[%d]\n", new->value, new->ignore);
 	new->next = NULL;
 	return (new);
 }
