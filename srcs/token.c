@@ -20,8 +20,7 @@ void	finddolar(t_all *all, int *i, char **tmp)
 	all->j = 0;
 	while (*i < ft_strlen(tmp[0]) && tmp[0][*i] != ' ')
 	{
-		if (tmp[0][*i] == '\'' || tmp[0][*i] == '\"'
-				|| tmp[0][*i] == '$' || tmp[0][*i] == ';' || tmp[0][*i] == '|')
+		if (ft_isalnum(tmp[0][*i]) ==  0 || tmp[0][*i] == '_' || tmp[0][*i] == '$')
 			break ;
 		tmp[1][all->j] = tmp[0][*i];
 		(*i)++;
