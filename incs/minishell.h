@@ -144,6 +144,7 @@ int				joinquote(t_all *all);
 void			joinjoin(t_all *all, char *buff, int *inc, int i);
 int				crontold(t_all *all);
 int				croco(t_all *all, char *buff, int len, int inc);
+int				itscroco(char comp);
 void			crocofail(t_all *all, char **pdir, char c);
 int				initcroco(t_all *all, int here);
 int				parse_command(t_all *all, int fd_p[all->tube][2]);
