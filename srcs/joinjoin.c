@@ -25,6 +25,8 @@ void	joinjoin(t_all *all, char *buff, int *inc, int i)
 	croco(all, all->dir[*inc], ft_strlen(all->dir[*inc]), *inc);
 	if (itscroco(all->dir[*inc][0]) == 1 || itscroco(all->dir[*inc][1]) == 1)
 		all->shouldi[*inc] = 2;
+	if (all->shouldi[(*inc) + 1])
+		all->shouldi[(*inc) + 1] = 1;
 	free(tmp);
 }
 
