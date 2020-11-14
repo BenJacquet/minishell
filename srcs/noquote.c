@@ -48,7 +48,7 @@ int		noquote(t_all *all, char *buff, int *inc)
 		return (0);
 	if (ft_count_word(buff + (all->u + (buff[1] == ' ') ? 2 : 1), " ") > 0)
 		i = noquoteinit(inc, buff, &fusion);
-	if (condi(fusion, i, buff) == 1 || itscroco(buff[i]) == 1)
+	if (condi(fusion, i, buff) == 1 || (itscroco(buff[1]) == 1 && i == 1))
 	{
 		all->dir[*inc] = malloc(sizeof(char) * i + 1);
 		all->dir[*inc] = ft_strncpy(all->dir[*inc],
