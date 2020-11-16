@@ -20,7 +20,7 @@ void	finddolar(t_all *all, int *i, char **tmp)
 	all->j = 0;
 	while (*i < ft_strlen(tmp[0]) && tmp[0][*i] != ' ')
 	{
-		if (ft_isalnum(tmp[0][*i]) ==  0 || tmp[0][*i] == '_' || tmp[0][*i] == '$')
+		if (((ft_isalnum(tmp[0][*i]) ==  0)  && tmp[0][*i] != '_' ) || tmp[0][*i] == '$')
 			break ;
 		tmp[1][all->j] = tmp[0][*i];
 		(*i)++;
@@ -35,7 +35,7 @@ void	finddolar(t_all *all, int *i, char **tmp)
 		free(tmp[2]);
 		tmp[2] = ft_strdup("$");
 	}
-	all->diff = ft_strlen(tmp[2]);
+	all->diff = ft_strlen(tmp[2]) - ft_strlen(tmp[1]);
 }
 
 int		nicedolbro(t_all *all, int i, char **tmp)
@@ -85,17 +85,20 @@ char	*tokla(t_all *all, char *buff, int *end, int i)
 		if (buff[i] == '\"')
 			break ;
 		all->mode = (all->kotey > 1) ? 1 : 0;
-		all->diff = 0;
 		if (buff[i] == '$' && all->kotey != 3)
 		{
 			dolar(all, buff + i, i);
 			buff = all->pdir[all->data - all->countsmc] + all->u - 1;
-			i = (all->diff < 1) ? i - 1 : i;
+			i = (i + all->diff > 0) ? i + all->diff : i;
+			if ((i + all->diff) > 0 && buff[i - all->diff] == '$')
+				break ;
 			*end = *end + all->diff;
-			i = (all->kotey > 1) ? 1 : 0;
 		}
-		i++;
+		if (buff[i] && i < *end)
+			i++;
 	}
+	if (buff[i] && buff[i - 1] && ((buff[i - 1] == '\'' && all->kotey != 3) || (buff[i - 1] == '\"' && all->kotey != 2)))
+		i = 0;
 	*end = i;
 	all->kotey = 0;
 	return (buff);
