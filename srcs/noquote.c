@@ -44,9 +44,7 @@ int		noquote(t_all *all, char *buff, int *inc)
 
 	i = noquoteinit(inc, buff, &fusion);
 	buff = tokla(all, buff, &i, (buff[1] == ' ') ? 2 : 1);
-	if (all->diff == -666)
-		return (0);
-	if (ft_count_word(buff + (/*all->u + (buff[1] == ' ') ? 2 :*/ 1), " ") > 0)
+	if (ft_count_word(buff + ((buff[1] == ' ') ? 2 : 1), " ") > 0)
 		i = noquoteinit(inc, buff, &fusion);
 	if (condi(fusion, i, buff) == 1 || (itscroco(buff[1]) == 1 && i == 1))
 	{

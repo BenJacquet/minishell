@@ -30,7 +30,6 @@ int		ifjoin(t_all *all, char *buff, int *inc, char quote)
 	i = ifjoininit(buff, quote);
 	croco(all, buff, i, *inc);
 	buff = tokla(all, buff, &i, 2);
-//		printf("ifjoin\n");
 	if (*inc > 0 && (buff[0] == ' ' || buff[0] == '<' || buff[0] == '>')
 			&& buff[2] != quote)
 	{

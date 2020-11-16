@@ -21,9 +21,6 @@ static int		in_charset(char c, char *charset)
 
 int				quote(char *s, int i)
 {
-	int stock;
-
-	stock = i;
 	if (s[i] == '\'' && checksquote(s) % 2 == 0)
 	{
 		i++;
@@ -31,19 +28,17 @@ int				quote(char *s, int i)
 			i++;
 		if (s[i] != '\0')
 			i++;
-		else
-			return (stock + 1);
 	}
-	if (s[i] == '\"' && checkdquote(s) % 2 == 0)
+	else if (s[i] == '\"' && checkdquote(s) % 2 == 0)
 	{
 		i++;
 		while (s[i] != '\"' && s[i])
 			i++;
 		if (s[i] != '\0')
 			i++;
-		else
-			return (stock + 1);
 	}
+	else
+		i++;
 	return (i);
 }
 
@@ -56,7 +51,6 @@ int				ft_count_word(char *s, char *charset)
 	i = 0;
 	while (s[i] != '\0')
 	{
-		i = quote(s, i);
 		if (in_charset(s[i], charset))
 		{
 			words++;
@@ -64,12 +58,7 @@ int				ft_count_word(char *s, char *charset)
 				while (in_charset(s[i], charset) && s[i] != '\0')
 					i++;
 		}
-		else if (s[i] != '\0' && (s[i] != '\"' && s[i] != '\''))
-			i++;
-		else if ((s[i] == '\"' || s[i] == '\''))
-			i = i;
-		else
-			break ;
+		i = quote(s, i);
 	}
 	return (words);
 }
@@ -82,12 +71,7 @@ static char		*ft_len_word(char *s, char *charset)
 
 	len = 0;
 	while (s[len] && !in_charset(s[len], charset))
-	{
-		if (len != quote(s, len))
 			len = quote(s, len);
-		else
-			len++;
-	}
 	if (!(word = malloc(sizeof(char) * (len + 1))))
 		return (NULL);
 	k = 0;

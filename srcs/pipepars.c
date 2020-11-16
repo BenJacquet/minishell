@@ -44,23 +44,6 @@ int	pipeok(t_all all, char c, int i)
 	return (all.pipe);
 }
 
-int	skipquote(char *str, int i)
-{
-	if (str[i] == '\'' && checksquote(str) % 2 == 0)
-	{
-		i++;
-		while (str[i] != '\'')
-			i++;
-	}
-	if (str[i] == '\"' && checkquote(str) % 2 == 0)
-	{
-		i++;
-		while (str[i] != '\"')
-			i++;
-	}
-	return (i);
-}
-
 int	pipecount(t_all all, char *str, char c)
 {
 	int i;
@@ -70,12 +53,11 @@ int	pipecount(t_all all, char *str, char c)
 	all.buff = str;
 	while (str[i])
 	{
-		i = skipquote(str, i);
 		if (str[i] == c)
 			all.pipe = pipeok(all, c, i);
 		if (all.pipe < 0)
 			return (-666);
-		i++;
+		i = quote(str, i);
 	}
 	return (all.pipe);
 }

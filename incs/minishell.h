@@ -162,6 +162,7 @@ int				noquote(t_all *all, char *buff, int *inc);
 int				noquoteinit(int *inc, char *buff, int *fusion);
 int				ft_count_word(char *s, char *charset);
 void			handle(int sig);
+int				quote(char *s, int i);
 
 /*
 ** -------------BEN------------------------------------------------------------

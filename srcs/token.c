@@ -20,7 +20,7 @@ void	finddolar(t_all *all, int *i, char **tmp)
 	all->j = 0;
 	while (*i < ft_strlen(tmp[0]) && tmp[0][*i] != ' ')
 	{
-		if (((ft_isalnum(tmp[0][*i]) ==  0)  && tmp[0][*i] != '_' ) || tmp[0][*i] == '$')
+		if ((ft_isalnum(tmp[0][*i]) == 0) && tmp[0][*i] != '_' )
 			break ;
 		tmp[1][all->j] = tmp[0][*i];
 		(*i)++;
@@ -28,9 +28,9 @@ void	finddolar(t_all *all, int *i, char **tmp)
 	}
 	tmp[1][all->j] = '\0';
 	tmp[2] = ft_getenv(all, tmp[1], (all->kotey == 2) ? 0 : 1);
-	if (all->j == 0 && ((tmp[0][1] && (tmp[0][1] == ' ' || tmp[0][1] == '\'' ||
-						tmp[0][1] == '\"') && all->mode == 1)
-				|| (!tmp[0][1] && all->mode == 0)))
+	if (all->j == 0 && ((tmp[0][1] && (tmp[0][1] == ' ' || (( tmp[0][1] == '\'' ||
+						tmp[0][1] == '\"') && all->mode == 1) || tmp[0][1] == '$'))
+				|| !tmp[0][1]))
 	{
 		free(tmp[2]);
 		tmp[2] = ft_strdup("$");
@@ -80,6 +80,7 @@ void	dolar(t_all *all, char *buff, int u)
 
 char	*tokla(t_all *all, char *buff, int *end, int i)
 {
+	all->diff = -666;
 	while (buff[i] && i < *end)
 	{
 		if (buff[i] == '\"')
@@ -90,16 +91,16 @@ char	*tokla(t_all *all, char *buff, int *end, int i)
 			dolar(all, buff + i, i);
 			buff = all->pdir[all->data - all->countsmc] + all->u - 1;
 			i = (i + all->diff > 0) ? i + all->diff : i;
-			if ((i + all->diff) > 0 && buff[i - all->diff] == '$')
-				break ;
 			*end = *end + all->diff;
 		}
 		if (buff[i] && i < *end)
 			i++;
 	}
-	if (buff[i] && buff[i - 1] && ((buff[i - 1] == '\'' && all->kotey != 3) || (buff[i - 1] == '\"' && all->kotey != 2)))
+	if (all->diff != -666 && i > 1 && buff[i] && buff[i - 1] && 
+			((buff[i - 1] == '\'' && all->kotey != 3) ||
+			 (buff[i - 1] == '\"' && all->kotey != 2)))
 		i = 0;
-	*end = i;
+	*end = (all->diff != -666) ? i : *end;
 	all->kotey = 0;
 	return (buff);
 }
