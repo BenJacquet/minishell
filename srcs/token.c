@@ -90,7 +90,7 @@ char	*tokla(t_all *all, char *buff, int *end, int i)
 		{
 			dolar(all, buff + i, i);
 			buff = all->pdir[all->data - all->countsmc] + all->u - 1;
-			i = (i + all->diff > 0) ? i + all->diff : i;
+			i = (i + all->diff > 0) ? i + all->diff : 0;
 			*end = *end + all->diff;
 		}
 		if (buff[i] && i < *end)
