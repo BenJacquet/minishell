@@ -6,7 +6,7 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/16 16:27:13 by chgilber          #+#    #+#             */
-/*   Updated: 2020/10/28 18:17:09 by jabenjam         ###   ########.fr       */
+/*   Updated: 2020/11/17 16:39:27 by jabenjam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ void				*ft_memset(void *b, int c, size_t len);
 char				*ft_strchr(const char *s, int c);
 size_t				ft_strlcat(char *dest, const char *src, size_t dstsize);
 size_t				ft_strlcpy(char *dest, const char *src, size_t dstsize);
+char				*ft_strcpy(char *dest, char *src);
 int					ft_strcmp(const char *s1, const char *s2);
 int					ft_strncmp(const char *s1, const char *s2, size_t n);
 char				*ft_strnstr(const char *str, const char *to_find,

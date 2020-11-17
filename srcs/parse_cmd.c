@@ -6,7 +6,7 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/05 15:21:37 by jabenjam          #+#    #+#             */
-/*   Updated: 2020/11/09 15:05:59 by jabenjam         ###   ########.fr       */
+/*   Updated: 2020/11/17 17:19:55 by jabenjam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ int		commands(t_all *all)
 		all->exec = get_path(all);
 		g_builtin = 2;
 		run_exec(all);
+		write(2, "CAME BACK\n", 11);
 	}
 	return (1);
 }

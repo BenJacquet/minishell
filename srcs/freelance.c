@@ -6,7 +6,7 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/06 18:44:32 by chgilber          #+#    #+#             */
-/*   Updated: 2020/10/28 18:56:31 by jabenjam         ###   ########.fr       */
+/*   Updated: 2020/11/17 17:32:25 by jabenjam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,8 @@ int		freelance(t_all *all)
 		free_tab(all->xdir);
 	if (all->wd_backup)
 		free(all->wd_backup);
+	if (all->exec)
+		free(all->exec);
 	all->bad = free_red(all->bad);
 	free(all->shouldi);
 	return (ret);

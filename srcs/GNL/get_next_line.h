@@ -6,7 +6,7 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/26 19:48:18 by chgilber          #+#    #+#             */
-/*   Updated: 2020/10/14 17:54:28 by chgilber         ###   ########.fr       */
+/*   Updated: 2020/11/17 16:41:00 by jabenjam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 # include <stdlib.h>
 # include <unistd.h>
+# include "../../srcs/libft/libft.h"
 
 # define MAX 1024
 # define BUFFER_SIZE 64

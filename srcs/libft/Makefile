@@ -21,7 +21,7 @@ SRCS =	ft_abs.c ft_atoi.c ft_isascii.c ft_isalpha.c \
 		ft_strdup.c ft_calloc.c ft_itoa.c ft_substr.c \
 		ft_strtrim.c ft_putchar_fd.c ft_putstr_fd.c ft_lennbr.c \
 		ft_putendl_fd.c ft_putnbr_fd.c ft_strmapi.c ft_split.c \
-		ft_strncat.c ft_strncpy.c ft_strjoin.c ft_strlen.c \
+		ft_strncat.c ft_strncpy.c ft_strjoin.c ft_strlen.c ft_strcpy.c \
 
 SRCS_BONUS_LIBFT = ft_lstnew_bonus.c ft_lstadd_front_bonus.c \
 ft_lstsize_bonus.c ft_lstlast_bonus.c \

@@ -6,7 +6,7 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/09 14:31:58 by jabenjam          #+#    #+#             */
-/*   Updated: 2020/11/09 14:35:00 by jabenjam         ###   ########.fr       */
+/*   Updated: 2020/11/17 16:03:48 by jabenjam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,4 +89,5 @@ void		init_all(t_all *all, char **env, int ac, char **av)
 	all->data = all->countsmc;
 	all->xdir = ft_splitmini(all->pdir[0], '|');
 	(all->tube > 0 && all->countsmc > 1) ? crocofail(all, all->pdir, '|') : 0;
+	all->exec = NULL;
 }

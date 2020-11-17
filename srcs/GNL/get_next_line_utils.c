@@ -6,25 +6,11 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/05 16:59:14 by jabenjam          #+#    #+#             */
-/*   Updated: 2020/11/05 16:59:14 by jabenjam         ###   ########.fr       */
+/*   Updated: 2020/11/17 16:41:13 by jabenjam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
-
-char	*ft_strcpy(char *dest, char *src)
-{
-	unsigned int	i;
-
-	i = 0;
-	while (src[i])
-	{
-		dest[i] = src[i];
-		i++;
-	}
-	dest[i] = src[i];
-	return (dest);
-}
 
 char	*ft_strjoinn(char *s1, char *s2, size_t len)
 {
