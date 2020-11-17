@@ -37,7 +37,7 @@ int				quote(char *s, int i)
 		if (s[i] != '\0')
 			i++;
 	}
-	else
+	else if (s[i])
 		i++;
 	return (i);
 }
@@ -71,7 +71,7 @@ static char		*ft_len_word(char *s, char *charset)
 
 	len = 0;
 	while (s[len] && !in_charset(s[len], charset))
-			len = quote(s, len);
+		len = quote(s, len);
 	if (!(word = malloc(sizeof(char) * (len + 1))))
 		return (NULL);
 	k = 0;

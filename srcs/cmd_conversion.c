@@ -27,7 +27,7 @@ t_tok	*new_token(char *token, t_tok *previous, int whole)
 	else
 		new->ignore = 0;
 	new->previous = previous;
-	printf("TOKEN --- Value=[%s] --- ignore=[%d]\n", new->value, new->ignore);
+//	printf("TOKEN --- Value=[%s] --- ignore=[%d]\n", new->value, new->ignore);
 	new->next = NULL;
 	return (new);
 }
@@ -100,13 +100,13 @@ t_tok	*convert_tokens_lst(char **cmd, int *whole)
 	if (cmd)
 	{
 		current = new_token(cmd[i], NULL, whole[i]);
-		printf("cmd[%d]=[%s] --- whole=[%d]\n", i, cmd[i], whole[i]);
+//		printf("cmd[%d]=[%s] --- whole=[%d]\n", i, cmd[i], whole[i]);
 		head = current;
 		i++;
 		while (cmd[i] != NULL)
 		{
 			current->next = new_token(cmd[i], current, whole[i]);
-			printf("cmd[%d]=[%s] --- whole=[%d]\n", i, cmd[i], whole[i]);
+//			printf("cmd[%d]=[%s] --- whole=[%d]\n", i, cmd[i], whole[i]);
 			current = current->next;
 			i++;
 		}
