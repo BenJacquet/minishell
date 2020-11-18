@@ -6,7 +6,7 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/13 17:46:15 by jabenjam          #+#    #+#             */
-/*   Updated: 2020/11/17 17:23:38 by jabenjam         ###   ########.fr       */
+/*   Updated: 2020/11/18 15:33:10 by jabenjam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int		check_execution(t_all *all, char **envp)
 {
 	char **tmp;
 
-	if (ft_strcmp(all->dir[0], "\0") == 0)
+	if (ft_strcmp(all->dir[0], "\0") == 0 || !ft_strcmp(all->dir[0], "exit"))
 		return (0);
 	else if (all->bad && ft_tablen(all->dir) == 1 &&
 			ft_strcmp(all->dir[0], "cat") == 0)

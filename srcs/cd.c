@@ -6,7 +6,7 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/04 17:17:15 by chgilber          #+#    #+#             */
-/*   Updated: 2020/11/17 17:10:08 by jabenjam         ###   ########.fr       */
+/*   Updated: 2020/11/17 17:49:05 by jabenjam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,9 @@ int		cd(char **dir, t_all *all)
 		i = chdir((dir[1]));
 		if (i == -1)
 		{
-			write(1, "minishell: cd: ", 15);
-			write(1, dir[1], ft_strlen(dir[1]));
-			write(1, ": No such file or directory\n", 28);
+			write(2, "minishell: cd: ", 15);
+			write(2, dir[1], ft_strlen(dir[1]));
+			write(2, ": No such file or directory\n", 28);
 			return (1);
 		}
 	}
@@ -38,6 +38,6 @@ int		cd(char **dir, t_all *all)
 	}
 	update_pwd(all, 0, 0);
 	if (i == -1)
-		write(1, "minishell: cd: HOME not set\n", 29);
+		write(2, "minishell: cd: HOME not set\n", 29);
 	return (0);
 }

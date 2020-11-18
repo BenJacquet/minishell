@@ -6,7 +6,7 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/12 15:52:23 by chgilber          #+#    #+#             */
-/*   Updated: 2020/10/29 18:06:35 by chgilber         ###   ########.fr       */
+/*   Updated: 2020/11/18 15:36:19 by jabenjam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,8 @@ void	finddolar(t_all *all, int *i, char **tmp)
 	all->j = 0;
 	while (*i < ft_strlen(tmp[0]) && tmp[0][*i] != ' ')
 	{
-		if ((ft_isalnum(tmp[0][*i]) == 0) && tmp[0][*i] != '_')
+		if ((ft_isalnum(tmp[0][*i]) == 0) && tmp[0][*i] != '_' &&
+			tmp[0][*i] != '?')
 			break ;
 		tmp[1][all->j] = tmp[0][*i];
 		(*i)++;

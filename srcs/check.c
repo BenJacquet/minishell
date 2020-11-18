@@ -6,7 +6,7 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/05 14:40:00 by chgilber          #+#    #+#             */
-/*   Updated: 2020/10/25 17:14:53 by chgilber         ###   ########.fr       */
+/*   Updated: 2020/11/18 15:32:11 by jabenjam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,13 +39,14 @@ int		check(char *buff, t_all *all)
 		return (1);
 	while (buff[i] == ' ')
 		i++;
-	if (ft_strlen(buff + i) == 4 && ft_strncmp(buff + i, "exit", 4) == 0)
+	if (ft_strlen(buff + i) == 4 && ft_strncmp(buff + i, "exit", 4) == 0 &&
+		!all->tube)
 	{
 		write(1, "exit\n", 5);
-		update_return(all, 0);
 		return (0);
 	}
-	if (ft_strlen(buff + i) > 4 && ft_strncmp(buff + i, "exit ", 5) == 0)
+	if (ft_strlen(buff + i) > 4 && ft_strncmp(buff + i, "exit ", 5) == 0 &&
+		!all->tube)
 	{
 		write(1, "exit\n", 5);
 		return (end(buff, all));
