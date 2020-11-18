@@ -6,7 +6,7 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/05 15:21:37 by jabenjam          #+#    #+#             */
-/*   Updated: 2020/11/17 17:40:34 by jabenjam         ###   ########.fr       */
+/*   Updated: 2020/11/18 16:12:35 by jabenjam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@ int		commands(t_all *all)
 		ft_unset_core(all);
 	else if (ft_strcmp(all->dir[0], "env") == 0)
 		ft_putenv(all);
+	else if (ft_strcmp(all->dir[0], "color") == 0)
+		ft_color(all);
 	else
 	{
 		all->exec = get_path(all);

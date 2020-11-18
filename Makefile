@@ -15,6 +15,7 @@ NAME = minishell
 SRCS =		srcs/cd.c\
 			srcs/check.c\
 			srcs/cmd_conversion.c\
+			srcs/color.c\
 			srcs/echo.c\
 			srcs/end.c\
 			srcs/env_conversion_list.c\

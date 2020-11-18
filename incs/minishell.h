@@ -6,7 +6,7 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/04 16:18:54 by jabenjam          #+#    #+#             */
-/*   Updated: 2020/11/17 16:41:26 by jabenjam         ###   ########.fr       */
+/*   Updated: 2020/11/18 16:13:40 by jabenjam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -242,5 +242,6 @@ int				slash(char	*str, int mode);
 int				commands(t_all *all);
 int				ft_envlen(t_env *env);
 t_tok			*skip_empty(t_tok *lst);
+int				ft_color(t_all *all);
 
 #endif
