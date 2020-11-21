@@ -6,7 +6,7 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/09 14:31:32 by jabenjam          #+#    #+#             */
-/*   Updated: 2020/11/09 14:31:32 by jabenjam         ###   ########.fr       */
+/*   Updated: 2020/11/21 13:49:48 by chgilber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ int		ifquote(t_all *all, int here, int inc)
 {
 	while (all->u < ft_strlen(all->pdir[here]) && all->pdir[here][all->u])
 	{
-		//	printf("pdir sent = [%s]et %d\n",all->pdir[all->data - all->countsmc] + all->u -1 , all->u);
 		while (all->pdir[here][all->u] == ' ')
 			all->u++;
 		if (all->pdir[here][all->u] == '\'')

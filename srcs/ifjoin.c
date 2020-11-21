@@ -6,7 +6,7 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/09 14:31:09 by jabenjam          #+#    #+#             */
-/*   Updated: 2020/11/09 14:31:10 by jabenjam         ###   ########.fr       */
+/*   Updated: 2020/11/21 13:49:20 by chgilber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ int		ifjoininit(char *buff, int quote)
 	int	i;
 
 	i = 2;
-//	printf("ifjoin buff avant = [%s] et %d\n", buff  + 2, i );
 	while (buff[i] && buff[i] != quote)
 		i++;
 	return (i);

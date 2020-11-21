@@ -6,7 +6,7 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/30 14:30:56 by jabenjam          #+#    #+#             */
-/*   Updated: 2020/11/14 11:33:05 by jabenjam         ###   ########.fr       */
+/*   Updated: 2020/11/21 13:53:38 by chgilber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,12 +22,12 @@ t_tok	*new_token(char *token, t_tok *previous, int whole)
 	new->beg = 0;
 	new->end = ft_strlen(token);
 	new->whole = whole;
-	if (whole == 1 && (!ft_strncmp(token, ">", 1) || !ft_strncmp(token, "<", 1)))
+	if (whole == 1 && (!ft_strncmp(token, ">", 1) ||
+				!ft_strncmp(token, "<", 1)))
 		new->ignore = 1;
 	else
 		new->ignore = 0;
 	new->previous = previous;
-//	printf("TOKEN --- Value=[%s] --- ignore=[%d]\n", new->value, new->ignore);
 	new->next = NULL;
 	return (new);
 }
@@ -100,13 +100,11 @@ t_tok	*convert_tokens_lst(char **cmd, int *whole)
 	if (cmd)
 	{
 		current = new_token(cmd[i], NULL, whole[i]);
-//		printf("cmd[%d]=[%s] --- whole=[%d]\n", i, cmd[i], whole[i]);
 		head = current;
 		i++;
 		while (cmd[i] != NULL)
 		{
 			current->next = new_token(cmd[i], current, whole[i]);
-//			printf("cmd[%d]=[%s] --- whole=[%d]\n", i, cmd[i], whole[i]);
 			current = current->next;
 			i++;
 		}

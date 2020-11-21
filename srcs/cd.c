@@ -6,16 +6,27 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/04 17:17:15 by chgilber          #+#    #+#             */
-/*   Updated: 2020/11/17 17:49:05 by jabenjam         ###   ########.fr       */
+/*   Updated: 2020/11/21 13:51:56 by chgilber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incs/minishell.h"
 
-int		cd(char **dir, t_all *all)
+int		homme(t_all *all)
 {
 	int		i;
 	char	*home;
+
+	i = 0;
+	home = ft_getenv(all, "HOME", 1);
+	i = chdir(home);
+	free(home);
+	return (i);
+}
+
+int		cd(char **dir, t_all *all)
+{
+	int		i;
 
 	i = 0;
 	update_pwd(all, 1, 0);
@@ -31,11 +42,7 @@ int		cd(char **dir, t_all *all)
 		}
 	}
 	else
-	{
-		home = ft_getenv(all, "HOME", 1);
-		i = chdir(home);
-		free(home);
-	}
+		i = homme(all);
 	update_pwd(all, 0, 0);
 	if (i == -1)
 		write(2, "minishell: cd: HOME not set\n", 29);
