@@ -6,7 +6,7 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/09 14:31:48 by jabenjam          #+#    #+#             */
-/*   Updated: 2020/11/18 15:17:27 by jabenjam         ###   ########.fr       */
+/*   Updated: 2020/11/21 14:07:41 by chgilber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int			letsgnl(t_all *all)
 	crontold(all);
 	if (checkquote(all->buff) == 1)
 	{
-		write(1, "No Multilines\n", 14);
+		write(2, "No Multilines\n", 14);
 		return (letsgnl(all));
 	}
 	g_builtin = 0;
