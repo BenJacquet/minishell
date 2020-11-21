@@ -6,7 +6,7 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/04 16:18:54 by jabenjam          #+#    #+#             */
-/*   Updated: 2020/11/21 18:29:40 by jabenjam         ###   ########.fr       */
+/*   Updated: 2020/11/21 18:37:08 by jabenjam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,7 +119,7 @@ int				end(char *buff, t_all *all);
 int				cd(char **dir, t_all *all);
 int				check(char *buff, t_all *all);
 int				checkonlyret(char *buff, t_all *all);
-int				checkquote(char *buff);
+int				checkquote(t_all all, char *buff);
 int				freelance(t_all *all);
 int				freedir(char **dir);
 char			**newdir(char **dir, char *buff);
