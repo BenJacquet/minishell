@@ -6,7 +6,7 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/05 14:40:00 by chgilber          #+#    #+#             */
-/*   Updated: 2020/11/21 17:48:54 by chgilber         ###   ########.fr       */
+/*   Updated: 2020/11/21 18:29:33 by jabenjam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,15 +22,13 @@ int		bouclebis(char *buff, int i, char quote)
 	return (i);
 }
 
-int		checkquote(t_all all, char *buff)
+int		checkquote(char *buff)
 {
 	int	i;
 
 	i = 0;
 	while (buff[i])
 	{
-		if (pipecount(all, buff, '|') < 0)
-			return (1);
 		if (buff[i] && buff[i] == 34)
 		{
 		if (bouclebis(buff, i, 34) < i)
