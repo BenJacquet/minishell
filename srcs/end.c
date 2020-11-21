@@ -6,7 +6,7 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/04 17:30:12 by chgilber          #+#    #+#             */
-/*   Updated: 2020/11/17 16:04:47 by jabenjam         ###   ########.fr       */
+/*   Updated: 2020/11/21 14:21:23 by chgilber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,8 +55,6 @@ int		end(char *buff, t_all *all)
 
 	i = 0;
 	arg = ft_split(buff, ' ');
-	if (arg[2] && arg[1] && ft_isdigit(arg[1][i]) == 1)
-		return (end2(all, arg));
 	if (arg[1])
 	{
 		i = numskip(arg, i);
@@ -70,6 +68,8 @@ int		end(char *buff, t_all *all)
 		else
 			update_return(all, ft_atoi(arg[1]));
 	}
+	else if (arg[2] && arg[1] && ft_isdigit(arg[1][i]) == 1)
+		return (end2(all, arg));
 	free_tab(arg);
 	return (0);
 }
