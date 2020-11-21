@@ -6,7 +6,7 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/09 14:31:48 by jabenjam          #+#    #+#             */
-/*   Updated: 2020/11/21 19:50:08 by jabenjam         ###   ########.fr       */
+/*   Updated: 2020/11/21 19:57:03 by jabenjam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ int			letsgnl(t_all *all)
 	free_tab(all->xdir);
 	all->xdir = ft_splitmini(all->pdir[0], '|');
 	(all->tube > 0 && all->countsmc > 1) ? crocofail(all, all->pdir, '|') : 0;
+	all->exec = NULL;
 	return (0);
 }
 
