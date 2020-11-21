@@ -6,7 +6,7 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/05 22:15:00 by jabenjam          #+#    #+#             */
-/*   Updated: 2020/11/09 11:45:24 by jabenjam         ###   ########.fr       */
+/*   Updated: 2020/11/21 17:37:16 by chgilber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,4 +74,22 @@ t_tok	*skip_empty(t_tok *lst)
 	while (lst && ft_strlen(lst->value) == 0)
 		lst = lst->next;
 	return (lst);
+}
+
+int		ft_put_error(char *error, char *var, int env, int mode)
+{
+	if (env == 0)
+		write(2, "minishell:", 10);
+	else
+		write(2, "env:", 4);
+	if (mode == 1)
+	{
+		ft_putstr_fd(" ", 1);
+		ft_putstr_fd(var, 2);
+		ft_putstr_fd(":", 1);
+	}
+	ft_putstr_fd(" ", 2);
+	ft_putstr_fd(error, 2);
+	write(2, "\n", 1);
+	return (-1);
 }

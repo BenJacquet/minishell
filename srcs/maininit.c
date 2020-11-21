@@ -6,7 +6,7 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/09 14:31:58 by jabenjam          #+#    #+#             */
-/*   Updated: 2020/11/21 14:15:18 by chgilber         ###   ########.fr       */
+/*   Updated: 2020/11/21 18:01:06 by chgilber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ void		init_all(t_all *all, char **env, int ac, char **av)
 	all->bad = NULL;
 	all->shouldi = malloc(sizeof(int *) * 1);
 	all->dir = ft_split(all->buff, ' ');
-	if (checkquote(all->buff) == 1)
+	if (checkquote(*all, all->buff) == 1)
 	{
 		all->xdir = ft_split(all->buff, ' ');
 		all->pdir = ft_split(all->buff, ' ');

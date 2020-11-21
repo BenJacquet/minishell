@@ -6,7 +6,7 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/04 17:30:12 by chgilber          #+#    #+#             */
-/*   Updated: 2020/11/21 14:21:23 by chgilber         ###   ########.fr       */
+/*   Updated: 2020/11/21 17:37:46 by chgilber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,20 +74,46 @@ int		end(char *buff, t_all *all)
 	return (0);
 }
 
-int		ft_put_error(char *error, char *var, int env, int mode)
+int		checkonlyret(char *buff, t_all *all)
 {
-	if (env == 0)
-		write(2, "minishell:", 10);
+	int i;
+
+	i = all->i;
+	i = 0;
+	if (!buff)
+		return (1);
+	while (buff[i] == ' ')
+		i++;
+	if (ft_strlen(buff + i) == 4 && ft_strncmp(buff + i, "exit", 4) == 0)
+		return (0);
+	if (ft_strlen(buff + i) > 4 && ft_strncmp(buff + i, "exit ", 5) == 0)
+		return (0);
 	else
-		write(2, "env:", 4);
-	if (mode == 1)
-	{
-		ft_putstr_fd(" ", 1);
-		ft_putstr_fd(var, 2);
-		ft_putstr_fd(":", 1);
-	}
-	ft_putstr_fd(" ", 2);
-	ft_putstr_fd(error, 2);
-	write(2, "\n", 1);
-	return (-1);
+		return (1);
 }
+
+int		check(char *buff, t_all *all)
+{
+	int i;
+
+	i = 0;
+	if (!buff)
+		return (1);
+	while (buff[i] == ' ')
+		i++;
+	if (ft_strlen(buff + i) == 4 && ft_strncmp(buff + i, "exit", 4) == 0 &&
+		!all->tube)
+	{
+		write(1, "exit\n", 5);
+		return (0);
+	}
+	if (ft_strlen(buff + i) > 4 && ft_strncmp(buff + i, "exit ", 5) == 0 &&
+		!all->tube)
+	{
+		write(1, "exit\n", 5);
+		return (end(buff, all));
+	}
+	else
+		return (1);
+}
+

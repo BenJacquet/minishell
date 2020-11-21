@@ -6,7 +6,7 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/09 14:31:48 by jabenjam          #+#    #+#             */
-/*   Updated: 2020/11/21 14:07:41 by chgilber         ###   ########.fr       */
+/*   Updated: 2020/11/21 18:00:23 by chgilber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int			letsgnl(t_all *all)
 	all->i = get_next_line(0, &all->buff);
 	signal_manager();
 	crontold(all);
-	if (checkquote(all->buff) == 1)
+	if (checkquote(*all, all->buff) == 1)
 	{
 		write(2, "No Multilines\n", 14);
 		return (letsgnl(all));
@@ -45,7 +45,7 @@ int			gestionpipe(t_all *all)
 	int		fd[all->tube][2];
 
 	free_tab(all->xdir);
-	all->countsmc = checkquote(all->buff) ? 0 : all->countsmc;
+	all->countsmc = checkquote(*all, all->buff) ? 0 : all->countsmc;
 	all->xdir = ft_splitmini(all->pdir[all->data - all->countsmc], '|');
 	if (all->tube)
 		open_pipes(all, fd);

@@ -6,7 +6,7 @@
 /*   By: chgilber <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/15 16:20:44 by chgilber          #+#    #+#             */
-/*   Updated: 2020/10/26 18:24:35 by chgilber         ###   ########.fr       */
+/*   Updated: 2020/11/21 18:02:23 by chgilber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,8 @@ int	pipeok(t_all all, char c, int i)
 	{
 		if (all.buff[i - 1] == c && all.buff[i] == c)
 			return (-666);
-		else
-			write(1, "No multilines\n", 14);
+	//	else
+	//		write(1, "No multilines\n", 14);
 		return (-666);
 	}
 	all.pipe = (ft_strlen(all.buff) == i + 1) ? all.pipe - 1 : all.pipe;
