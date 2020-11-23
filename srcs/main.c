@@ -6,7 +6,7 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/09 14:31:48 by jabenjam          #+#    #+#             */
-/*   Updated: 2020/11/21 19:57:03 by jabenjam         ###   ########.fr       */
+/*   Updated: 2020/11/23 16:41:07 by chgilber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,7 @@ int			letsgnl(t_all *all)
 	crontold(all);
 	if (checkquote(*all, all->buff) == 1)
 	{
-		if (all->buff[0] != '|')
-			write(2, "No Multilines\n", 14);
+		all->buff[0] != '|' ? write(2, "No Multilines\n", 14) : 0;
 		return (letsgnl(all));
 	}
 	g_builtin = 0;
@@ -37,7 +36,7 @@ int			letsgnl(t_all *all)
 	all->data = all->countsmc;
 	free_tab(all->xdir);
 	all->xdir = ft_splitmini(all->pdir[0], '|');
-	(all->tube > 0 && all->countsmc > 1) ? crocofail(all, all->pdir, '|') : 0;
+	(all->tube > 0 && all->countsmc >= 1) ? crocofail(all, all->xdir, '|') : 0;
 	all->exec = NULL;
 	return (0);
 }

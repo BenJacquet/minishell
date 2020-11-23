@@ -6,11 +6,33 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/15 16:20:44 by chgilber          #+#    #+#             */
-/*   Updated: 2020/11/21 19:55:29 by jabenjam         ###   ########.fr       */
+/*   Updated: 2020/11/23 17:01:49 by chgilber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incs/minishell.h"
+
+int	timide(char *buff)
+{
+	int i;
+
+	i = 0;
+	while (buff[i])
+	{
+
+		if (buff[i] == '>')
+		{
+			if (buff[i + 1] && buff[i + 1] == '<')
+			{
+				write(2, "minishell: syntax error near unexpected token '<'\n"
+						, 51);
+				return (1);
+			}
+		}
+		i++;
+	}
+	return (0);
+}
 
 int	message(t_all all, char c, int i)
 {
@@ -36,8 +58,6 @@ int	pipeok(t_all all, char c, int i)
 	{
 		if (all.buff[i - 1] == c && all.buff[i] == c)
 			return (-666);
-	//	else
-	//		write(1, "No multilines\n", 14);
 		return (-666);
 	}
 	all.pipe = (ft_strlen(all.buff) == i + 1) ? all.pipe - 1 : all.pipe;
