@@ -6,25 +6,27 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/09 14:31:48 by jabenjam          #+#    #+#             */
-/*   Updated: 2020/11/23 16:41:07 by chgilber         ###   ########.fr       */
+/*   Updated: 2020/11/23 20:59:05 by chgilber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incs/minishell.h"
 
-int			letsgnl(t_all *all)
+void		meowline(t_all *all)
 {
-	g_freete = 0;
-	get_dir(all);
-	free(all->buff);
-	all->i = get_next_line(0, &all->buff);
-	signal_manager();
-	crontold(all);
-	if (checkquote(*all, all->buff) == 1)
-	{
+	int	i;
+
+	i = 0;
+	all->pdir = ft_splitmini(all->buff, '\0');
+	i = ft_strlen(all->pdir[0]) - 2;
+	while (i >= 0 && all->pdir[0][i] == ' ')
+		i--;
+	if (i >= 0 && !messagecroco(all->pdir, '|', 0, i))
 		all->buff[0] != '|' ? write(2, "No Multilines\n", 14) : 0;
-		return (letsgnl(all));
-	}
+}
+
+void		letsgnlbis(t_all *all)
+{
 	g_builtin = 0;
 	all->countsmc = pipecount(*all, all->buff, ';') + 1;
 	free_tab(all->pdir);
@@ -38,6 +40,23 @@ int			letsgnl(t_all *all)
 	all->xdir = ft_splitmini(all->pdir[0], '|');
 	(all->tube > 0 && all->countsmc >= 1) ? crocofail(all, all->xdir, '|') : 0;
 	all->exec = NULL;
+}
+
+int			letsgnl(t_all *all)
+{
+	g_freete = 0;
+	get_dir(all);
+	free(all->buff);
+	all->i = get_next_line(0, &all->buff);
+	signal_manager();
+	crontold(all);
+	if (checkquote(*all, all->buff) == 1)
+	{
+		free_tab(all->pdir);
+		meowline(all);
+		return (letsgnl(all));
+	}
+	letsgnlbis(all);
 	return (0);
 }
 

@@ -6,7 +6,7 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/20 14:38:32 by chgilber          #+#    #+#             */
-/*   Updated: 2020/11/23 17:02:20 by chgilber         ###   ########.fr       */
+/*   Updated: 2020/11/23 20:26:36 by chgilber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ int		messagecroco(char **pdir, char c, int i, int j)
 		write(2, "minishell: syntax error near unexpected token '", 48);
 		if (pdir[i + 1])
 		{
+			printf("%s\n", pdir[i + 1]);
 			write(2, &c, 1);
 			write(2, "'\n", 2);
 		}

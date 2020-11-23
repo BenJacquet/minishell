@@ -6,7 +6,7 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/15 16:20:44 by chgilber          #+#    #+#             */
-/*   Updated: 2020/11/23 17:01:49 by chgilber         ###   ########.fr       */
+/*   Updated: 2020/11/23 20:54:38 by chgilber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ int	timide(char *buff)
 	i = 0;
 	while (buff[i])
 	{
-
 		if (buff[i] == '>')
 		{
 			if (buff[i + 1] && buff[i + 1] == '<')
