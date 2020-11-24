@@ -6,7 +6,7 @@
 /*   By: chgilber <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/24 17:49:55 by chgilber          #+#    #+#             */
-/*   Updated: 2020/11/24 20:02:38 by chgilber         ###   ########.fr       */
+/*   Updated: 2020/11/24 22:02:05 by chgilber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,8 @@ int		checkpars(t_all *all, char *buff)
 			write(2, "No multilines\n", 14);
 			return (1);
 		}
-		if (timide(buff + i))
+		if (timide(buff + i) || (buff[i] == '|' && pipecount(*all, buff, '|')
+			< 0) || (buff[i] == ';' && pipecount(*all, buff, ';') < 0))
 			return (1);
 	}
 	return (0);

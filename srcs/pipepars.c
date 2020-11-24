@@ -6,7 +6,7 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/15 16:20:44 by chgilber          #+#    #+#             */
-/*   Updated: 2020/11/24 20:02:45 by chgilber         ###   ########.fr       */
+/*   Updated: 2020/11/24 22:18:00 by chgilber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,12 +31,13 @@ int	timide(char *buff)
 	int i;
 
 	i = 0;
-	if (buff[i] == '>')
+	if (buff[i] == '>' || buff[i] == '<')
 	{
 		i++;
 		while (buff[i] == ' ')
 			i++;
-		if ((buff[i] && incharset(buff[i], "|<;")) || buff[i] == '\0')
+		if ((buff[0] == '>' && incharset(buff[i], "|<;")) ||
+				(buff[0] == '<' && incharset(buff[i], "|;")) || buff[i] == '\0')
 		{
 			write(2, "minishell: syntax error near unexpected token '", 47);
 			if (buff[i] == '\0')
@@ -91,7 +92,7 @@ int	pipecount(t_all all, char *str, char c)
 	all.buff = str;
 	while (str[i])
 	{
-		if (str[i] == '|' || str[i] == ';')
+		if (str[i] == c)
 			all.pipe = pipeok(all, c, i);
 		if (all.pipe < 0)
 			return (-666);
