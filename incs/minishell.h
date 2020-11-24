@@ -6,7 +6,7 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/04 16:18:54 by jabenjam          #+#    #+#             */
-/*   Updated: 2020/11/23 20:59:43 by chgilber         ###   ########.fr       */
+/*   Updated: 2020/11/24 20:04:36 by chgilber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,10 +145,9 @@ void			joinjoin(t_all *all, char *buff, int *inc, int i);
 int				crontold(t_all *all);
 int				croco(t_all *all, char *buff, int len, int inc);
 int				itscroco(char comp);
-void			crocofail(t_all *all, char **pdir, char c);
 int				timide(char *buff);
-int				messagecroco(char **pdir, char c, int i, int j);
-void			meowline(t_all *all);
+int				whilewell(char *buff, int i);
+int				checkpars(t_all *all, char *buff);
 int				initcroco(t_all *all, int here);
 int				parse_command(t_all *all, int fd_p[all->tube][2]);
 char			*ft_strncat(char *s1, char *s2, int len);

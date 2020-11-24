@@ -6,41 +6,11 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/09 14:31:48 by jabenjam          #+#    #+#             */
-/*   Updated: 2020/11/23 20:59:05 by chgilber         ###   ########.fr       */
+/*   Updated: 2020/11/24 19:39:23 by chgilber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incs/minishell.h"
-
-void		meowline(t_all *all)
-{
-	int	i;
-
-	i = 0;
-	all->pdir = ft_splitmini(all->buff, '\0');
-	i = ft_strlen(all->pdir[0]) - 2;
-	while (i >= 0 && all->pdir[0][i] == ' ')
-		i--;
-	if (i >= 0 && !messagecroco(all->pdir, '|', 0, i))
-		all->buff[0] != '|' ? write(2, "No Multilines\n", 14) : 0;
-}
-
-void		letsgnlbis(t_all *all)
-{
-	g_builtin = 0;
-	all->countsmc = pipecount(*all, all->buff, ';') + 1;
-	free_tab(all->pdir);
-	all->pdir = ft_splitmini(all->buff, ';');
-	crocofail(all, all->pdir, ';');
-	all->tube = (all->pdir[0] && all->countsmc > 0) ?
-		pipecount(*all, all->pdir[0], '|') : 0;
-	all->countsmc = (all->tube >= 0) ? all->countsmc : 0;
-	all->data = all->countsmc;
-	free_tab(all->xdir);
-	all->xdir = ft_splitmini(all->pdir[0], '|');
-	(all->tube > 0 && all->countsmc >= 1) ? crocofail(all, all->xdir, '|') : 0;
-	all->exec = NULL;
-}
 
 int			letsgnl(t_all *all)
 {
@@ -50,13 +20,19 @@ int			letsgnl(t_all *all)
 	all->i = get_next_line(0, &all->buff);
 	signal_manager();
 	crontold(all);
-	if (checkquote(*all, all->buff) == 1)
-	{
-		free_tab(all->pdir);
-		meowline(all);
+	if (checkpars(all, all->buff))
 		return (letsgnl(all));
-	}
-	letsgnlbis(all);
+	g_builtin = 0;
+	all->countsmc = pipecount(*all, all->buff, ';') + 1;
+	free_tab(all->pdir);
+	all->pdir = ft_splitmini(all->buff, ';');
+	all->tube = (all->pdir[0] && all->countsmc > 0) ?
+		pipecount(*all, all->pdir[0], '|') : 0;
+	all->countsmc = (all->tube >= 0) ? all->countsmc : 0;
+	all->data = all->countsmc;
+	free_tab(all->xdir);
+	all->xdir = ft_splitmini(all->pdir[0], '|');
+	all->exec = NULL;
 	return (0);
 }
 
@@ -65,7 +41,6 @@ int			gestionpipe(t_all *all)
 	int		fd[all->tube][2];
 
 	free_tab(all->xdir);
-	all->countsmc = checkquote(*all, all->buff) ? 0 : all->countsmc;
 	all->xdir = ft_splitmini(all->pdir[all->data - all->countsmc], '|');
 	if (all->tube)
 		open_pipes(all, fd);

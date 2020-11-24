@@ -6,7 +6,7 @@
 #    By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/10/16 11:50:11 by chgilber          #+#    #+#              #
-#    Updated: 2020/11/21 18:22:43 by chgilber         ###   ########.fr        #
+#    Updated: 2020/11/24 18:41:10 by chgilber         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -52,6 +52,7 @@ SRCS =		srcs/cd.c\
 			srcs/token.c\
 			srcs/update.c\
 			srcs/utils.c\
+			srcs/parsingcharset.c\
 
 SRCSLIB =	srcs/libft/ft_split.c\
 			srcs/libft/ft_strlen.c\

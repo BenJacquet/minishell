@@ -6,7 +6,7 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/20 14:38:32 by chgilber          #+#    #+#             */
-/*   Updated: 2020/11/23 20:26:36 by chgilber         ###   ########.fr       */
+/*   Updated: 2020/11/24 19:17:00 by chgilber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,49 +17,6 @@ int		itscroco(char comp)
 	if (comp == '>' || comp == '<')
 		return (1);
 	return (0);
-}
-
-int		messagecroco(char **pdir, char c, int i, int j)
-{
-	if (pdir[i][j] == '>' || pdir[i][j] == '<')
-	{
-		write(2, "minishell: syntax error near unexpected token '", 48);
-		if (pdir[i + 1])
-		{
-			printf("%s\n", pdir[i + 1]);
-			write(2, &c, 1);
-			write(2, "'\n", 2);
-		}
-		else
-			write(2, "newline'\n", 10);
-		return (1);
-	}
-	return (0);
-}
-
-void	crocofail(t_all *all, char **pdir, char c)
-{
-	int i;
-	int j;
-
-	j = 0;
-	i = 0;
-	if (pdir[0] && ft_strlen(pdir[0]) > 0)
-	{
-		while (pdir[i] && ft_strlen(pdir[i]) > 0)
-		{
-			j = ft_strlen(pdir[i]) - 1;
-			while (j >= 0 && pdir[i][j] == ' ')
-				j--;
-			if ((j >= 0 && messagecroco(pdir, c, i, j) == 1) ||
-					timide(pdir[i]) == 1)
-			{
-				all->countsmc = 0;
-				break ;
-			}
-			i++;
-		}
-	}
 }
 
 int		croco(t_all *all, char *buff, int len, int inc)

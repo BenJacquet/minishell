@@ -6,7 +6,7 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/09 14:31:58 by jabenjam          #+#    #+#             */
-/*   Updated: 2020/11/23 20:57:07 by chgilber         ###   ########.fr       */
+/*   Updated: 2020/11/24 19:29:26 by chgilber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,20 +73,18 @@ void		init_all(t_all *all, char **env, int ac, char **av)
 	all->bad = NULL;
 	all->shouldi = malloc(sizeof(int *) * 1);
 	all->dir = ft_split(all->buff, ' ');
-	if (checkquote(*all, all->buff) == 1)
+	if (checkpars(all, all->buff))
 	{
+		all->pdir = ft_split(all->buff, ' ');
 		all->xdir = ft_split(all->buff, ' ');
-		meowline(all);
 		return ((void)letsgnl(all));
 	}
 	all->countsmc = (g_freete == 0) ? pipecount(*all, all->buff, ';') + 1 : 0;
 	all->pdir = ft_splitmini(all->buff, ';');
-	crocofail(all, all->pdir, ';');
 	all->tube = (g_freete == 0 && all->pdir[0] && all->countsmc > 0) ?
 		pipecount(*all, all->pdir[0], '|') : 0;
 	all->countsmc = (all->tube >= 0) ? all->countsmc : 0;
 	all->data = all->countsmc;
 	all->xdir = ft_splitmini(all->pdir[0], '|');
-	(all->tube > 0 && all->countsmc >= 1) ? crocofail(all, all->xdir, '|') : 0;
 	all->exec = NULL;
 }
