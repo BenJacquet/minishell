@@ -6,7 +6,7 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/28 15:58:32 by chgilber          #+#    #+#             */
-/*   Updated: 2020/11/24 22:13:53 by chgilber         ###   ########.fr       */
+/*   Updated: 2020/11/24 22:49:23 by jabenjam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,8 @@ int		fork_command(t_all *all, int fd[all->tube][2])
 	if ((all->pid = fork()) == 0)
 	{
 		io_manager_dup_replace(all, fd, 1);
-		commands(all);
+		if (!bad_red(all))
+			commands(all);
 		io_manager_dup_restore(all);
 		exit(freelance(all));
 	}

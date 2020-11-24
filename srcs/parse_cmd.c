@@ -6,7 +6,7 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/05 15:21:37 by jabenjam          #+#    #+#             */
-/*   Updated: 2020/11/24 22:13:29 by chgilber         ###   ########.fr       */
+/*   Updated: 2020/11/24 22:48:55 by jabenjam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,8 @@ int		run_command(t_all *all, int fd[all->tube][2])
 		handle_redirections(all);
 	all->dir = convert_tokens_tab(all->toks);
 	io_manager_dup_replace(all, fd, 0);
-	commands(all);
+	if (!bad_red(all))
+		commands(all);
 	io_manager_dup_restore(all);
 	if (all->tube)
 		pipes_parent(all, fd);
