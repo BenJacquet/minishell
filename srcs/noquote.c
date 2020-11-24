@@ -6,7 +6,7 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/09 14:32:05 by jabenjam          #+#    #+#             */
-/*   Updated: 2020/11/23 13:45:43 by chgilber         ###   ########.fr       */
+/*   Updated: 2020/11/24 17:42:01 by chgilber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,8 +62,8 @@ int		noquote(t_all *all, char *buff, int *inc)
 		all->dir[*inc] = malloc(sizeof(char) * i + 1);
 		all->dir[*inc] = ft_strncpy(all->dir[*inc],
 				buff + ((buff[1] == ' ') ? 2 : 1), crocod(buff, i));
-		i = (buff[i] == ' ' || (itscroco(buff[i]) == 1 && i == 1) ||
-				(itscroco(buff[2]) == 1 && i == 2)) ? i : i - 1;
+		i = (buff[i] == ' ' || (itscroco(buff[1]) == 1 && i == 1) ||
+				(itscroco(buff[1]) && itscroco(buff[2]) && i == 2)) ? i : i - 1;
 		(*inc)++;
 	}
 	else if (fusion == 1)
