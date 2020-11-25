@@ -6,11 +6,34 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/05 21:47:26 by jabenjam          #+#    #+#             */
-/*   Updated: 2020/11/09 15:05:56 by jabenjam         ###   ########.fr       */
+/*   Updated: 2020/11/25 14:31:39 by jabenjam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incs/minishell.h"
+
+int		ft_env_bracket(t_all *all)
+{
+	int		i;
+
+	i = 0;
+	if (all->dir[1][0] == '[' && ft_strlen(all->dir[1]) == 1)
+	{
+		while (all->dir[i])
+		{
+			if (all->dir[i][0] == ']')
+			{
+				update_return(all, 0);
+				return (1);
+			}
+			i++;
+		}
+		ft_put_error("missing ]", all->dir[1], 0, 1);
+		update_return(all, 2);
+		return (1);
+	}
+	return (0);
+}
 
 void	ft_putenv(t_all *all)
 {
@@ -20,6 +43,8 @@ void	ft_putenv(t_all *all)
 	i = 0;
 	if (ft_tablen(all->dir) > 1)
 	{
+		if (ft_env_bracket(all))
+			return ;
 		update_return(all, 127);
 		ft_put_error(strerror(2), all->dir[1], 1, 1);
 		return ;

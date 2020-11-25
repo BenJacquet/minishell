@@ -6,7 +6,7 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/04 16:18:54 by jabenjam          #+#    #+#             */
-/*   Updated: 2020/11/24 22:46:15 by jabenjam         ###   ########.fr       */
+/*   Updated: 2020/11/25 14:17:45 by jabenjam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -247,5 +247,6 @@ t_tok			*skip_empty(t_tok *lst);
 int				ft_color(t_all *all);
 int				bad_red(t_all *all);
 int				get_error(t_all *all);
+int				ft_env_bracket(t_all *all);
 
 #endif
