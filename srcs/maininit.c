@@ -6,7 +6,7 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/09 14:31:58 by jabenjam          #+#    #+#             */
-/*   Updated: 2020/11/24 22:13:09 by chgilber         ###   ########.fr       */
+/*   Updated: 2020/11/26 09:50:50 by chgilber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,7 @@ void		init_all(t_all *all, char **env, int ac, char **av)
 	{
 		all->pdir = ft_split(all->buff, ' ');
 		all->xdir = ft_split(all->buff, ' ');
+		update_return(all, 2);
 		return ((void)letsgnl(all));
 	}
 	all->countsmc = (g_freete == 0) ? pipecount(*all, all->buff, ';') + 1 : 0;

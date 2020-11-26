@@ -6,7 +6,7 @@
 /*   By: jabenjam <jabenjam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/09 14:31:48 by jabenjam          #+#    #+#             */
-/*   Updated: 2020/11/24 22:13:00 by chgilber         ###   ########.fr       */
+/*   Updated: 2020/11/26 09:46:54 by chgilber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,10 @@ int			letsgnl(t_all *all)
 	signal_manager();
 	crontold(all);
 	if (checkpars(all, all->buff))
+	{
+		update_return(all, 2);
 		return (letsgnl(all));
+	}
 	g_builtin = 0;
 	all->countsmc = pipecount(*all, all->buff, ';') + 1;
 	free_tab(all->pdir);
